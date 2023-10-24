@@ -31,6 +31,9 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	bool isJumping = false;
+	float initialY; // Store the initial position when the jump starts
+	
 };
 
 #endif // __PLAYER_H__

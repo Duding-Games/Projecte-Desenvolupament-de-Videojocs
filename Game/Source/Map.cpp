@@ -185,14 +185,20 @@ bool Map::Load(SString mapFileName)
     
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
-    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543 + 32, 256, 64, STATIC);
+    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543, 256, 1, STATIC);
     c1->ctype = ColliderType::PLATFORM;
 
-    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384 + 32, 128, 64, STATIC);
+    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384, 128, 1, STATIC);
     c2->ctype = ColliderType::PLATFORM;
 
-    PhysBody* c3 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
+    PhysBody* c3 = app->physics->CreateRectangle(256, 704 , 576, 1, STATIC);
     c3->ctype = ColliderType::PLATFORM;
+
+    PhysBody* c4 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
+    c4->ctype = ColliderType::WALL;
+   
+    PhysBody* c5 = app->physics->CreateRectangle(0, 704 + 32, 130,1000, STATIC);
+    c5->ctype = ColliderType::WALL;
     
     if(ret == true)
     {

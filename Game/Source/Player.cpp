@@ -44,6 +44,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
+	vel.y = pbody->body->GetLinearVelocity().y;
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
@@ -53,15 +54,32 @@ bool Player::Update(float dt)
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-		vel = b2Vec2(-speed*dt, -GRAVITY_Y);
+		vel = b2Vec2(-speed*dt, pbody->body->GetLinearVelocity().y);
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		vel = b2Vec2(speed*dt, -GRAVITY_Y);
+		vel = b2Vec2(speed*dt, pbody->body->GetLinearVelocity().y);
 	}
 
-	//Set the velocity of the pbody of the player
+
 	pbody->body->SetLinearVelocity(vel);
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (isJumping == false) {
+			vel.y = 0;
+			pbody->body->SetLinearVelocity(vel);
+			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.2f), pbody->body->GetWorldCenter(), true);
+			isJumping = true;
+			
+		}
+		
+	}
+
+
+	
+
+	//Set the velocity of the pbody of the player
+	
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -86,9 +104,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
 		break;
+
+	case ColliderType::WALL:
+		LOG("Collision WALL");
+		break;
+
 	case ColliderType::PLATFORM:
+		isJumping = false;
 		LOG("Collision PLATFORM");
 		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
