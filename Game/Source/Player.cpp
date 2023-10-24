@@ -8,10 +8,44 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Animation.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
 	name.Create("Player");
+
+	//idle
+
+	idleAnim.PushBack({ 0 ,0 , 50, 37 });
+	idleAnim.PushBack({ 50 ,0 , 50, 37 });
+	idleAnim.PushBack({ 100 ,0 , 50, 37 });
+	idleAnim.PushBack({ 150 ,0 , 50, 37 });
+	idleAnim.speed = 0.1f;
+	idleAnim.loop;
+
+	//run
+
+	runAnim.PushBack({ 50,40,50,37 });
+	runAnim.PushBack({ 100,40,50,37 });
+	runAnim.PushBack({ 150,40,50,37 });
+	runAnim.PushBack({ 200,40,50,37 });
+	runAnim.PushBack({ 250,40,50,37 });
+	runAnim.speed = 0.1;
+	runAnim.loop;
+
+	//jump
+
+	jumpAnim.PushBack({ 0, 75, 50,37 });
+	jumpAnim.PushBack({ 50, 75, 50,37 });
+	jumpAnim.PushBack({ 100, 75, 50,37 });
+	jumpAnim.PushBack({ 150, 75, 50,37 });
+	jumpAnim.PushBack({ 200, 75, 50,37 });
+	jumpAnim.PushBack({ 250, 75, 50,37 });
+	jumpAnim.PushBack({ 300, 75, 50,37 });
+	jumpAnim.PushBack({ 0, 120, 50,37 });
+	jumpAnim.speed = 0.12f;
+
+
 }
 
 Player::~Player() {
@@ -43,6 +77,8 @@ bool Player::Start() {
 
 bool Player::Update(float dt)
 {
+	currentAnim = &idleAnim;
+
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
@@ -55,10 +91,12 @@ bool Player::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		vel = b2Vec2(-speed*dt, pbody->body->GetLinearVelocity().y);
+		currentAnim = &runAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed*dt, pbody->body->GetLinearVelocity().y);
+		currentAnim = &runAnim;
 	}
 
 
@@ -75,7 +113,8 @@ bool Player::Update(float dt)
 		
 	}
 
-
+	if (isJumping == true) { currentAnim = &jumpAnim; };
+	if (isJumping == false) { jumpAnim.Reset(); };
 	
 
 	//Set the velocity of the pbody of the player
@@ -85,11 +124,29 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	app->render->DrawTexture(texture, position.x, position.y);
+	
+	app->render->DrawTexture(texture, position.x, position.y,&currentAnim->GetCurrentFrame());
 
+	currentAnim->Update();
 	return true;
 }
 
+bool Player::PostUpdate() {
+
+	//SDL_Rect rect = currentAnim->GetCurrentFrame();
+
+	//if (isFacingLeft) {
+	//	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+	//}
+	//else {
+	//	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+	//}
+
+
+
+
+	return true;
+}
 bool Player::CleanUp()
 {
 
