@@ -34,8 +34,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 	runAnim.loop;
 
 	//jump
-
-	jumpAnim.PushBack({ 0, 75, 50,37 });
 	jumpAnim.PushBack({ 50, 75, 50,37 });
 	jumpAnim.PushBack({ 100, 75, 50,37 });
 	jumpAnim.PushBack({ 150, 75, 50,37 });
@@ -43,7 +41,29 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.PushBack({ 250, 75, 50,37 });
 	jumpAnim.PushBack({ 300, 75, 50,37 });
 	jumpAnim.PushBack({ 0, 120, 50,37 });
-	jumpAnim.speed = 0.12f;
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.speed = 0.13f;
+
+	//crouch
+
+	crouchAnim.PushBack({ 50, 110, 50,37 });
+	
 
 
 }
@@ -66,9 +86,10 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 28, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
+	pbody->body->SetFixedRotation(true);
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -92,11 +113,13 @@ bool Player::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
 		vel = b2Vec2(-speed*dt, pbody->body->GetLinearVelocity().y);
 		currentAnim = &runAnim;
+		isFacingLeft = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
 		vel = b2Vec2(speed*dt, pbody->body->GetLinearVelocity().y);
 		currentAnim = &runAnim;
+		isFacingLeft = false;
 	}
 
 
@@ -106,17 +129,31 @@ bool Player::Update(float dt)
 		if (isJumping == false) {
 			vel.y = 0;
 			pbody->body->SetLinearVelocity(vel);
-			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.2f), pbody->body->GetWorldCenter(), true);
+			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.15f), pbody->body->GetWorldCenter(), true);
 			isJumping = true;
 			
 		}
 		
 	}
 
+	//pbody->body->SetLinearVelocity(vel);
+
+	//if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+	//	if (isDashing = false) {
+	//		vel.x = 0;
+	//		pbody->body->SetLinearVelocity(vel);
+	//		pbody->body->ApplyLinearImpulse(b2Vec2(0.5f,0), pbody->body->GetWorldCenter(), true);
+	//		/*isDashing = true;*/
+	//	}
+	//}
+	
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
+	//if (jumpAnim.HasFinished() && isJumping == true) {
+	//	jumpAnim.PushBack({ 50, 110, 50,37 });
+	//	jumpAnim.loop = true;
+	//}
 	
-
 	//Set the velocity of the pbody of the player
 	
 
@@ -125,7 +162,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	
-	app->render->DrawTexture(texture, position.x, position.y,&currentAnim->GetCurrentFrame());
+	//app->render->DrawTexture(texture, position.x - 8, position.y-4,&currentAnim->GetCurrentFrame());
 
 	currentAnim->Update();
 	return true;
@@ -133,18 +170,14 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate() {
 
-	//SDL_Rect rect = currentAnim->GetCurrentFrame();
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	//if (isFacingLeft) {
-	//	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
-	//}
-	//else {
-	//	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
-	//}
-
-
-
-
+	if (isFacingLeft) {
+		app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+	}
+	else {
+		app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+	}
 	return true;
 }
 bool Player::CleanUp()

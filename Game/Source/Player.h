@@ -22,6 +22,8 @@ public:
 
 	bool Update(float dt);
 
+	
+
 	bool PostUpdate();
 
 	bool CleanUp();
@@ -36,6 +38,7 @@ public:
 	int pickCoinFxId;
 	bool isJumping = false;
 	bool isFacingLeft = false;
+	bool isDashing = false;
 	float initialY; // Store the initial position when the jump starts
 
 	Animation* currentAnim;
@@ -44,6 +47,8 @@ private:
 	Animation idleAnim;
 	Animation runAnim;
 	Animation jumpAnim;
+	Animation dashAnim;
+	Animation crouchAnim;
 };
 
 #endif // __PLAYER_H__
