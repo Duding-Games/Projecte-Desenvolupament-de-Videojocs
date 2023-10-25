@@ -5,6 +5,8 @@
 #include "Point.h"
 #include "SDL/include/SDL.h"
 #include "Animation.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 
 struct SDL_Texture;
 
@@ -31,7 +33,9 @@ public:
 	void OnCollision(PhysBody* physA, PhysBody* physB);
 
 public:
+	Timer timerDash;
 	float speed = 0.2f;
+	float speedDash = 0.5f;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
@@ -39,6 +43,7 @@ public:
 	bool isJumping = false;
 	bool isFacingLeft = false;
 	bool isDashing = false;
+	bool isAttacking = false;
 	float initialY; // Store the initial position when the jump starts
 
 	Animation* currentAnim;
@@ -49,6 +54,7 @@ private:
 	Animation jumpAnim;
 	Animation dashAnim;
 	Animation crouchAnim;
+	Animation attackAnim;
 };
 
 #endif // __PLAYER_H__

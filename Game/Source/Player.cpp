@@ -9,6 +9,8 @@
 #include "Point.h"
 #include "Physics.h"
 #include "Animation.h"
+#include "Timer.h"
+#include "PerfTimer.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -65,10 +67,35 @@ Player::Player() : Entity(EntityType::PLAYER)
 	crouchAnim.PushBack({ 250, 0, 50,37 });
 	crouchAnim.PushBack({ 300, 0, 50,37 });
 	crouchAnim.PushBack({ 0, 37, 50,37 });
-	crouchAnim.speed = 0.05f;
+	crouchAnim.speed = 0.07f;
 	
+	//dash
+	dashAnim.PushBack({ 150, 111, 50,37 });
+	dashAnim.PushBack({ 200, 111, 50,37 });
+	dashAnim.PushBack({ 250, 111, 50,37 });
+	dashAnim.PushBack({ 300, 111, 50,37 });
+	dashAnim.PushBack({ 0, 148, 50,37 });
+	dashAnim.speed = 0.1f;
 
-
+	//attack
+	attackAnim.PushBack({ 0, 222, 50,37 });
+	attackAnim.PushBack({ 50, 222, 50,37 });
+	attackAnim.PushBack({ 100, 222, 50,37 });
+	attackAnim.PushBack({ 150, 222, 50,37 });
+	attackAnim.PushBack({ 200, 222, 50,37 });
+	attackAnim.PushBack({ 250, 222, 50,37 });
+	attackAnim.PushBack({ 300, 222, 50,37 });
+	attackAnim.PushBack({ 0, 259, 50,37 });
+	attackAnim.PushBack({ 50, 259, 50,37 });
+	attackAnim.PushBack({ 100, 259, 50,37 });
+	attackAnim.PushBack({ 150, 259, 50,37 });
+	attackAnim.PushBack({ 200, 259, 50,37 });
+	attackAnim.PushBack({ 250, 259, 50,37 });
+	attackAnim.PushBack({ 300, 259, 50,37 });
+	attackAnim.PushBack({ 0, 296, 50,37 });
+	attackAnim.PushBack({ 50, 296, 50,37 });
+	attackAnim.PushBack({ 100, 296, 50,37 });
+	attackAnim.speed = 0.15f;
 }
 
 Player::~Player() {
@@ -80,7 +107,8 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
-
+	timerDash = Timer();
+	
 	return true;
 }
 
@@ -126,8 +154,6 @@ bool Player::Update(float dt)
 	}
 
 
-	pbody->body->SetLinearVelocity(vel);
-
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		if (isJumping == false) {
 			vel.y = 0;
@@ -138,8 +164,45 @@ bool Player::Update(float dt)
 		}
 		
 	}
-
 	
+	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		if (!isDashing) {
+			timerDash.Start();
+			if (isFacingLeft) {
+				vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+				currentAnim = &dashAnim;
+			}
+			else {
+				vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+				currentAnim = &dashAnim;
+			}
+			
+			isDashing;
+			
+		}
+		
+	}
+	if (timerDash.ReadMSec() < 500) {
+		if (isFacingLeft) {
+			vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+			currentAnim = &dashAnim;
+		}
+		else {
+			vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+			currentAnim = &dashAnim;
+		}
+
+		isDashing;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
+		currentAnim = &attackAnim;
+		isAttacking;
+	}
+	
+	pbody->body->SetLinearVelocity(vel);
+
+	//DASH
 	//pbody->body->SetLinearVelocity(vel);
 
 	//if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
@@ -150,13 +213,11 @@ bool Player::Update(float dt)
 	//		/*isDashing = true;*/
 	//	}
 	//}
-	
+	if (timerDash.ReadMSec() > 500) { !isDashing; }
+	if (!isDashing) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
-	//if (jumpAnim.HasFinished() && isJumping == true) {
-	//	jumpAnim.PushBack({ 50, 110, 50,37 });
-	//	jumpAnim.loop = true;
-	//}
+
 	
 	//Set the velocity of the pbody of the player
 	
@@ -194,7 +255,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		/*app->entityManager->DestroyEntity(ALGO)*/
+		/*app->entityManager->DestroyEntity(ALGO);*/
 		break;
 
 	case ColliderType::WALL:
