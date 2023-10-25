@@ -61,8 +61,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.speed = 0.13f;
 
 	//crouch
-
-	crouchAnim.PushBack({ 50, 110, 50,37 });
+	crouchAnim.PushBack({ 200, 0, 50,37 });
+	crouchAnim.PushBack({ 250, 0, 50,37 });
+	crouchAnim.PushBack({ 300, 0, 50,37 });
+	crouchAnim.PushBack({ 0, 37, 50,37 });
+	crouchAnim.speed = 0.05f;
 	
 
 
@@ -107,7 +110,7 @@ bool Player::Update(float dt)
 		//
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//
+		currentAnim = &crouchAnim;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -136,6 +139,7 @@ bool Player::Update(float dt)
 		
 	}
 
+	
 	//pbody->body->SetLinearVelocity(vel);
 
 	//if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
@@ -161,9 +165,6 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	
-	//app->render->DrawTexture(texture, position.x - 8, position.y-4,&currentAnim->GetCurrentFrame());
-
 	currentAnim->Update();
 	return true;
 }
@@ -173,10 +174,10 @@ bool Player::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 8, position.y-4, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x-8, position.y-4, SDL_FLIP_NONE, &rect);
 	}
 	return true;
 }
@@ -193,6 +194,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
+		/*app->entityManager->DestroyEntity(ALGO)*/
 		break;
 
 	case ColliderType::WALL:
