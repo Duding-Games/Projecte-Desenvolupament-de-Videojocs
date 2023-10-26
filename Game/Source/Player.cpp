@@ -60,7 +60,24 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.PushBack({ 50, 110, 50,37 });
 	jumpAnim.PushBack({ 50, 110, 50,37 });
 	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.speed = 0.13f;
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.speed = 0.17f;
 
 	//crouch
 	crouchAnim.PushBack({ 200, 0, 50,37 });
@@ -117,10 +134,12 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+	
 	pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 28, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetFixedRotation(true);
+	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -130,7 +149,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	currentAnim = &idleAnim;
-
+	
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
@@ -153,6 +172,7 @@ bool Player::Update(float dt)
 		isFacingLeft = false;
 	}
 
+	pbody->body->SetLinearVelocity(vel);
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
 		if (isJumping == false) {
@@ -170,10 +190,12 @@ bool Player::Update(float dt)
 			timerDash.Start();
 			if (isFacingLeft) {
 				vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
 			else {
 				vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
 			
@@ -185,10 +207,12 @@ bool Player::Update(float dt)
 	if (timerDash.ReadMSec() < 500) {
 		if (isFacingLeft) {
 			vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+			pbody->body->SetLinearVelocity(vel);
 			currentAnim = &dashAnim;
 		}
 		else {
 			vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+			pbody->body->SetLinearVelocity(vel);
 			currentAnim = &dashAnim;
 		}
 
@@ -200,7 +224,7 @@ bool Player::Update(float dt)
 		isAttacking;
 	}
 	
-	pbody->body->SetLinearVelocity(vel);
+	
 
 	//DASH
 	//pbody->body->SetLinearVelocity(vel);
@@ -217,7 +241,19 @@ bool Player::Update(float dt)
 	if (!isDashing) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
+	if (isDashing) {
+		pbody = app->physics->CreateRectangle(position.x, position.y + 16, 28, 16, bodyType::DYNAMIC);
+		pbody->listener = this;
+		pbody->ctype = ColliderType::PLAYER;
+		pbody->body->SetFixedRotation(true);
+	}
+	if (isCrouching) {
+		pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 16, bodyType::DYNAMIC);
+		pbody->listener = this;
+		pbody->ctype = ColliderType::PLAYER;
+		pbody->body->SetFixedRotation(true);
 
+	}
 	
 	//Set the velocity of the pbody of the player
 	

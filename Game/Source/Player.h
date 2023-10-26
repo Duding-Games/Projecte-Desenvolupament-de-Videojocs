@@ -44,6 +44,7 @@ public:
 	bool isFacingLeft = false;
 	bool isDashing = false;
 	bool isAttacking = false;
+	bool isCrouching = false;
 	float initialY; // Store the initial position when the jump starts
 
 	Animation* currentAnim;
