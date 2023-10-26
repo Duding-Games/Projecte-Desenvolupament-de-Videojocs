@@ -39,6 +39,8 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
+	PhysBody* pbodyCrouch;
+	PhysBody* pbodyDash;
 	int pickCoinFxId;
 	bool isJumping = false;
 	bool isFacingLeft = false;

@@ -134,12 +134,10 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	
 	pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 28, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetFixedRotation(true);
-	
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -149,7 +147,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	currentAnim = &idleAnim;
-	
+
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
@@ -224,38 +222,14 @@ bool Player::Update(float dt)
 		isAttacking;
 	}
 	
-	
 
-	//DASH
-	//pbody->body->SetLinearVelocity(vel);
-
-	//if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
-	//	if (isDashing = false) {
-	//		vel.x = 0;
-	//		pbody->body->SetLinearVelocity(vel);
-	//		pbody->body->ApplyLinearImpulse(b2Vec2(0.5f,0), pbody->body->GetWorldCenter(), true);
-	//		/*isDashing = true;*/
-	//	}
-	//}
 	if (timerDash.ReadMSec() > 500) { !isDashing; }
 	if (!isDashing) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
-	if (isDashing) {
-		pbody = app->physics->CreateRectangle(position.x, position.y + 16, 28, 16, bodyType::DYNAMIC);
-		pbody->listener = this;
-		pbody->ctype = ColliderType::PLAYER;
-		pbody->body->SetFixedRotation(true);
-	}
-	if (isCrouching) {
-		pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 16, bodyType::DYNAMIC);
-		pbody->listener = this;
-		pbody->ctype = ColliderType::PLAYER;
-		pbody->body->SetFixedRotation(true);
 
-	}
-	
-	//Set the velocity of the pbody of the player
+	//Adapting collider
+
 	
 
 	//Update player position in pixels
