@@ -151,6 +151,10 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
+	/*if (isCrouching != _isCrouching && isCrouching == true) {
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		pbody = app->physics->CreateRectangle();
+	}*/
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
@@ -228,7 +232,7 @@ bool Player::Update(float dt)
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
 
-	//Adapting collider
+
 
 	
 
@@ -237,6 +241,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	currentAnim->Update();
+	_isCrouching = isCrouching;
 	return true;
 }
 

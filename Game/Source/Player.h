@@ -39,14 +39,13 @@ public:
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
-	PhysBody* pbodyCrouch;
-	PhysBody* pbodyDash;
 	int pickCoinFxId;
 	bool isJumping = false;
 	bool isFacingLeft = false;
 	bool isDashing = false;
 	bool isAttacking = false;
 	bool isCrouching = false;
+	bool _isCrouching = false;
 	float initialY; // Store the initial position when the jump starts
 
 	Animation* currentAnim;
