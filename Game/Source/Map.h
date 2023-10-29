@@ -132,6 +132,7 @@ private:
 	bool LoadAllLayers(pugi::xml_node mapNode);
 	TileSet* GetTilesetFromTileId(int gid) const;
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
+	bool LoadCollisions(std::string collisionLayer);
 
 public: 
 

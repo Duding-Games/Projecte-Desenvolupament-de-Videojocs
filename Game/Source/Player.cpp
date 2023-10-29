@@ -11,6 +11,7 @@
 #include "Animation.h"
 #include "Timer.h"
 #include "PerfTimer.h"
+#include "Window.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -134,10 +135,10 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateRectangle(position.x, position.y + 16, 16, 28, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
-	pbody->body->SetFixedRotation(true);
+	pbody->body->SetFixedRotation(false);
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
@@ -151,15 +152,14 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
-	/*if (isCrouching != _isCrouching && isCrouching == true) {
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		pbody = app->physics->CreateRectangle();
-	}*/
+
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
 	}
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
 		currentAnim = &crouchAnim;
+		isCrouching = true;
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
@@ -180,7 +180,7 @@ bool Player::Update(float dt)
 		if (isJumping == false) {
 			vel.y = 0;
 			pbody->body->SetLinearVelocity(vel);
-			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.15f), pbody->body->GetWorldCenter(), true);
+			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.20f), pbody->body->GetWorldCenter(), true);
 			isJumping = true;
 			
 		}
@@ -226,12 +226,18 @@ bool Player::Update(float dt)
 		isAttacking;
 	}
 	
-
+	//if (isCrouching != _isCrouching && isCrouching == true) {
+	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//	pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
+	//}
+	//else if (isCrouching != _isCrouching && isCrouching == false){
+	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
+	//}
 	if (timerDash.ReadMSec() > 500) { !isDashing; }
 	if (!isDashing) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
-
 
 
 	
@@ -242,6 +248,18 @@ bool Player::Update(float dt)
 
 	currentAnim->Update();
 	_isCrouching = isCrouching;
+
+	//Cam Movement
+	uint windowH;
+	uint windowW;
+	app->win->GetWindowSize(windowW, windowH);
+
+	app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
+	app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
+	LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
+	LOG("---------Camera : %d", app->render->camera.x);
+	
+
 	return true;
 }
 
@@ -270,7 +288,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		/*app->entityManager->DestroyEntity(ALGO);*/
+		/*app->entityManager->DestroyEntity(physB->listener);*/
 		break;
 
 	case ColliderType::WALL:
@@ -286,4 +304,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision UNKNOWN");
 		break;
 	}
+}
+
+bool Player::isOutOfBounds(int x, int y) {
+	return true;
 }

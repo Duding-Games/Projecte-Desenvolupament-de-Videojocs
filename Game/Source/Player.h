@@ -24,13 +24,13 @@ public:
 
 	bool Update(float dt);
 
-	
-
 	bool PostUpdate();
 
 	bool CleanUp();
 
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	bool isOutOfBounds(int x, int y);
 
 public:
 	Timer timerDash;
@@ -46,7 +46,6 @@ public:
 	bool isAttacking = false;
 	bool isCrouching = false;
 	bool _isCrouching = false;
-	float initialY; // Store the initial position when the jump starts
 
 	Animation* currentAnim;
 

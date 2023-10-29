@@ -184,23 +184,27 @@ bool Map::Load(SString mapFileName)
         ret = LoadAllLayers(mapFileXML.child("map"));
     }
     
+    if (ret == true)
+    {
+        ret = LoadCollisions("Collisions");
+    }
     // NOTE: Later you have to create a function here to load and create the colliders from the map
 
-    PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543, 256, 1, STATIC);
-    c1->ctype = ColliderType::PLATFORM;
+    //PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543, 256, 1, STATIC);
+    //c1->ctype = ColliderType::PLATFORM;
 
-    PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384, 128, 1, STATIC);
-    c2->ctype = ColliderType::PLATFORM;
+    //PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384, 128, 1, STATIC);
+    //c2->ctype = ColliderType::PLATFORM;
 
-    PhysBody* c3 = app->physics->CreateRectangle(256, 704 , 576, 1, STATIC);
-    c3->ctype = ColliderType::PLATFORM;
+    //PhysBody* c3 = app->physics->CreateRectangle(256, 704 , 576, 1, STATIC);
+    //c3->ctype = ColliderType::PLATFORM;
 
-    PhysBody* c4 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    c4->ctype = ColliderType::WALL;
+    //PhysBody* c4 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
+    //c4->ctype = ColliderType::WALL;
    
-    PhysBody* c5 = app->physics->CreateRectangle(0, 704 + 32, 130,1000, STATIC);
-    c5->ctype = ColliderType::WALL;
-    
+    //PhysBody* c5 = app->physics->CreateRectangle(0, 704 + 32, 130,1000, STATIC);
+    //c5->ctype = ColliderType::WALL;
+    //
     if(ret == true)
     {
         LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
@@ -347,6 +351,48 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
     }
 
     return ret;
+}
+
+bool Map::LoadCollisions(std::string collisionLayer)
+{
+    ListItem<MapLayer*>* mapLayerItem;
+    mapLayerItem = mapData.maplayers.start;
+    
+
+    while (mapLayerItem != NULL) {
+
+        if (mapLayerItem->data->name.GetString() == collisionLayer) {
+
+            for (int x = 0; x < mapLayerItem->data->width; x++)
+            {
+                for (int y = 0; y < mapLayerItem->data->height; y++)
+                {
+                    int gid = mapLayerItem->data->Get(x, y);
+                    TileSet* tileset = GetTilesetFromTileId(gid);
+
+                    SDL_Rect r = tileset->GetTileRect(gid);
+                    iPoint pos = MapToWorld(x, y);
+                    if (gid == tileset->firstgid + 0) {
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12, pos.y + 1, 24, 1, STATIC);
+                        c1->ctype = ColliderType::PLATFORM;
+                        PhysBody* c2 = app->physics->CreateRectangle(pos.x + 12, pos.y + 13, 24, 23, STATIC);
+                        c2->ctype = ColliderType::WALL;
+                    }
+
+                    if (gid == tileset->firstgid + 1) {
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12, pos.y + 12, 24, 24, STATIC);
+                        c1->ctype = ColliderType::WALL;
+                    }
+                   
+                }
+            }
+        }
+        mapLayerItem = mapLayerItem->next;
+
+    }
+
+    return true;
+  
 }
 
 Properties::Property* Properties::GetProperty(const char* name)
