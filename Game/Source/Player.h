@@ -46,6 +46,7 @@ public:
 	bool isAttacking = false;
 	bool isCrouching = false;
 	bool _isCrouching = false;
+	bool isDying = false;
 
 	Animation* currentAnim;
 
@@ -56,6 +57,7 @@ private:
 	Animation dashAnim;
 	Animation crouchAnim;
 	Animation attackAnim;
+	Animation dieAnim;
 };
 
 #endif // __PLAYER_H__
