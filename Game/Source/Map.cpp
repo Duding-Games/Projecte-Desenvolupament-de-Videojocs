@@ -304,10 +304,14 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     layer->width = node.attribute("width").as_int();
     layer->height = node.attribute("height").as_int();
 
-   /* if (node.attribute("parallaxx")) {
-        layer->parallaxFactor = nodenode.attribute("height").as_float();
+    if (node.attribute("parallaxx")) {
+        layer->parallaxFactor = node.attribute("parallaxx").as_float();
     }
-    */
+
+    else {
+        layer->parallaxFactor = 1.0f;
+    }
+    
 
     LoadProperties(node, layer->properties);
 

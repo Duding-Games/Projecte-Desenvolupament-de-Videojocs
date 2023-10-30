@@ -317,7 +317,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::WALL:
-		isDying = true;
 		LOG("Collision WALL");
 		break;
 
