@@ -143,13 +143,13 @@ bool Player::Update(float dt)
 		isCrouching = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
 		vel = b2Vec2(-speed*dt, pbody->body->GetLinearVelocity().y);
 		currentAnim = &runAnim;
 		isFacingLeft = true;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing) {
 		vel = b2Vec2(speed*dt, pbody->body->GetLinearVelocity().y);
 		currentAnim = &runAnim;
 		isFacingLeft = false;
