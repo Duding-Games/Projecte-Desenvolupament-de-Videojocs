@@ -132,99 +132,132 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
-
+	//Godmode
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		godmode = !godmode;
+	}
 	//Movement
+	if (godmode == true) {
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+			vel = b2Vec2(0, -speed * dt);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			vel = b2Vec2(0, speed *dt);
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//
-	}
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		currentAnim = &crouchAnim;
-		isCrouching = true;
-	}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
+			vel = b2Vec2(-speed * dt,0);
+			isFacingLeft = true;
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
-		vel = b2Vec2(-speed*dt, pbody->body->GetLinearVelocity().y);
-		currentAnim = &runAnim;
-		isFacingLeft = true;
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing) {
-		vel = b2Vec2(speed*dt, pbody->body->GetLinearVelocity().y);
-		currentAnim = &runAnim;
-		isFacingLeft = false;
-	}
-	//Jump
-	pbody->body->SetLinearVelocity(vel);
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
-		if (isJumping == false) {
-			vel.y = 0;
-			pbody->body->SetLinearVelocity(vel);
-			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.11f), pbody->body->GetWorldCenter(), true);
-			isJumping = true;
-			
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing) {
+			vel = b2Vec2(speed * dt, 0);
+			isFacingLeft = false;
 		}
 		
 	}
-	//Dash
-	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
-		if (!isDashing) {
-			timerDash.Start();
+
+	//Jump
+
+	
+	if (godmode == false) {
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
+			vel = b2Vec2(-speed * dt, pbody->body->GetLinearVelocity().y);
+			currentAnim = &runAnim;
+			isFacingLeft = true;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing) {
+			vel = b2Vec2(speed * dt, pbody->body->GetLinearVelocity().y);
+			currentAnim = &runAnim;
+			isFacingLeft = false;
+		}
+
+		pbody->body->SetLinearVelocity(vel);
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+			if (isJumping == false) {
+				vel.y = 0;
+				pbody->body->SetLinearVelocity(vel);
+				pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.11f), pbody->body->GetWorldCenter(), true);
+				isJumping = true;
+
+			}
+
+		}
+		//Dash
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+			if (!isDashing) {
+				timerDash.Start();
+				if (isFacingLeft) {
+					vel = b2Vec2(-speedDash * dt, 0);
+					pbody->body->SetLinearVelocity(vel);
+					currentAnim = &dashAnim;
+				}
+				else {
+					vel = b2Vec2(speedDash * dt, 0);
+					pbody->body->SetLinearVelocity(vel);
+					currentAnim = &dashAnim;
+				}
+				pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(7);
+				isDashing = true;
+				offsetTexY = 12;
+			}
+
+		}
+		if (timerDash.ReadMSec() < 500 && isDashing) {
 			if (isFacingLeft) {
 				vel = b2Vec2(-speedDash * dt, 0);
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
 			else {
-				vel = b2Vec2(speedDash * dt,0);
+				vel = b2Vec2(speedDash * dt, 0);
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
-			pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(7);
+
 			isDashing = true;
-			offsetTexY = 12;
 		}
-		
-	}
-	if (timerDash.ReadMSec() < 500 && isDashing) {
-		if (isFacingLeft) {
-			vel = b2Vec2(-speedDash * dt,0);
-			pbody->body->SetLinearVelocity(vel);
-			currentAnim = &dashAnim;
+		//Attack
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
+			currentAnim = &attackAnim;
+			isAttacking = true;
 		}
-		else {
-			vel = b2Vec2(speedDash * dt,0);
-			pbody->body->SetLinearVelocity(vel);
-			currentAnim = &dashAnim;
+		//Die
+		if (isDying) {
+			currentAnim = &dieAnim;
+			position.x = 200;
+			position.y = 460;
 		}
 
-		isDashing = true;
-	}
-	//Attack
-	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
-		currentAnim = &attackAnim;
-		isAttacking = true;
-	}
-	//Die
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) {
-		currentAnim = &dieAnim;
-		isDying = true;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_UP) {
-		isDying = false;
-		dieAnim.Reset();
-	}
-	
-	//Dash
-	if (timerDash.ReadMSec() > 500 && isDashing) { 
-		
-		isDashing = false; 
-		offsetTexY = 6;
-		pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
 
-	}
+		//Dash
+		if (timerDash.ReadMSec() > 500 && isDashing) {
 
+			isDashing = false;
+			offsetTexY = 6;
+			pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
+			//Dash
+			if (timerDash.ReadMSec() > 500 && isDashing) {
+
+				isDashing = false;
+				offsetTexY = 6;
+				pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
+				//Dash
+				if (timerDash.ReadMSec() > 500 && isDashing) {
+
+					isDashing = false;
+					offsetTexY = 6;
+					pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
+
+				}
+
+			}
+
+		}
+	}
 	if (dashAnim.HasFinished()) { isDashing = false; };
 	if (isDashing == false) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
@@ -284,18 +317,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::WALL:
+		isDying = true;
 		LOG("Collision WALL");
 		break;
 
 	case ColliderType::PLATFORM:
+		isDying = false;
 		isJumping = false;
 		LOG("Collision PLATFORM");
+		break;
+
+	case ColliderType::SPIKES:
+		isDying = true;
+		LOG("Collision SPIKES");
 		break;
 
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
 	}
+
 }
 
 bool Player::isOutOfBounds(int x, int y) {

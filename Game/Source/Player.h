@@ -49,6 +49,8 @@ public:
 	bool _isCrouching = false;
 	bool isDying = false;
 
+	bool godmode = false;
+
 	Animation* currentAnim;
 
 private:
