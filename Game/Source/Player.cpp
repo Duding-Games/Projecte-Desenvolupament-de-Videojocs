@@ -181,9 +181,11 @@ bool Player::Update(float dt)
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
-			
+			/*pbody->body->GetWorld()->DestroyBody(pbody->body);
+			pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);*/
+			pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(7);
 			isDashing = true;
-			
+			offsetTexY = 12;
 		}
 		
 	}
@@ -226,7 +228,13 @@ bool Player::Update(float dt)
 	//	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
 	//}
 	//LO DEL DASH CON TIMER DA MUCHOS PROBLEMAS
-	if (timerDash.ReadMSec() > 500) { isDashing = false; }
+	if (timerDash.ReadMSec() > 500 && isDashing) { 
+		
+		isDashing = false; 
+		offsetTexY = 6;
+		pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
+
+	}
 
 	if (dashAnim.HasFinished()) { isDashing = false; };
 	if (isDashing == false) { dashAnim.Reset(); }
@@ -262,27 +270,27 @@ bool Player::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x - 8, position.y-6, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 8, position.y- offsetTexY, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x-8, position.y-6, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x-8, position.y- offsetTexY, SDL_FLIP_NONE, &rect);
 	}
 	
 	//TODO VAYA CACA
-	//if (currentAnim = &dashAnim) {
-	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//	pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
-	//	pbody->listener = this;
-	//	pbody->ctype = ColliderType::PLAYER;
-	//	pbody->body->SetFixedRotation(false);
-	//}
-	//else {
-	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
-	//	pbody->listener = this;
-	//	pbody->ctype = ColliderType::PLAYER;
-	//	pbody->body->SetFixedRotation(false);
-	//}
+	/*if (currentAnim = &dashAnim) {
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
+		pbody->listener = this;
+		pbody->ctype = ColliderType::PLAYER;
+		pbody->body->SetFixedRotation(false);
+	}
+	else {
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+		pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
+		pbody->listener = this;
+		pbody->ctype = ColliderType::PLAYER;
+		pbody->body->SetFixedRotation(false);
+	}*/
 
 	return true;
 }

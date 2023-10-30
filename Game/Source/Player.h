@@ -40,6 +40,7 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 	int pickCoinFxId;
+	int offsetTexY = 6;
 	bool isJumping = false;
 	bool isFacingLeft = false;
 	bool isDashing = false;
