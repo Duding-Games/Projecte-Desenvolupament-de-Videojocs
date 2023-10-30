@@ -161,7 +161,7 @@ bool Player::Update(float dt)
 		if (isJumping == false) {
 			vel.y = 0;
 			pbody->body->SetLinearVelocity(vel);
-			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.13f), pbody->body->GetWorldCenter(), true);
+			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.11f), pbody->body->GetWorldCenter(), true);
 			isJumping = true;
 			
 		}
