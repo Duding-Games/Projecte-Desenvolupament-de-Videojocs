@@ -48,9 +48,9 @@
  <tileset firstgid="3487" name="FONS 3" tilewidth="23" tileheight="23" tilecount="1575" columns="63">
   <image source="background3.png" width="1450" height="575"/>
  </tileset>
- <layer id="14" name="ARBOL1" width="150" height="25">
+ <layer id="14" name="ARBOL1" width="150" height="25" parallaxx="0.2" parallaxy="0.2">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
@@ -3806,9 +3806,9 @@
    <tile gid="1878"/>
   </data>
  </layer>
- <layer id="15" name="arbol2" width="150" height="25">
+ <layer id="15" name="arbol2" width="150" height="25" parallaxx="0.5" parallaxy="0.5">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
@@ -7564,9 +7564,9 @@
    <tile gid="3457"/>
   </data>
  </layer>
- <layer id="16" name="ARBOL3" width="150" height="25">
+ <layer id="16" name="ARBOL3" width="150" height="25" parallaxx="0.8" parallaxy="0.8">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="Draw" type="bool" value="true"/>
    <property name="Navigation" type="bool" value="false"/>
   </properties>
   <data>
