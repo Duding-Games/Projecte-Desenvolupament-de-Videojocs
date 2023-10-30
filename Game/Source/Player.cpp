@@ -161,7 +161,7 @@ bool Player::Update(float dt)
 		if (isJumping == false) {
 			vel.y = 0;
 			pbody->body->SetLinearVelocity(vel);
-			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.20f), pbody->body->GetWorldCenter(), true);
+			pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.13f), pbody->body->GetWorldCenter(), true);
 			isJumping = true;
 			
 		}
@@ -172,12 +172,12 @@ bool Player::Update(float dt)
 		if (!isDashing) {
 			timerDash.Start();
 			if (isFacingLeft) {
-				vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+				vel = b2Vec2(-speedDash * dt, 0);
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
 			else {
-				vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+				vel = b2Vec2(speedDash * dt,0);
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
@@ -189,12 +189,12 @@ bool Player::Update(float dt)
 	}
 	if (timerDash.ReadMSec() < 500 && isDashing) {
 		if (isFacingLeft) {
-			vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
+			vel = b2Vec2(-speedDash * dt,0);
 			pbody->body->SetLinearVelocity(vel);
 			currentAnim = &dashAnim;
 		}
 		else {
-			vel = b2Vec2(speedDash * dt, pbody->body->GetLinearVelocity().y);
+			vel = b2Vec2(speedDash * dt,0);
 			pbody->body->SetLinearVelocity(vel);
 			currentAnim = &dashAnim;
 		}
