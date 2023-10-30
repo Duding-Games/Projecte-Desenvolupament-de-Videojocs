@@ -24,17 +24,17 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 100 ,0 , 50, 37 });
 	idleAnim.PushBack({ 150 ,0 , 50, 37 });
 	idleAnim.speed = 0.1f;
-	idleAnim.loop;
+	
 
 	//run
 
-	runAnim.PushBack({ 50,40,50,37 });
-	runAnim.PushBack({ 100,40,50,37 });
-	runAnim.PushBack({ 150,40,50,37 });
-	runAnim.PushBack({ 200,40,50,37 });
-	runAnim.PushBack({ 250,40,50,37 });
+	runAnim.PushBack({ 50,37,50,37 });
+	runAnim.PushBack({ 100,37,50,37 });
+	runAnim.PushBack({ 150,37,50,37 });
+	runAnim.PushBack({ 200,37,50,37 });
+	runAnim.PushBack({ 250,37,50,37 });
 	runAnim.speed = 0.1;
-	runAnim.loop;
+
 
 	//jump
 	jumpAnim.PushBack({ 50, 75, 50,37 });
@@ -45,39 +45,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.PushBack({ 300, 75, 50,37 });
 	jumpAnim.PushBack({ 0, 120, 50,37 });
 	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
+	jumpAnim.loop = false;
 	jumpAnim.speed = 0.17f;
 
 	//crouch
@@ -114,6 +82,18 @@ Player::Player() : Entity(EntityType::PLAYER)
 	attackAnim.PushBack({ 50, 296, 50,37 });
 	attackAnim.PushBack({ 100, 296, 50,37 });
 	attackAnim.speed = 0.15f;
+
+	//die
+	dieAnim.PushBack({ 100, 333, 50,37 });
+	dieAnim.PushBack({ 150, 333, 50,37 });
+	dieAnim.PushBack({ 200, 333, 50,37 });
+	dieAnim.PushBack({ 250, 333, 50,37 });
+	dieAnim.PushBack({ 150, 333, 50,37 });
+	dieAnim.PushBack({ 200, 333, 50,37 });
+	dieAnim.PushBack({ 250, 333, 50,37 });
+	dieAnim.PushBack({ 200, 333, 50,37 });
+	dieAnim.speed = 0.07f;
+	dieAnim.loop = false;
 }
 
 Player::~Player() {
@@ -135,7 +115,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetFixedRotation(false);
@@ -153,6 +133,7 @@ bool Player::Update(float dt)
 	vel.y = pbody->body->GetLinearVelocity().y;
 
 
+	//Movement
 
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 		//
@@ -173,7 +154,7 @@ bool Player::Update(float dt)
 		currentAnim = &runAnim;
 		isFacingLeft = false;
 	}
-
+	//Jump
 	pbody->body->SetLinearVelocity(vel);
 
 	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
@@ -186,7 +167,7 @@ bool Player::Update(float dt)
 		}
 		
 	}
-	
+	//Dash
 	if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
 		if (!isDashing) {
 			timerDash.Start();
@@ -201,7 +182,7 @@ bool Player::Update(float dt)
 				currentAnim = &dashAnim;
 			}
 			
-			isDashing;
+			isDashing = true;
 			
 		}
 		
@@ -218,14 +199,24 @@ bool Player::Update(float dt)
 			currentAnim = &dashAnim;
 		}
 
-		isDashing;
+		isDashing = true;
 	}
-
+	//Attack
 	if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
 		currentAnim = &attackAnim;
-		isAttacking;
+		isAttacking = true;
+	}
+	//Die
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_REPEAT) {
+		currentAnim = &dieAnim;
+		isDying = true;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_R) == KEY_UP) {
+		isDying = false;
+		dieAnim.Reset();
 	}
 	
+	//
 	//if (isCrouching != _isCrouching && isCrouching == true) {
 	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
 	//	pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
@@ -234,8 +225,11 @@ bool Player::Update(float dt)
 	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
 	//	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
 	//}
-	if (timerDash.ReadMSec() > 500) { !isDashing; }
-	if (!isDashing) { dashAnim.Reset(); }
+	//LO DEL DASH CON TIMER DA MUCHOS PROBLEMAS
+	//if (timerDash.ReadMSec() > 500) { isDashing = false; }
+
+	if (dashAnim.HasFinished()) { isDashing = false; };
+	if (isDashing == false) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
 
@@ -249,7 +243,7 @@ bool Player::Update(float dt)
 	currentAnim->Update();
 	_isCrouching = isCrouching;
 
-	//Cam Movement
+	//TODO Cam Movement
 	uint windowH;
 	uint windowW;
 	app->win->GetWindowSize(windowW, windowH);
@@ -268,11 +262,28 @@ bool Player::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x - 8, position.y-4, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 8, position.y-6, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x-8, position.y-4, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x-8, position.y-6, SDL_FLIP_NONE, &rect);
 	}
+	
+	//TODO VAYA CACA
+	//if (currentAnim = &dashAnim) {
+	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//	pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
+	//	pbody->listener = this;
+	//	pbody->ctype = ColliderType::PLAYER;
+	//	pbody->body->SetFixedRotation(false);
+	//}
+	//else {
+	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	//	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
+	//	pbody->listener = this;
+	//	pbody->ctype = ColliderType::PLAYER;
+	//	pbody->body->SetFixedRotation(false);
+	//}
+
 	return true;
 }
 bool Player::CleanUp()
