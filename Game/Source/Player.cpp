@@ -187,7 +187,7 @@ bool Player::Update(float dt)
 		}
 		
 	}
-	if (timerDash.ReadMSec() < 500) {
+	if (timerDash.ReadMSec() < 500 && isDashing) {
 		if (isFacingLeft) {
 			vel = b2Vec2(-speedDash * dt, pbody->body->GetLinearVelocity().y);
 			pbody->body->SetLinearVelocity(vel);
@@ -226,7 +226,7 @@ bool Player::Update(float dt)
 	//	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
 	//}
 	//LO DEL DASH CON TIMER DA MUCHOS PROBLEMAS
-	//if (timerDash.ReadMSec() > 500) { isDashing = false; }
+	if (timerDash.ReadMSec() > 500) { isDashing = false; }
 
 	if (dashAnim.HasFinished()) { isDashing = false; };
 	if (isDashing == false) { dashAnim.Reset(); }
