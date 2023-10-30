@@ -215,6 +215,13 @@ bool Player::Update(float dt)
 		isDying = false;
 		dieAnim.Reset();
 	}
+
+	//GodMode
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
+		GRAVITY_Y * 0;
+		pbody->body->SetActive(false);
+
+	}
 	
 	//Dash
 	if (timerDash.ReadMSec() > 500 && isDashing) { 
