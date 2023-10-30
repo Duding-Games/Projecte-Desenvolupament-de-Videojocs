@@ -65,7 +65,8 @@ bool Map::Update(float dt)
                         pos.x,
                         pos.y,
                         SDL_FLIP_NONE,
-                        &r);
+                        &r,
+                        mapLayerItem->data->parallaxFactor);
                 }
             }
         }
@@ -302,6 +303,11 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
     layer->name = node.attribute("name").as_string();
     layer->width = node.attribute("width").as_int();
     layer->height = node.attribute("height").as_int();
+
+   /* if (node.attribute("parallaxx")) {
+        layer->parallaxFactor = nodenode.attribute("height").as_float();
+    }
+    */
 
     LoadProperties(node, layer->properties);
 
