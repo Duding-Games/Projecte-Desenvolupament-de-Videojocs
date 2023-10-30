@@ -373,14 +373,14 @@ bool Map::LoadCollisions(std::string collisionLayer)
                     SDL_Rect r = tileset->GetTileRect(gid);
                     iPoint pos = MapToWorld(x, y);
                     if (gid == tileset->firstgid + 0) {
-                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12, pos.y + 1, 24, 1, STATIC);
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 11.5, pos.y + 1, 23, 1, STATIC);
                         c1->ctype = ColliderType::PLATFORM;
-                        PhysBody* c2 = app->physics->CreateRectangle(pos.x + 12, pos.y + 13, 24, 23, STATIC);
+                        PhysBody* c2 = app->physics->CreateRectangle(pos.x + 11.5, pos.y + 12, 23, 23, STATIC);
                         c2->ctype = ColliderType::WALL;
                     }
 
                     if (gid == tileset->firstgid + 1) {
-                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12, pos.y + 12, 24, 24, STATIC);
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 11, pos.y + 12, 23, 23, STATIC);
                         c1->ctype = ColliderType::WALL;
                     }
                    

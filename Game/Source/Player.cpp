@@ -181,8 +181,6 @@ bool Player::Update(float dt)
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
-			/*pbody->body->GetWorld()->DestroyBody(pbody->body);
-			pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);*/
 			pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(7);
 			isDashing = true;
 			offsetTexY = 12;
@@ -218,16 +216,7 @@ bool Player::Update(float dt)
 		dieAnim.Reset();
 	}
 	
-	//
-	//if (isCrouching != _isCrouching && isCrouching == true) {
-	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//	pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
-	//}
-	//else if (isCrouching != _isCrouching && isCrouching == false){
-	//	pbody->body->GetWorld()->DestroyBody(pbody->body);
-	//	pbody = app->physics->CreateCircle(position.x, position.y + 16, 16, bodyType::DYNAMIC);
-	//}
-	//LO DEL DASH CON TIMER DA MUCHOS PROBLEMAS
+	//Dash
 	if (timerDash.ReadMSec() > 500 && isDashing) { 
 		
 		isDashing = false; 
@@ -275,22 +264,6 @@ bool Player::PostUpdate() {
 	else {
 		app->render->DrawTexture(texture, position.x-8, position.y- offsetTexY, SDL_FLIP_NONE, &rect);
 	}
-	
-	//TODO VAYA CACA
-	/*if (currentAnim = &dashAnim) {
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		pbody = app->physics->CreateCircle(position.x, position.y + 24, 8, bodyType::DYNAMIC);
-		pbody->listener = this;
-		pbody->ctype = ColliderType::PLAYER;
-		pbody->body->SetFixedRotation(false);
-	}
-	else {
-		pbody->body->GetWorld()->DestroyBody(pbody->body);
-		pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
-		pbody->listener = this;
-		pbody->ctype = ColliderType::PLAYER;
-		pbody->body->SetFixedRotation(false);
-	}*/
 
 	return true;
 }
