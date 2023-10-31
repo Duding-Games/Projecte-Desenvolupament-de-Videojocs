@@ -282,6 +282,34 @@ bool Player::Update(float dt)
 	app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
 	LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
 	LOG("---------Camera : %d", app->render->camera.x);
+
+	//uint windowH;
+	//uint windowW;
+	//app->win->GetWindowSize(windowW, windowH);
+
+	//int mapLimitX = -20; // Set your map limit for x-coordinate here
+	//int mapLimitY = 0; // Set your map limit for y-coordinate here
+
+	//int cameraX = -position.x * app->win->GetScale() + (windowW / 2);
+	//int cameraY = -position.y * app->win->GetScale() + (windowH / 2);
+
+	//if (cameraX < mapLimitX * app->win->GetScale()) {
+	//	app->render->camera.x = mapLimitX * app->win->GetScale();
+	//}
+	//else {
+	//	app->render->camera.x = cameraX;
+	//}
+
+	//if (cameraY < mapLimitY * app->win->GetScale()) {
+	//	app->render->camera.y = mapLimitY * app->win->GetScale();
+	//}
+	//else {
+	//	app->render->camera.y = cameraY;
+	//}
+
+	//LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
+	//LOG("---------Camera : %d", app->render->camera.x);
+
 	
 
 	return true;
