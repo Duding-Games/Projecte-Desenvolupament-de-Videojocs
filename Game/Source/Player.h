@@ -49,7 +49,7 @@ public:
 	bool _isCrouching = false;
 	bool isDying = false;
 
-	
+	/*b2Vec2 initialPos;*/
 
 	Animation* currentAnim;
 

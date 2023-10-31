@@ -122,6 +122,9 @@ bool Player::Start() {
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
+	/*initialPos = b2Vec2(position.x, position.y), 0;*/
+		
+
 	return true;
 }
 
@@ -173,7 +176,9 @@ bool Player::Update(float dt)
 			currentAnim = &runAnim;
 			isFacingLeft = false;
 		}
-
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+			currentAnim = &crouchAnim;
+		}
 		pbody->body->SetLinearVelocity(vel);
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
@@ -231,13 +236,14 @@ bool Player::Update(float dt)
 		}
 
 		//Die
-		if (isDying) {
+	/*	if (isDying) {
 			currentAnim = &dieAnim;
 			if (dieAnim.HasFinished()) {
-				pbody->body->SetTransform(b2Vec2(200, 460),0);
+				pbody->body->SetTransform(initialPos, 0);
 				isDying = false;
+				dieAnim.Reset();
 			}
-		}
+		}*/
 
 
 		//Dash
@@ -280,8 +286,7 @@ bool Player::Update(float dt)
 	currentAnim->Update();
 	_isCrouching = isCrouching;
 
-	//TODO Cam Movement
-	// 
+	// Cam Movement
 	uint windowH;
 	uint windowW;
 
@@ -394,6 +399,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::SPIKES:
 		isDying = true;
+		isJumping = false;
 		LOG("Collision SPIKES");
 		break;
 

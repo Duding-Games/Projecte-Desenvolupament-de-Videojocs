@@ -393,6 +393,11 @@ bool Map::LoadCollisions(std::string collisionLayer)
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + 11, pos.y + 12, 23, 23, STATIC);
                         c1->ctype = ColliderType::WALL;
                     }
+
+                    if (gid == tileset->firstgid + 2) {
+                        PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12.5, pos.y + 20, 13, 5, STATIC);
+                        c1->ctype = ColliderType::SPIKES;
+                    }
                    
                 }
             }
