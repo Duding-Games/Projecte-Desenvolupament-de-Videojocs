@@ -134,10 +134,10 @@ bool Player::Update(float dt)
 
 	//Godmode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
-		godmode = !godmode;
+		app->godmode = !app->godmode;
 	}
 	//Movement
-	if (godmode == true) {
+	if (app->godmode == true) {
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			vel = b2Vec2(0, -speed * dt);
 		}
@@ -160,7 +160,7 @@ bool Player::Update(float dt)
 	//Jump
 
 	
-	if (godmode == false) {
+	if (app->godmode == false) {
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
 			vel = b2Vec2(-speed * dt, pbody->body->GetLinearVelocity().y);
@@ -277,11 +277,13 @@ bool Player::Update(float dt)
 	uint windowH;
 	uint windowW;
 	app->win->GetWindowSize(windowW, windowH);
+	if (!app->godmode) {
+		app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
+		app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
+		LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
+		LOG("---------Camera : %d", app->render->camera.x);
+	}
 
-	app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
-	app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
-	LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
-	LOG("---------Camera : %d", app->render->camera.x);
 
 	//uint windowH;
 	//uint windowW;

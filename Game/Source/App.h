@@ -84,6 +84,8 @@ public:
 	Map* map;
 	Physics* physics;
 
+	bool godmode = false;
+
 private:
 
 	int argc;
