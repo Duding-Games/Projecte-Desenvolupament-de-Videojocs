@@ -35,10 +35,6 @@ public:
 	bool CleanUp();
 
 private:
-	SDL_Texture* background1;
-	SDL_Texture* background2;
-	SDL_Texture* background3;
-	SDL_Texture* img;
 	float textPosX, textPosY = 0;
 	uint texW, texH;
 	uint windowW, windowH;

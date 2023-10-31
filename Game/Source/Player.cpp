@@ -24,7 +24,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.PushBack({ 100 ,0 , 50, 37 });
 	idleAnim.PushBack({ 150 ,0 , 50, 37 });
 	idleAnim.speed = 0.1f;
-	
+
 
 	//run
 
@@ -54,7 +54,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	crouchAnim.PushBack({ 300, 0, 50,37 });
 	crouchAnim.PushBack({ 0, 37, 50,37 });
 	crouchAnim.speed = 0.07f;
-	
+
 	//dash
 	dashAnim.PushBack({ 150, 111, 50,37 });
 	dashAnim.PushBack({ 200, 111, 50,37 });
@@ -106,7 +106,7 @@ bool Player::Awake() {
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	timerDash = Timer();
-	
+
 	return true;
 }
 
@@ -142,11 +142,11 @@ bool Player::Update(float dt)
 			vel = b2Vec2(0, -speed * dt);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-			vel = b2Vec2(0, speed *dt);
+			vel = b2Vec2(0, speed * dt);
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
-			vel = b2Vec2(-speed * dt,0);
+			vel = b2Vec2(-speed * dt, 0);
 			isFacingLeft = true;
 		}
 
@@ -154,12 +154,12 @@ bool Player::Update(float dt)
 			vel = b2Vec2(speed * dt, 0);
 			isFacingLeft = false;
 		}
-		
+
 	}
 
 	//Jump
 
-	
+
 	if (app->godmode == false) {
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
@@ -225,11 +225,18 @@ bool Player::Update(float dt)
 			currentAnim = &attackAnim;
 			isAttacking = true;
 		}
+
+		if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+			isDying = true;
+		}
+
 		//Die
 		if (isDying) {
 			currentAnim = &dieAnim;
-			position.x = 200;
-			position.y = 460;
+			if (dieAnim.HasFinished()) {
+				pbody->body->SetTransform(b2Vec2(200, 460),0);
+				isDying = false;
+			}
 		}
 
 
@@ -264,7 +271,7 @@ bool Player::Update(float dt)
 	if (isJumping == false) { jumpAnim.Reset(); };
 
 
-	
+
 
 	//Update player position in pixels
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -274,15 +281,45 @@ bool Player::Update(float dt)
 	_isCrouching = isCrouching;
 
 	//TODO Cam Movement
+	// 
 	uint windowH;
 	uint windowW;
+
 	app->win->GetWindowSize(windowW, windowH);
-	if (!app->godmode) {
-		app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
-		app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
-		LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
-		LOG("---------Camera : %d", app->render->camera.x);
+	if (position.x < 255) {
+		app->render->camera.x = -20;
 	}
+	else {
+		app->render->camera.x = -position.x * app->win->GetScale() + (windowW / 2) - 25;
+		
+	}
+	if (position.x > 3156) {
+		app->render->camera.x = -5823;
+	}
+	if (position.y < 120) {
+		app->render->camera.y = 0;
+	}
+	else {
+
+		app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2) - 19;
+	}
+	if (position.y > 438) {
+		app->render->camera.y = -650;
+	}
+	
+	LOG("---------Player X : %d", position.x);
+	LOG("---------Player Y : %d", position.y);
+	LOG("---------Camera : %d", app->render->camera.x);
+	LOG("---------Camera : %d", app->render->camera.y);
+	//uint windowH;
+	//uint windowW;
+	//app->win->GetWindowSize(windowW, windowH);
+	//if (!app->godmode) {
+	//	app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
+	//	app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
+	//	LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
+	//	LOG("---------Camera : %d", app->render->camera.x);
+	//}
 
 
 	//uint windowH;
@@ -312,7 +349,7 @@ bool Player::Update(float dt)
 	//LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
 	//LOG("---------Camera : %d", app->render->camera.x);
 
-	
+
 
 	return true;
 }
@@ -322,10 +359,10 @@ bool Player::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x - 8, position.y- offsetTexY, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 8, position.y - offsetTexY, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x-8, position.y- offsetTexY, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x - 8, position.y - offsetTexY, SDL_FLIP_NONE, &rect);
 	}
 
 	return true;
@@ -351,7 +388,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::PLATFORM:
-		isDying = false;
 		isJumping = false;
 		LOG("Collision PLATFORM");
 		break;
