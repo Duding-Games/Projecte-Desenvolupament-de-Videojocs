@@ -260,6 +260,7 @@ bool Player::Update(float dt)
 				pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
 				isDying = false;
 				dieAnim.Reset();
+				isFacingLeft = false;
 			}
 		}
 
