@@ -131,7 +131,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	currentAnim = &idleAnim;
-
+	
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
@@ -141,6 +141,9 @@ bool Player::Update(float dt)
 	}
 	//Movement
 	if (app->godmode == true) {
+		
+		b2Vec2 vel = b2Vec2(0, 0);
+
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
 			vel = b2Vec2(0, -speed * dt);
 		}
@@ -157,6 +160,8 @@ bool Player::Update(float dt)
 			vel = b2Vec2(speed * dt, 0);
 			isFacingLeft = false;
 		}
+		pbody->body->SetLinearVelocity(vel);
+		pbody->body->SetGravityScale(0);
 
 	}
 
@@ -164,6 +169,8 @@ bool Player::Update(float dt)
 
 
 	if (app->godmode == false) {
+
+		pbody->body->SetGravityScale(1);
 
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
 			vel = b2Vec2(-speed * dt, pbody->body->GetLinearVelocity().y);
