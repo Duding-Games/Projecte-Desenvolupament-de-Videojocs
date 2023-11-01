@@ -7,7 +7,7 @@
   <image source="rock_3.png" width="46" height="23"/>
  </tileset>
  <tileset firstgid="317" name="FONS 1" tilewidth="23" tileheight="23" tilecount="1575" columns="63">
-  <image source="background1.png" width="1450" height="575"/>
+  <image source="background_layer_1.png" width="1450" height="575"/>
  </tileset>
  <tileset firstgid="1892" name="fence_11" tilewidth="23" tileheight="23" tilecount="3" columns="3">
   <image source="fence_11.png" width="69" height="23"/>
@@ -40,10 +40,10 @@
   <image source="Spikes.png" width="46" height="23"/>
  </tileset>
  <tileset firstgid="1910" name="FONS 2" tilewidth="23" tileheight="23" tilecount="1575" columns="63">
-  <image source="background2.png" width="1450" height="575"/>
+  <image source="background_layer_2.png" width="1450" height="575"/>
  </tileset>
  <tileset firstgid="3485" name="FONS 3" tilewidth="23" tileheight="23" tilecount="1575" columns="63">
-  <image source="background3.png" width="1450" height="575"/>
+  <image source="background_layer_3.png" width="1450" height="575"/>
  </tileset>
  <tileset firstgid="5060" name="Colliders" tilewidth="23" tileheight="23" tilecount="15" columns="5">
   <image source="Colliders.png" width="115" height="69"/>
