@@ -34,6 +34,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	Player* GetPLayer();
+
 private:
 	float textPosX, textPosY = 0;
 	uint texW, texH;

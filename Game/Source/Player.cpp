@@ -123,6 +123,8 @@ bool Player::Start() {
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
 	/*initialPos = b2Vec2(position.x, position.y), 0;*/
+
+	initialPos = pbody->body->GetTransform();
 		
 
 	return true;
@@ -134,6 +136,13 @@ bool Player::Update(float dt)
 	
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
+	}
 
 	//Godmode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -162,6 +171,7 @@ bool Player::Update(float dt)
 		}
 		pbody->body->SetLinearVelocity(vel);
 		pbody->body->SetGravityScale(0);
+		pbody->body->GetFixtureList()[0].SetSensor(true);
 
 	}
 
@@ -171,24 +181,25 @@ bool Player::Update(float dt)
 	if (app->godmode == false) {
 
 		pbody->body->SetGravityScale(1);
+		pbody->body->GetFixtureList()[0].SetSensor(false);
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing) {
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing && !isDying) {
 			vel = b2Vec2(-speed * dt, pbody->body->GetLinearVelocity().y);
 			currentAnim = &runAnim;
 			isFacingLeft = true;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing && !isDying) {
 			vel = b2Vec2(speed * dt, pbody->body->GetLinearVelocity().y);
 			currentAnim = &runAnim;
 			isFacingLeft = false;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !isDying) {
 			currentAnim = &crouchAnim;
 		}
 		pbody->body->SetLinearVelocity(vel);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isDying) {
 			if (isJumping == false) {
 				vel.y = 0;
 				pbody->body->SetLinearVelocity(vel);
@@ -199,7 +210,7 @@ bool Player::Update(float dt)
 
 		}
 		//Dash
-		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN) {
+		if (app->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN && !isDying) {
 			if (!isDashing) {
 				timerDash.Start();
 				if (isFacingLeft) {
@@ -233,7 +244,7 @@ bool Player::Update(float dt)
 			isDashing = true;
 		}
 		//Attack
-		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT) {
+		if (app->input->GetKey(SDL_SCANCODE_Q) == KEY_REPEAT && !isDying) {
 			currentAnim = &attackAnim;
 			isAttacking = true;
 		}
@@ -243,14 +254,14 @@ bool Player::Update(float dt)
 		}
 
 		//Die
-	/*	if (isDying) {
+		if (isDying) {
 			currentAnim = &dieAnim;
 			if (dieAnim.HasFinished()) {
-				pbody->body->SetTransform(initialPos, 0);
+				pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
 				isDying = false;
 				dieAnim.Reset();
 			}
-		}*/
+		}
 
 
 		//Dash
@@ -298,31 +309,35 @@ bool Player::Update(float dt)
 	uint windowW;
 
 	app->win->GetWindowSize(windowW, windowH);
-	if (position.x < 255) {
-		app->render->camera.x = -20;
-	}
-	else {
-		app->render->camera.x = -position.x * app->win->GetScale() + (windowW / 2) - 25;
-		
-	}
-	if (position.x > 3156) {
-		app->render->camera.x = -5823;
-	}
-	if (position.y < 120) {
-		app->render->camera.y = 0;
-	}
-	else {
-
-		app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2) - 19;
-	}
-	if (position.y > 438) {
-		app->render->camera.y = -650;
-	}
 	
-	LOG("---------Player X : %d", position.x);
-	LOG("---------Player Y : %d", position.y);
-	LOG("---------Camera : %d", app->render->camera.x);
-	LOG("---------Camera : %d", app->render->camera.y);
+	if (!app->godmode) {
+		if (position.x < 255) {
+			app->render->camera.x = -20;
+		}
+		else {
+			app->render->camera.x = -position.x * app->win->GetScale() + (windowW / 2) - 25;
+
+		}
+		if (position.x > 3156) {
+			app->render->camera.x = -5823;
+		}
+		if (position.y < 120) {
+			app->render->camera.y = 0;
+		}
+		else {
+
+			app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2) - 19;
+		}
+		if (position.y > 438) {
+			app->render->camera.y = -650;
+		}
+	}
+
+	
+	//LOG("---------Player X : %d", position.x);
+	//LOG("---------Player Y : %d", position.y);
+	//LOG("---------Camera : %d", app->render->camera.x);
+	//LOG("---------Camera : %d", app->render->camera.y);
 	//uint windowH;
 	//uint windowW;
 	//app->win->GetWindowSize(windowW, windowH);

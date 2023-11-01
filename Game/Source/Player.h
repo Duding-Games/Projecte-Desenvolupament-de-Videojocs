@@ -8,6 +8,8 @@
 #include "PerfTimer.h"
 #include "Timer.h"
 
+#include "Physics.h"
+
 struct SDL_Texture;
 
 class Player : public Entity
@@ -49,8 +51,6 @@ public:
 	bool _isCrouching = false;
 	bool isDying = false;
 
-	/*b2Vec2 initialPos;*/
-
 	Animation* currentAnim;
 
 private:
@@ -61,6 +61,8 @@ private:
 	Animation crouchAnim;
 	Animation attackAnim;
 	Animation dieAnim;
+
+	b2Transform initialPos;
 };
 
 #endif // __PLAYER_H__
