@@ -40,15 +40,18 @@
   <image source="Colliders.png" width="115" height="69"/>
  </tileset>
  <tileset firstgid="350" name="FONS 3" tilewidth="23" tileheight="23" tilecount="5000" columns="200">
-  <image source="background_layer_31.png" width="4600" height="575"/>
+  <image source="background3.png" width="4600" height="575"/>
  </tileset>
  <tileset firstgid="5350" name="FONS 2" tilewidth="23" tileheight="23" tilecount="5000" columns="200">
-  <image source="background_layer_21.png" width="4600" height="575"/>
+  <image source="background2.png" width="4600" height="575"/>
  </tileset>
  <tileset firstgid="10350" name="FONS 1" tilewidth="23" tileheight="23" tilecount="5000" columns="200">
-  <image source="background_layer_11.png" width="4600" height="575"/>
+  <image source="background1.png" width="4600" height="575"/>
  </tileset>
  <layer id="21" name="FONS 1" width="150" height="25" parallaxx="0.2" parallaxy="0.2">
+  <properties>
+   <property name="Draw" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="10350"/>
    <tile gid="10351"/>
@@ -3803,6 +3806,9 @@
   </data>
  </layer>
  <layer id="20" name="FONS 2" width="150" height="25" parallaxx="0.5" parallaxy="0.5">
+  <properties>
+   <property name="Draw" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="5350"/>
    <tile gid="5351"/>
@@ -7557,6 +7563,9 @@
   </data>
  </layer>
  <layer id="19" name="FONS 3" width="150" height="25" parallaxx="0.8" parallaxy="0.8">
+  <properties>
+   <property name="Draw" type="bool" value="true"/>
+  </properties>
   <data>
    <tile gid="350"/>
    <tile gid="351"/>
