@@ -48,7 +48,6 @@ public:
 	bool isDashing = false;
 	bool isAttacking = false;
 	bool isCrouching = false;
-	bool _isCrouching = false;
 	bool isDying = false;
 
 	Animation* currentAnim;

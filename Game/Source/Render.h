@@ -7,6 +7,8 @@
 
 #include "SDL/include/SDL.h"
 
+#define VSYNC false
+
 class Render : public Module
 {
 public:

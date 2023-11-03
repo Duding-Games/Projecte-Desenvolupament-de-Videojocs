@@ -5,7 +5,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-#define VSYNC true
+
 
 Render::Render() : Module()
 {

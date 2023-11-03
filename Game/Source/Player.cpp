@@ -18,12 +18,12 @@ Player::Player() : Entity(EntityType::PLAYER)
 	name.Create("Player");
 
 	//idle
-
-	idleAnim.PushBack({ 0 ,0 , 50, 37 });
+	idleAnim.LoadAnimations("idleAnim");
+	/*idleAnim.PushBack({ 0 ,0 , 50, 37 });
 	idleAnim.PushBack({ 50 ,0 , 50, 37 });
 	idleAnim.PushBack({ 100 ,0 , 50, 37 });
 	idleAnim.PushBack({ 150 ,0 , 50, 37 });
-	idleAnim.speed = 0.1f;
+	idleAnim.speed = 0.1f;*/
 
 
 	//run
@@ -133,6 +133,7 @@ bool Player::Start() {
 bool Player::Update(float dt)
 {
 	currentAnim = &idleAnim;
+	isCrouching = false;
 	
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
@@ -182,21 +183,23 @@ bool Player::Update(float dt)
 
 		pbody->body->SetGravityScale(1);
 		pbody->body->GetFixtureList()[0].SetSensor(false);
-
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing && !isDying) {
+		
+		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !isDying) {
+			currentAnim = &crouchAnim;
+			isCrouching = true;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && !isDashing && !isDying &&!isCrouching) {
 			vel = b2Vec2(-speed * dt, pbody->body->GetLinearVelocity().y);
 			currentAnim = &runAnim;
 			isFacingLeft = true;
 		}
 
-		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing && !isDying) {
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && !isDashing && !isDying && !isCrouching) {
 			vel = b2Vec2(speed * dt, pbody->body->GetLinearVelocity().y);
 			currentAnim = &runAnim;
 			isFacingLeft = false;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !isDying) {
-			currentAnim = &crouchAnim;
-		}
+		
 		pbody->body->SetLinearVelocity(vel);
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !isDying) {
@@ -303,7 +306,7 @@ bool Player::Update(float dt)
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	currentAnim->Update();
-	_isCrouching = isCrouching;
+	
 
 	// Cam Movement
 	uint windowH;

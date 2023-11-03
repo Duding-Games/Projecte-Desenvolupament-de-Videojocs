@@ -206,8 +206,9 @@ void App::FinishUpdate()
 
 	// Shows the time measurements in the window title
 	static char title[256];
-	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u ",
-		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount);
+	#define formatBool(b) ((b) ? "On" : "Off")
+	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u  Vsync: %s ",
+		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount, formatBool(VSYNC));
 
 	app->win->SetTitle(title);
 }

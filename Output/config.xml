@@ -1,31 +1,38 @@
 <config>
-  <app>
-    <title>Game Development template</title>
-    <maxFrameDuration value="16"/>
-  </app>
+	<app>
+		<title>Game Development template</title>
+		<maxFrameDuration value="16"/>
+	</app>
 
-  <renderer>
-    <vsync value="true"/>
-  </renderer>
+	<renderer>
+		<vsync value="true"/>
+	</renderer>
 
-  <window>
-    <resolution width="1024" height="500" scale="2"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
-  </window>
+	<window>
+		<resolution width="1024" height="500" scale="2"/>
+		<fullscreen value="false"/>
+		<borderless value="false"/>
+		<resizable value="false"/>
+		<fullscreen_window value="false"/>
+	</window>
 
-  <audio>
-    <music volume="128"/>
-    <fx volume="128"/>
-  </audio>
+	<audio>
+		<music volume="128"/>
+		<fx volume="128"/>
+	</audio>
 
-  <scene>
-    <map path="Assets/Maps/" name="MapGameTiled.tmx"/>
-    <player x="200" y="460" texturepath="Assets/Textures/player1.png"/>
-   
-	
-  </scene>
-  
+	<scene>
+		<map path="Assets/Maps/" name="MapGameTiled.tmx"/>
+		<player x="200" y="460" texturepath="Assets/Textures/player1.png"/>
+
+
+	</scene>
+	<animations>
+		<idleAnim loop="true" speed="0.1">
+			<frame x="0" y="0" w="50" h="37"/>
+			<frame x="50" y="0" w="50" h="37"/>
+			<frame x="100" y="0" w="50" h="37"/>
+			<frame x="150" y="0" w="50" h="37"/>
+		</idleAnim>
+	</animations>
 </config>
