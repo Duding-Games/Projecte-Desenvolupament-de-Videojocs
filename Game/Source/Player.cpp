@@ -298,7 +298,11 @@ bool Player::Update(float dt)
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
 
+	//Vsync
 
+	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+		app->render->vsync = !app->render->vsync;
+	}
 
 
 	//Update player position in pixels

@@ -208,7 +208,7 @@ void App::FinishUpdate()
 	static char title[256];
 	#define formatBool(b) ((b) ? "On" : "Off")
 	sprintf_s(title, 256, "%s: Av.FPS: %.2f Last sec frames: %i Last dt: %.3f Time since startup: %I32u Frame Count: %I64u  Vsync: %s ",
-		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount, formatBool(VSYNC));
+		gameTitle.GetString(), averageFps, framesPerSecond, dt, secondsSinceStartup, frameCount, formatBool(app->render->vsync));
 
 	app->win->SetTitle(title);
 }

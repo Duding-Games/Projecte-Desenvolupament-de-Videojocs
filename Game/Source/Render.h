@@ -7,8 +7,6 @@
 
 #include "SDL/include/SDL.h"
 
-#define VSYNC false
-
 class Render : public Module
 {
 public:
@@ -43,6 +41,10 @@ public:
 
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
+
+	//VSYNC
+
+	bool vsync;
 
 public:
 
