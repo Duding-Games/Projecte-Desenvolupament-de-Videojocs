@@ -27,13 +27,13 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 
 	//run
-
-	runAnim.PushBack({ 50,37,50,37 });
-	runAnim.PushBack({ 100,37,50,37 });
-	runAnim.PushBack({ 150,37,50,37 });
-	runAnim.PushBack({ 200,37,50,37 });
-	runAnim.PushBack({ 250,37,50,37 });
-	runAnim.speed = 0.1;
+	runAnim.LoadAnimations("runAnim");
+	//runAnim.PushBack({ 50,37,50,37 });
+	//runAnim.PushBack({ 100,37,50,37 });
+	//runAnim.PushBack({ 150,37,50,37 });
+	//runAnim.PushBack({ 200,37,50,37 });
+	//runAnim.PushBack({ 250,37,50,37 });
+	//runAnim.speed = 0.1;
 
 
 	//jump

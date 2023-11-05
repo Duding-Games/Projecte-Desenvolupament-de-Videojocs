@@ -34,5 +34,12 @@
 			<frame x="100" y="0" w="50" h="37"/>
 			<frame x="150" y="0" w="50" h="37"/>
 		</idleAnim>
+		<runAnim loop="true" speed="0.1">
+			<frame x="50" y="37" w="50" h="37"/>
+			<frame x="100" y="37" w="50" h="37"/>
+			<frame x="150" y="37" w="50" h="37"/>
+			<frame x="200" y="37" w="50" h="37"/>
+			<frame x="250" y="37" w="50" h="37"/>
+		</runAnim>
 	</animations>
 </config>
