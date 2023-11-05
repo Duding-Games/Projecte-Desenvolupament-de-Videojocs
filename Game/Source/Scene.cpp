@@ -66,6 +66,8 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
+	/*app->audio->LoadMusic("backgroundMusic");*/
+
 	return true;
 }
 

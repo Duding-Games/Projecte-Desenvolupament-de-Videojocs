@@ -128,7 +128,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetFixedRotation(false);
 
-	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
+	pickCoinFxId = app->audio->LoadAudios("pickCoin");
 
 
 	initialPos = pbody->body->GetTransform();
@@ -410,7 +410,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		/*app->entityManager->DestroyEntity(physB->listener);*/
+		app->entityManager->DestroyEntity(physB->listener);
+		physB->body->SetActive(false);
 		break;
 
 	case ColliderType::WALL:

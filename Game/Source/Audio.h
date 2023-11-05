@@ -27,7 +27,9 @@ public:
 	bool PlayMusic(const char* path, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
 
 	//Load audios
-	/*bool LoadAudios(const char* name);*/
+	unsigned int LoadAudios(const char* name);
+
+	bool LoadMusic(const char* name, float fadeTime = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
 	unsigned int LoadFx(const char* path);
@@ -39,6 +41,8 @@ private:
 
 	_Mix_Music* music;
 	List<Mix_Chunk *>	fx;
+	int volumeFx;
+	int volumeMusic;
 };
 
 #endif // __AUDIO_H__
