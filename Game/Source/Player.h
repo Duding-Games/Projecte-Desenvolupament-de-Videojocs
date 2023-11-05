@@ -36,8 +36,9 @@ public:
 
 public:
 	Timer timerDash;
-	float speed = 0.2f;
-	float speedDash = 0.5f;
+	float speed;
+	float speedDash;
+	float jumpForce;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;

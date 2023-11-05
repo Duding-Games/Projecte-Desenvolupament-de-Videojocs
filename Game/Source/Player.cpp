@@ -110,6 +110,9 @@ bool Player::Awake() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	speed = parameters.attribute("speed").as_float();
+	speedDash = parameters.attribute("speedDash").as_float();
+	jumpForce = parameters.attribute("jumpForce").as_float();
 	timerDash = Timer();
 
 	return true;
@@ -212,7 +215,7 @@ bool Player::Update(float dt)
 			if (isJumping == false) {
 				vel.y = 0;
 				pbody->body->SetLinearVelocity(vel);
-				pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * 0.11f), pbody->body->GetWorldCenter(), true);
+				pbody->body->ApplyLinearImpulse(b2Vec2(0, GRAVITY_Y * jumpForce), pbody->body->GetWorldCenter(), true);
 				isJumping = true;
 
 			}

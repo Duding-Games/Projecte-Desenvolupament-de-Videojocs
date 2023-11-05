@@ -23,7 +23,7 @@
 
 	<scene>
 		<map path="Assets/Maps/" name="MapGameTiled.tmx"/>
-		<player x="200" y="460" texturepath="Assets/Textures/player1.png"/>
+		<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
 
 
 	</scene>
