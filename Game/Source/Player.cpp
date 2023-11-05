@@ -127,7 +127,6 @@ bool Player::Start() {
 
 	pickCoinFxId = app->audio->LoadFx("Assets/Audio/Fx/retro-video-game-coin-pickup-38299.ogg");
 
-	/*initialPos = b2Vec2(position.x, position.y), 0;*/
 
 	initialPos = pbody->body->GetTransform();
 		
@@ -178,6 +177,7 @@ bool Player::Update(float dt)
 		pbody->body->SetLinearVelocity(vel);
 		pbody->body->SetGravityScale(0);
 		pbody->body->GetFixtureList()[0].SetSensor(true);
+		isDying = false;
 
 	}
 
@@ -188,6 +188,7 @@ bool Player::Update(float dt)
 
 		pbody->body->SetGravityScale(1);
 		pbody->body->GetFixtureList()[0].SetSensor(false);
+		
 		
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && !isDying) {
 			currentAnim = &crouchAnim;
