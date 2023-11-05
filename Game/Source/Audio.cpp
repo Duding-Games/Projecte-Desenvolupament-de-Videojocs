@@ -138,6 +138,16 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 	return ret;
 }
 
+//bool Audio::LoadAudios(const char* name)
+//{
+//	pugi::xml_document configFile;
+//	pugi::xml_node audio;
+//	pugi::xml_parse_result file = configFile.load_file("config.xml");
+//
+//	audio = configFile.child("config").child("audios").child(name);
+//	return true;
+//}
+
 // Load WAV
 unsigned int Audio::LoadFx(const char* path)
 {
