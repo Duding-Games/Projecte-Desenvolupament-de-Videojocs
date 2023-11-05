@@ -37,7 +37,8 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 
 	//jump
-	jumpAnim.PushBack({ 50, 75, 50,37 });
+	jumpAnim.LoadAnimations("jumpAnim");
+	/*jumpAnim.PushBack({ 50, 75, 50,37 });
 	jumpAnim.PushBack({ 100, 75, 50,37 });
 	jumpAnim.PushBack({ 150, 75, 50,37 });
 	jumpAnim.PushBack({ 200, 75, 50,37 });
@@ -46,25 +47,28 @@ Player::Player() : Entity(EntityType::PLAYER)
 	jumpAnim.PushBack({ 0, 120, 50,37 });
 	jumpAnim.PushBack({ 50, 110, 50,37 });
 	jumpAnim.loop = false;
-	jumpAnim.speed = 0.17f;
+	jumpAnim.speed = 0.17f;*/
 
 	//crouch
-	crouchAnim.PushBack({ 200, 0, 50,37 });
+	crouchAnim.LoadAnimations("crouchAnim");
+	/*crouchAnim.PushBack({ 200, 0, 50,37 });
 	crouchAnim.PushBack({ 250, 0, 50,37 });
 	crouchAnim.PushBack({ 300, 0, 50,37 });
 	crouchAnim.PushBack({ 0, 37, 50,37 });
-	crouchAnim.speed = 0.07f;
+	crouchAnim.speed = 0.07f;*/
 
 	//dash
-	dashAnim.PushBack({ 150, 111, 50,37 });
+	dashAnim.LoadAnimations("dashAnim");
+	/*dashAnim.PushBack({ 150, 111, 50,37 });
 	dashAnim.PushBack({ 200, 111, 50,37 });
 	dashAnim.PushBack({ 250, 111, 50,37 });
 	dashAnim.PushBack({ 300, 111, 50,37 });
 	dashAnim.PushBack({ 0, 148, 50,37 });
-	dashAnim.speed = 0.1f;
+	dashAnim.speed = 0.1f;*/
 
 	//attack
-	attackAnim.PushBack({ 0, 222, 50,37 });
+	attackAnim.LoadAnimations("attackAnim");
+	/*attackAnim.PushBack({ 0, 222, 50,37 });
 	attackAnim.PushBack({ 50, 222, 50,37 });
 	attackAnim.PushBack({ 100, 222, 50,37 });
 	attackAnim.PushBack({ 150, 222, 50,37 });
@@ -81,10 +85,11 @@ Player::Player() : Entity(EntityType::PLAYER)
 	attackAnim.PushBack({ 0, 296, 50,37 });
 	attackAnim.PushBack({ 50, 296, 50,37 });
 	attackAnim.PushBack({ 100, 296, 50,37 });
-	attackAnim.speed = 0.15f;
+	attackAnim.speed = 0.15f;*/
 
 	//die
-	dieAnim.PushBack({ 100, 333, 50,37 });
+	dieAnim.LoadAnimations("dieAnim");
+	/*dieAnim.PushBack({ 100, 333, 50,37 });
 	dieAnim.PushBack({ 150, 333, 50,37 });
 	dieAnim.PushBack({ 200, 333, 50,37 });
 	dieAnim.PushBack({ 250, 333, 50,37 });
@@ -93,7 +98,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 	dieAnim.PushBack({ 250, 333, 50,37 });
 	dieAnim.PushBack({ 200, 333, 50,37 });
 	dieAnim.speed = 0.07f;
-	dieAnim.loop = false;
+	dieAnim.loop = false;*/
 }
 
 Player::~Player() {
