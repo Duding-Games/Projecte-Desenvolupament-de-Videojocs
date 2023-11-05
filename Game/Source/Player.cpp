@@ -280,21 +280,7 @@ bool Player::Update(float dt)
 			offsetTexY = 6;
 			pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
 			//Dash
-			if (timerDash.ReadMSec() > 500 && isDashing) {
-
-				isDashing = false;
-				offsetTexY = 6;
-				pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
-				//Dash
-				if (timerDash.ReadMSec() > 500 && isDashing) {
-
-					isDashing = false;
-					offsetTexY = 6;
-					pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(14);
-
-				}
-
-			}
+			
 
 		}
 	}
@@ -302,7 +288,7 @@ bool Player::Update(float dt)
 	if (isDashing == false) { dashAnim.Reset(); }
 	if (isJumping == true) { currentAnim = &jumpAnim; };
 	if (isJumping == false) { jumpAnim.Reset(); };
-
+	if (isDashing && isJumping) { currentAnim = &dashAnim; };
 	//Vsync
 
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
