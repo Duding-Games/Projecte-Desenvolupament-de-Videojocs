@@ -305,7 +305,7 @@ bool Player::Update(float dt)
 
 	//Vsync
 
-	if (app->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
 		app->render->vsync = !app->render->vsync;
 	}
 

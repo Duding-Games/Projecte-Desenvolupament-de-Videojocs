@@ -1,6 +1,6 @@
 <config>
 	<app>
-		<title>Game Development template</title>
+		<title>Duding Games Platformer Alpha</title>
 		<maxFrameDuration value="16"/>
 	</app>
 
