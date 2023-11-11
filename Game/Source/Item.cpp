@@ -14,18 +14,7 @@ Item::Item() : Entity(EntityType::ITEM)
 {
 	name.Create("item");
 
-	/*coinAnim.LoadAnimations("coinAnim");*/
-
-	coinAnim.PushBack({ 0,0,16,16 });
-	coinAnim.PushBack({ 16,0,16,16 });
-	coinAnim.PushBack({ 32,0,16,16 });
-	coinAnim.PushBack({ 48,0,16,16 });
-	coinAnim.PushBack({ 0,16,16,16 });
-	coinAnim.PushBack({ 16,16,16,16 });
-	coinAnim.PushBack({ 32,16,16,16 });
-	coinAnim.PushBack({ 48,16,16,16 });
-	coinAnim.loop = true;
-	coinAnim.speed = 2;
+	coinAnim.LoadAnimations("coinAnim");
 }
 
 Item::~Item() {}
@@ -53,7 +42,8 @@ bool Item::Start() {
 
 bool Item::Update(float dt)
 {
-	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
+	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics. 
+	coinAnim.Update();
 	currentAnim = &coinAnim;
 	return true;
 }

@@ -29,6 +29,8 @@
 		<map path="Assets/Maps/" name="MapGameTiled.tmx"/>
 		<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
 		<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
+		<item x="235" y="471" texturepath="Assets/Textures/coin.png"/>
+		<item x="240" y="471" texturepath="Assets/Textures/coin.png"/>
 
 
 
@@ -99,7 +101,7 @@
 			<frame x="250" y="333" w="50" h="37"/>
 			<frame x="200" y="333" w="50" h="37"/>
 		</dieAnim>
-		<coinAnim loop="true" speed="0.8">
+		<coinAnim loop="true" speed="0.1">
 			<frame x="0" y="0" w="16" h="16"/>
 			<frame x="16" y="0" w="16" h="16"/>
 			<frame x="32" y="0" w="16" h="16"/>
