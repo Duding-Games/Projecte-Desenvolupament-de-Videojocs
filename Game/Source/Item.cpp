@@ -43,8 +43,8 @@ bool Item::Start() {
 bool Item::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics. 
-	coinAnim.Update();
 	currentAnim = &coinAnim;
+	coinAnim.Update();
 	return true;
 }
 
