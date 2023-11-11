@@ -8,10 +8,24 @@
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
+#include "Animation.h"
 
 Item::Item() : Entity(EntityType::ITEM)
 {
 	name.Create("item");
+
+	/*coinAnim.LoadAnimations("coinAnim");*/
+
+	coinAnim.PushBack({ 0,0,16,16 });
+	coinAnim.PushBack({ 16,0,16,16 });
+	coinAnim.PushBack({ 32,0,16,16 });
+	coinAnim.PushBack({ 48,0,16,16 });
+	coinAnim.PushBack({ 0,16,16,16 });
+	coinAnim.PushBack({ 16,16,16,16 });
+	coinAnim.PushBack({ 32,16,16,16 });
+	coinAnim.PushBack({ 48,16,16,16 });
+	coinAnim.loop = true;
+	coinAnim.speed = 2;
 }
 
 Item::~Item() {}
@@ -29,7 +43,7 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x + 16, position.y + 16, 8, bodyType::KINEMATIC);
+	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 4, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::ITEM;
 	pbody->listener = this;
 	
@@ -40,12 +54,14 @@ bool Item::Start() {
 bool Item::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics.  
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-	
-	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE);
-	
-	
+	currentAnim = &coinAnim;
+	return true;
+}
+
+bool Item::PostUpdate()
+{
+	SDL_Rect rect = currentAnim->GetCurrentFrame();
+	app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_NONE, &rect);
 
 	return true;
 }
@@ -54,3 +70,5 @@ bool Item::CleanUp()
 {
 	return true;
 }
+
+

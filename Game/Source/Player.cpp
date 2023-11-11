@@ -19,73 +19,28 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//idle
 	idleAnim.LoadAnimations("idleAnim");
-	/*idleAnim.PushBack({ 0 ,0 , 50, 37 });
-	idleAnim.PushBack({ 50 ,0 , 50, 37 });
-	idleAnim.PushBack({ 100 ,0 , 50, 37 });
-	idleAnim.PushBack({ 150 ,0 , 50, 37 });
-	idleAnim.speed = 0.1f;*/
+
 
 
 	//run
 	runAnim.LoadAnimations("runAnim");
-	//runAnim.PushBack({ 50,37,50,37 });
-	//runAnim.PushBack({ 100,37,50,37 });
-	//runAnim.PushBack({ 150,37,50,37 });
-	//runAnim.PushBack({ 200,37,50,37 });
-	//runAnim.PushBack({ 250,37,50,37 });
-	//runAnim.speed = 0.1;
+
 
 
 	//jump
 	jumpAnim.LoadAnimations("jumpAnim");
-	/*jumpAnim.PushBack({ 50, 75, 50,37 });
-	jumpAnim.PushBack({ 100, 75, 50,37 });
-	jumpAnim.PushBack({ 150, 75, 50,37 });
-	jumpAnim.PushBack({ 200, 75, 50,37 });
-	jumpAnim.PushBack({ 250, 75, 50,37 });
-	jumpAnim.PushBack({ 300, 75, 50,37 });
-	jumpAnim.PushBack({ 0, 120, 50,37 });
-	jumpAnim.PushBack({ 50, 110, 50,37 });
-	jumpAnim.loop = false;
-	jumpAnim.speed = 0.17f;*/
+
 
 	//crouch
 	crouchAnim.LoadAnimations("crouchAnim");
-	/*crouchAnim.PushBack({ 200, 0, 50,37 });
-	crouchAnim.PushBack({ 250, 0, 50,37 });
-	crouchAnim.PushBack({ 300, 0, 50,37 });
-	crouchAnim.PushBack({ 0, 37, 50,37 });
-	crouchAnim.speed = 0.07f;*/
+
 
 	//dash
 	dashAnim.LoadAnimations("dashAnim");
-	/*dashAnim.PushBack({ 150, 111, 50,37 });
-	dashAnim.PushBack({ 200, 111, 50,37 });
-	dashAnim.PushBack({ 250, 111, 50,37 });
-	dashAnim.PushBack({ 300, 111, 50,37 });
-	dashAnim.PushBack({ 0, 148, 50,37 });
-	dashAnim.speed = 0.1f;*/
+
 
 	//attack
 	attackAnim.LoadAnimations("attackAnim");
-	/*attackAnim.PushBack({ 0, 222, 50,37 });
-	attackAnim.PushBack({ 50, 222, 50,37 });
-	attackAnim.PushBack({ 100, 222, 50,37 });
-	attackAnim.PushBack({ 150, 222, 50,37 });
-	attackAnim.PushBack({ 200, 222, 50,37 });
-	attackAnim.PushBack({ 250, 222, 50,37 });
-	attackAnim.PushBack({ 300, 222, 50,37 });
-	attackAnim.PushBack({ 0, 259, 50,37 });
-	attackAnim.PushBack({ 50, 259, 50,37 });
-	attackAnim.PushBack({ 100, 259, 50,37 });
-	attackAnim.PushBack({ 150, 259, 50,37 });
-	attackAnim.PushBack({ 200, 259, 50,37 });
-	attackAnim.PushBack({ 250, 259, 50,37 });
-	attackAnim.PushBack({ 300, 259, 50,37 });
-	attackAnim.PushBack({ 0, 296, 50,37 });
-	attackAnim.PushBack({ 50, 296, 50,37 });
-	attackAnim.PushBack({ 100, 296, 50,37 });
-	attackAnim.speed = 0.15f;*/
 
 	//die
 	dieAnim.LoadAnimations("dieAnim");
