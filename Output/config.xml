@@ -1,7 +1,7 @@
 <config>
 	<app>
 		<title>Duding Games Platformer Alpha</title>
-		<maxFrameDuration value="16"/>
+		<maxFrameDuration value="32"/>
 	</app>
 
 	<renderer>

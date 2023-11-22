@@ -175,7 +175,7 @@ void App::FinishUpdate()
 {
 	// This is a good place to call Load / Save functions
 	double currentDt = frameTime.ReadMs();
-	if (maxFrameDuration > 0 && currentDt < maxFrameDuration) {
+	if (maxFrameDuration > 0 && currentDt < maxFrameDuration && app->render->vsync == false) {
 		uint32 delay = (uint32) (maxFrameDuration - currentDt);
 
 		PerfTimer delayTimer = PerfTimer();
