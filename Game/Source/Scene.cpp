@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -97,6 +98,10 @@ bool Scene::Update(float dt)
 	// Renders the image in the center of the screen 
 	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
 
+	//Request App to Load / Save when pressing the keys F5(save) / F6(load)
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) app->LoadRequest();
+
 	return true;
 }
 
@@ -122,4 +127,27 @@ bool Scene::CleanUp()
 Player* Scene::GetPLayer()
 {
 	return player;
+}
+
+//Implement a method to load the state
+// for now load camera's x and y
+bool Scene::LoadState(pugi::xml_node node) {
+
+	int x = node.child("player").attribute("x").as_int();
+	int y = node.child("player").attribute("y").as_int();
+
+	player->pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)), 0);
+
+	return true;
+}
+
+//Create a method to save the state of the renderer
+// using append_child and append_attribute
+bool Scene::SaveState(pugi::xml_node node) {
+
+	pugi::xml_node camNode = node.append_child("player");
+	camNode.append_attribute("x").set_value(player->position.x);
+	camNode.append_attribute("y").set_value(player->position.y);
+
+	return true;
 }
