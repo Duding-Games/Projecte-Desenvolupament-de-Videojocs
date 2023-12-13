@@ -21,7 +21,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 	idleAnim.LoadAnimations("idleAnim");
 
 
-
 	//run
 	runAnim.LoadAnimations("runAnim");
 
@@ -330,6 +329,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		isDying = true;
 		isJumping = false;
 		LOG("Collision SPIKES");
+		break;
+
+	case ColliderType::FLYING_ENEMY:
+		isDying = true;
+		isJumping = false;
+		LOG("Collision FLYING_ENEMY");
 		break;
 
 	case ColliderType::UNKNOWN:
