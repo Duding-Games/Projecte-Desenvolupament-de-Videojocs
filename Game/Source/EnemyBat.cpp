@@ -13,12 +13,12 @@
 #include "PerfTimer.h"
 #include "Window.h"
 
-EnemyBat::EnemyBat() : Entity(EntityType::EnemyBat)
+EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 {
 	name.Create("EnemyBat");
 
 	//idle
-
+	idleAnim.LoadAnimations("idleAnimBat");
 
 }
 
@@ -43,7 +43,7 @@ bool EnemyBat::Start() {
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
 	pbody->listener = this;
-	pbody->ctype = ColliderType::FLYING_ENEMY;
+	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(false);
 
 	initialPos = pbody->body->GetTransform();
@@ -82,8 +82,8 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
-	case ColliderType::FLYING_ENEMY:
-		LOG("Collision FLYING_ENEMY");
+	case ColliderType::ENEMY:
+		LOG("Collision ENEMY");
 		break;
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
