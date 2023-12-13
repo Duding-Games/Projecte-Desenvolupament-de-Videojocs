@@ -44,16 +44,7 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//die
 	dieAnim.LoadAnimations("dieAnim");
-	/*dieAnim.PushBack({ 100, 333, 50,37 });
-	dieAnim.PushBack({ 150, 333, 50,37 });
-	dieAnim.PushBack({ 200, 333, 50,37 });
-	dieAnim.PushBack({ 250, 333, 50,37 });
-	dieAnim.PushBack({ 150, 333, 50,37 });
-	dieAnim.PushBack({ 200, 333, 50,37 });
-	dieAnim.PushBack({ 250, 333, 50,37 });
-	dieAnim.PushBack({ 200, 333, 50,37 });
-	dieAnim.speed = 0.07f;
-	dieAnim.loop = false;*/
+
 }
 
 Player::~Player() {
@@ -290,49 +281,6 @@ bool Player::Update(float dt)
 			app->render->camera.y = -650;
 		}
 	}
-
-	
-	//LOG("---------Player X : %d", position.x);
-	//LOG("---------Player Y : %d", position.y);
-	//LOG("---------Camera : %d", app->render->camera.x);
-	//LOG("---------Camera : %d", app->render->camera.y);
-	//uint windowH;
-	//uint windowW;
-	//app->win->GetWindowSize(windowW, windowH);
-	//if (!app->godmode) {
-	//	app->render->camera.x = MIN(-position.x * app->win->GetScale() + (windowW / 2), -20);
-	//	app->render->camera.y = -position.y * app->win->GetScale() + (windowH / 2);
-	//	LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
-	//	LOG("---------Camera : %d", app->render->camera.x);
-	//}
-
-
-	//uint windowH;
-	//uint windowW;
-	//app->win->GetWindowSize(windowW, windowH);
-
-	//int mapLimitX = -20; // Set your map limit for x-coordinate here
-	//int mapLimitY = 0; // Set your map limit for y-coordinate here
-
-	//int cameraX = -position.x * app->win->GetScale() + (windowW / 2);
-	//int cameraY = -position.y * app->win->GetScale() + (windowH / 2);
-
-	//if (cameraX < mapLimitX * app->win->GetScale()) {
-	//	app->render->camera.x = mapLimitX * app->win->GetScale();
-	//}
-	//else {
-	//	app->render->camera.x = cameraX;
-	//}
-
-	//if (cameraY < mapLimitY * app->win->GetScale()) {
-	//	app->render->camera.y = mapLimitY * app->win->GetScale();
-	//}
-	//else {
-	//	app->render->camera.y = cameraY;
-	//}
-
-	//LOG("---------Player : %d", -position.x * app->win->GetScale() + (windowW / 2));
-	//LOG("---------Camera : %d", app->render->camera.x);
 
 
 
