@@ -36,6 +36,9 @@ bool Map::Start() {
     mapPath += name;
     bool ret = Load(mapPath);
 
+    //Initialize pathfinding 
+    pathfinding = new PathFinding();
+
     return ret;
 }
 
