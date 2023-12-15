@@ -84,10 +84,10 @@ bool EnemyBat::Update(float dt)
 		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
 		currentAnim = &dieAnim;
 	}
-
+	Bathfinding();
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
+	
 	pbody->body->SetLinearVelocity(vel);
 
 	currentAnim->Update();
