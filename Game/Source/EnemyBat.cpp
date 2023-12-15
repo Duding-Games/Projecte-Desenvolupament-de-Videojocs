@@ -12,6 +12,7 @@
 #include "Timer.h"
 #include "PerfTimer.h"
 #include "Window.h"
+#include "Map.h"
 
 EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 {
@@ -72,7 +73,6 @@ bool EnemyBat::Update(float dt)
 
 	if(isDead) {
 		currentAnim = &deadAnim;
-		/*pbody->body->GetWorld()->DestroyBody(pbody->body);*/
 		pbody->body->SetActive(false);
 		if (deadAnim.HasFinished() == true) {
 			app->entityManager->DestroyEntity(pbody->listener);
@@ -158,4 +158,10 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 bool EnemyBat::isOutOfBounds(int x, int y) {
 	return true;
+}
+
+bool EnemyBat::Bathfinding()
+{
+	if(app->map->pathfinding->GetDistance((b2Vec2)app->scene->GetPLayer()->position, );
+	return false;
 }
