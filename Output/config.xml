@@ -29,6 +29,7 @@
 		<map path="Assets/Maps/" name="MapGameTiled.tmx"/>
 		<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
 		<enemyBat x="230" y="460" texturepath="Assets/Textures/Enemies/Bat/bat.png" speed="0.2"/>
+		<mouseTileTex texturepath="Assets/Textures/goldCoin.png"/>
 		<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>

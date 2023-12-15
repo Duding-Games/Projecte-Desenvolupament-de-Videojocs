@@ -162,6 +162,17 @@ bool EnemyBat::isOutOfBounds(int x, int y) {
 
 bool EnemyBat::Bathfinding()
 {
-	if(app->map->pathfinding->GetDistance((b2Vec2)app->scene->GetPLayer()->position, );
-	return false;
+	if(app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
+
+		app->map->pathfinding->CreatePath(position, app->scene->GetPLayer()->position);
+		lastPath = *app->map->pathfinding->GetLastPath();
+		// L13: Get the latest calculated path and draw
+		for (uint i = 0; i < lastPath.Count(); ++i)
+		{
+			iPoint pos = app->map->MapToWorld(lastPath.At(i)->x, lastPath.At(i)->y);
+			app->render->DrawTexture(app->map->pathfinding->mouseTileTex, pos.x, pos.y, SDL_FLIP_NONE);
+		}
+
+	}
+	return true;
 }

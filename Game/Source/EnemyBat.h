@@ -7,6 +7,8 @@
 #include "Animation.h"
 #include "PerfTimer.h"
 #include "Timer.h"
+#include "DynArray.h"
+
 
 #include "Physics.h"
 
@@ -46,6 +48,7 @@ public:
 	bool isDead = false;
 
 	Animation* currentAnim;
+	DynArray<iPoint> lastPath;
 
 private:
 	Animation idleAnim;
