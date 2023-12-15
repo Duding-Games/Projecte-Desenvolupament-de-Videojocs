@@ -20,6 +20,12 @@ EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 	//idle
 	idleAnim.LoadAnimations("idleAnimBat");
 
+	//dying
+	dieAnim.LoadAnimations("dyingAnimBat");
+
+	//dead
+	deadAnim.LoadAnimations("deadAnimBat");
+
 }
 
 EnemyBat::~EnemyBat() {
@@ -41,14 +47,14 @@ bool EnemyBat::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x, position.y, 7, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 6, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(false);
 	pbody->body->SetGravityScale(0);
 
 	initialPos = pbody->body->GetTransform();
-
+	isFacingLeft = true;
 
 	return true;
 }
@@ -64,10 +70,18 @@ bool EnemyBat::Update(float dt)
 		vel = b2Vec2(speed * dt, 0);
 	}
 
+	if(isDead) {
+		currentAnim = &deadAnim;
+		pbody->body->SetActive(false);
+		if (deadAnim.HasFinished() == true) {
+			app->entityManager->DestroyEntity(pbody->listener);
+		}
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
 		pbody->body->SetGravityScale(1);
-		app->entityManager->DestroyEntity(pbody->listener);
-		pbody->body->SetActive(false);
+		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
+		currentAnim = &dieAnim;
 	}
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
@@ -85,7 +99,7 @@ bool EnemyBat::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x, position.y, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 4, position.y + 7, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
 		app->render->DrawTexture(texture, position.x + 3, position.y + 2, SDL_FLIP_NONE, &rect);
@@ -106,7 +120,12 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
 		break;
-
+	case ColliderType::ATTACK:
+		LOG("Collision ATTACK");
+		pbody->body->SetGravityScale(1);
+		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
+		currentAnim = &dieAnim;
+		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		break;
@@ -120,6 +139,7 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::PLATFORM:
+		isDead = true;
 		LOG("Collision PLATFORM");
 		break;
 
