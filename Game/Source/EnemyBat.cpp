@@ -72,6 +72,7 @@ bool EnemyBat::Update(float dt)
 
 	if(isDead) {
 		currentAnim = &deadAnim;
+		/*pbody->body->GetWorld()->DestroyBody(pbody->body);*/
 		pbody->body->SetActive(false);
 		if (deadAnim.HasFinished() == true) {
 			app->entityManager->DestroyEntity(pbody->listener);
