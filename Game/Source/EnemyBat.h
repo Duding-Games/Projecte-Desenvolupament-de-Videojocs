@@ -36,10 +36,11 @@ public:
 
 	bool isOutOfBounds(int x, int y);
 
-	bool Bathfinding();
+	bool Bathfinding( float dt);
 
 public:
 	float speed;
+	b2Vec2 vel;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
