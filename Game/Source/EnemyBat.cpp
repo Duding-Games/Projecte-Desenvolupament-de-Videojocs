@@ -29,6 +29,9 @@ EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 	//dead
 	deadAnim.LoadAnimations("deadAnimBat");
 
+	//attacking
+	attackAnim.LoadAnimations("attackAnimBat");
+
 }
 
 EnemyBat::~EnemyBat() {
@@ -90,6 +93,10 @@ bool EnemyBat::Update(float dt)
 		currentAnim = &dieAnim;
 	}
 
+	if(isAttacking && !isDead){
+		currentAnim = &attackAnim;
+	}
+
 	
 	Bathfinding(dt);
 
@@ -131,6 +138,7 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::ATTACK:
 		LOG("Collision ATTACK");
+		isAttacking = false;
 		pbody->body->SetGravityScale(1);
 		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
 		currentAnim = &dieAnim;
@@ -207,7 +215,8 @@ bool EnemyBat::Bathfinding(float dt)
 			if (lastPath.At(lastPath.Count() - 2)->y > enemyPos.y) {
 				vel.y += speed * dt;
 			}
-
+			isAttacking = false;
+			attackAnim.Reset();
 			pbody->body->SetLinearVelocity(vel);
 		}
 
@@ -220,32 +229,33 @@ bool EnemyBat::Bathfinding(float dt)
 				vel.x += speed * dt;
 
 			}
+			isAttacking = true;
 			pbody->body->SetLinearVelocity(vel);
 		}
 	
 	}
 
-	//else {
-	//	if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
-	//		vel.x -= speed * dt;
-	//		isFacingLeft = true;
-	//	}
-	//	
-	//	if (initialPos.p.x - 3 > position.x && isFacingLeft) {
-	//		isFacingLeft = false;
-	//	}
+	else {
+		if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
+			vel.x -= speed * dt;
+			isFacingLeft = true;
+		}
+		
+		if (initialPos.p.x - 3 > position.x && isFacingLeft) {
+			isFacingLeft = false;
+		}
 
-	//	if (initialPos.p.x + 3 >= position.x && !isFacingLeft) {
-	//		vel.x += speed * dt;
-	//		isFacingLeft = false;
-	//	}
-	//	if (initialPos.p.x + 3 < position.x && !isFacingLeft) {
-	//		isFacingLeft = true;
-	//	}
+		if (initialPos.p.x + 3 >= position.x && !isFacingLeft) {
+			vel.x += speed * dt;
+			isFacingLeft = false;
+		}
+		if (initialPos.p.x + 3 < position.x && !isFacingLeft) {
+			isFacingLeft = true;
+		}
 
-	//
-	//	pbody->body->SetLinearVelocity(vel);
-	//}
+	
+		pbody->body->SetLinearVelocity(vel);
+	}
 	return true;
 
 }

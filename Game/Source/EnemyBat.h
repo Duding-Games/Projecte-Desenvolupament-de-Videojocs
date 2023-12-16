@@ -47,6 +47,7 @@ public:
 
 	bool isFacingLeft;
 	bool isDead = false;
+	bool isAttacking = false;
 
 	Animation* currentAnim;
 	DynArray<iPoint> lastPath;
@@ -55,6 +56,7 @@ private:
 	Animation idleAnim;
 	Animation dieAnim;
 	Animation deadAnim;
+	Animation attackAnim;
 
 	b2Transform initialPos;
 };
