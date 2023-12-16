@@ -51,9 +51,12 @@ bool Scene::Awake(pugi::xml_node& config)
 		app->map->path = config.child("map").attribute("path").as_string();
 	}
 
+	if (config.child("map").child("mouseTileTex")) {
+		texturePath = config.child("map").child("mouseTileTex").attribute("texturepath").as_string();
+	}
+
 	return ret;
 }
-
 // Called before the first frame
 bool Scene::Start()
 {

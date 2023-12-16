@@ -13,6 +13,8 @@
 #include "PerfTimer.h"
 #include "Window.h"
 #include "Map.h"
+#include "DynArray.h"
+#include "Pathfinding.h"
 
 EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 {
@@ -71,6 +73,10 @@ bool EnemyBat::Update(float dt)
 		vel = b2Vec2(speed * dt, 0);
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
+		isFacingLeft = !isFacingLeft;
+	}
+
 	if(isDead) {
 		currentAnim = &deadAnim;
 		pbody->body->SetActive(false);
@@ -84,7 +90,10 @@ bool EnemyBat::Update(float dt)
 		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
 		currentAnim = &dieAnim;
 	}
+
+	
 	Bathfinding();
+
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 	
@@ -100,10 +109,10 @@ bool EnemyBat::PostUpdate() {
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x - 4, position.y + 7, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x + 7, position.y + 7, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x + 3, position.y + 2, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x + 5, position.y + 7, SDL_FLIP_NONE, &rect);
 	}
 
 	return true;
@@ -164,15 +173,24 @@ bool EnemyBat::Bathfinding()
 {
 	if(app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
 
-		app->map->pathfinding->CreatePath(position, app->scene->GetPLayer()->position);
+		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
+		iPoint enemyPos = app->map->WorldToMap(position.x,position.y);
+		/*LOG("PX = %d  PY = %d", playerPos.x, playerPos.y);
+		LOG("EX = %d  EY = %d", enemyPos.x, enemyPos.y);*/
+
+		app->map->pathfinding->CreatePath(playerPos,enemyPos);
 		lastPath = *app->map->pathfinding->GetLastPath();
 		// L13: Get the latest calculated path and draw
 		for (uint i = 0; i < lastPath.Count(); ++i)
 		{
 			iPoint pos = app->map->MapToWorld(lastPath.At(i)->x, lastPath.At(i)->y);
-			app->render->DrawTexture(app->map->pathfinding->mouseTileTex, pos.x, pos.y, SDL_FLIP_NONE);
+			if (app->physics->debug == true) {
+				app->render->DrawTexture(app->map->pathfinding->mouseTileTex, pos.x, pos.y, SDL_FLIP_NONE);
+			}
 		}
-
+		
+		/*if(lastPath.At(0))*/
 	}
 	return true;
+
 }

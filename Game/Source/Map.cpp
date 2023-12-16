@@ -25,7 +25,6 @@ bool Map::Awake(pugi::xml_node& config)
 {
     LOG("Loading Map Parser");
     bool ret = true;
-    texturePath = config.child("mouseTileTex").attribute("texturepath").as_string();
     return ret;
 }
 
@@ -37,8 +36,7 @@ bool Map::Start() {
     bool ret = Load(mapPath);
 
     //Initialize pathfinding 
-    pathfinding = new PathFinding();
-    pathfinding->mouseTileTex = app->tex->Load(texturePath.GetString());
+    
 
     return ret;
 }
@@ -256,25 +254,6 @@ bool Map::Load(SString mapFileName)
         ret = LoadCollisions("Collisions");
     }
 
-   
-
-    // NOTE: Later you have to create a function here to load and create the colliders from the map
-
-    //PhysBody* c1 = app->physics->CreateRectangle(224 + 128, 543, 256, 1, STATIC);
-    //c1->ctype = ColliderType::PLATFORM;
-
-    //PhysBody* c2 = app->physics->CreateRectangle(352 + 64, 384, 128, 1, STATIC);
-    //c2->ctype = ColliderType::PLATFORM;
-
-    //PhysBody* c3 = app->physics->CreateRectangle(256, 704 , 576, 1, STATIC);
-    //c3->ctype = ColliderType::PLATFORM;
-
-    //PhysBody* c4 = app->physics->CreateRectangle(256, 704 + 32, 576, 64, STATIC);
-    //c4->ctype = ColliderType::WALL;
-   
-    //PhysBody* c5 = app->physics->CreateRectangle(0, 704 + 32, 130,1000, STATIC);
-    //c5->ctype = ColliderType::WALL;
-    //
     if(ret == true)
     {
         LOG("Successfully parsed map XML file :%s", mapFileName.GetString());
@@ -317,6 +296,16 @@ bool Map::Load(SString mapFileName)
         }
         mapLayerItem = mapLayerItem->next;
     }
+
+    pathfinding = new PathFinding();
+
+    uchar* navigationMap = NULL;
+
+    CreateNavigationMap(mapData.width, mapData.height, &navigationMap, navigationLayer);
+    pathfinding->SetNavigationMap((uint)mapData.width, (uint)mapData.height, navigationMap);
+    pathfinding->mouseTileTex = app->tex->Load(app->scene->texturePath.GetString());
+
+    RELEASE_ARRAY(navigationMap);
 
     if(mapFileXML) mapFileXML.reset();
 
@@ -577,8 +566,8 @@ void Map::CreateNavigationMap(int& width, int& height, uchar** buffer, MapLayer*
                 TileSet* tileset = GetTilesetFromTileId(gid);
                 //If the gid is a blockedGid is an area that I cannot navigate, so is set in the navigation map as 0, all the other areas can be navigated
                 //!!!! make sure that you assign blockedGid according to your map
-                if (gid == tileset->firstgid + 3) navigationMap[i] = 1;
-                else navigationMap[i] = 0;
+                if (gid == tileset->firstgid + 3) navigationMap[i] = 0;
+                else navigationMap[i] = 1;
                 /*if (navigationLayer == navigationLayer) {
                     if (gid == tileset->firstgid + 1) navigationMap[i] = 1;
                     else navigationMap[i] = 0;

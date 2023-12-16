@@ -43,6 +43,8 @@ public:
 
 	Player* GetPLayer();
 
+	SString texturePath;
+
 private:
 	float textPosX, textPosY = 0;
 	uint texW, texH;
