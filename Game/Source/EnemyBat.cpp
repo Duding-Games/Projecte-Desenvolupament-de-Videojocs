@@ -224,6 +224,28 @@ bool EnemyBat::Bathfinding(float dt)
 		}
 	
 	}
+
+	//else {
+	//	if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
+	//		vel.x -= speed * dt;
+	//		isFacingLeft = true;
+	//	}
+	//	
+	//	if (initialPos.p.x - 3 > position.x && isFacingLeft) {
+	//		isFacingLeft = false;
+	//	}
+
+	//	if (initialPos.p.x + 3 >= position.x && !isFacingLeft) {
+	//		vel.x += speed * dt;
+	//		isFacingLeft = false;
+	//	}
+	//	if (initialPos.p.x + 3 < position.x && !isFacingLeft) {
+	//		isFacingLeft = true;
+	//	}
+
+	//
+	//	pbody->body->SetLinearVelocity(vel);
+	//}
 	return true;
 
 }
