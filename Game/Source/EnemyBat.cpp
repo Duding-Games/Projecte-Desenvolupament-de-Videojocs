@@ -59,7 +59,8 @@ bool EnemyBat::Start() {
 	pbody->body->SetFixedRotation(false);
 	pbody->body->SetGravityScale(0);
 
-	initialPos = pbody->body->GetTransform();
+	initialPos.p.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 3;
+	initialPos.p.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 3;
 	isFacingLeft = true;
 
 	return true;
@@ -183,8 +184,6 @@ bool EnemyBat::Bathfinding(float dt)
 		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
 		playerPos.x += 1;
 		iPoint enemyPos = app->map->WorldToMap(position.x,position.y);
-		/*LOG("PX = %d  PY = %d", playerPos.x, playerPos.y);
-		LOG("EX = %d  EY = %d", enemyPos.x, enemyPos.y);*/
 
 		app->map->pathfinding->CreatePath(playerPos,enemyPos);
 		lastPath = *app->map->pathfinding->GetLastPath();
@@ -237,8 +236,10 @@ bool EnemyBat::Bathfinding(float dt)
 
 	else {
 
+		currentAnim = &idleAnim;
+
 		if (isFacingLeft) {
-			if(position.x > initialPos.p.x - 10 && app->map->pathfinding->IsWalkable(position)) {
+			if(position.x > initialPos.p.x - 40) {
 				vel.x -= speed * dt;
 			}
 			else {
@@ -248,31 +249,14 @@ bool EnemyBat::Bathfinding(float dt)
 
 
 		else{
-			if (position.x < initialPos.p.x + 10 && app->map->pathfinding->IsWalkable(position)) {
+			if (position.x < initialPos.p.x + 40) {
 				vel.x += speed * dt;
 			}
 			else {
 				isFacingLeft = true;
 			}
 		}
-		/*if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
-			vel.x -= speed * dt;
-			isFacingLeft = true;
-		}
-		
-		if (initialPos.p.x - 3 > position.x && isFacingLeft) {
-			isFacingLeft = false;
-		}
 
-		if (initialPos.p.x + 3 >= position.x && !isFacingLeft) {
-			vel.x += speed * dt;
-			isFacingLeft = false;
-		}
-		if (initialPos.p.x + 3 < position.x && !isFacingLeft) {
-			isFacingLeft = true;
-		}*/
-
-	
 		pbody->body->SetLinearVelocity(vel);
 	}
 	return true;
