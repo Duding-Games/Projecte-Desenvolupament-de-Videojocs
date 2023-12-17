@@ -236,7 +236,26 @@ bool EnemyBat::Bathfinding(float dt)
 	}
 
 	else {
-		if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
+
+		if (isFacingLeft) {
+			if(position.x > initialPos.p.x - 10 && app->map->pathfinding->IsWalkable(position)) {
+				vel.x -= speed * dt;
+			}
+			else {
+				isFacingLeft = false;
+			}
+		}
+
+
+		else{
+			if (position.x < initialPos.p.x + 10 && app->map->pathfinding->IsWalkable(position)) {
+				vel.x += speed * dt;
+			}
+			else {
+				isFacingLeft = true;
+			}
+		}
+		/*if (initialPos.p.x - 3 <= position.x && isFacingLeft) {
 			vel.x -= speed * dt;
 			isFacingLeft = true;
 		}
@@ -251,7 +270,7 @@ bool EnemyBat::Bathfinding(float dt)
 		}
 		if (initialPos.p.x + 3 < position.x && !isFacingLeft) {
 			isFacingLeft = true;
-		}
+		}*/
 
 	
 		pbody->body->SetLinearVelocity(vel);
