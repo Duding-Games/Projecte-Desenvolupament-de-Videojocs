@@ -55,7 +55,6 @@ public:
 private:
 	Animation idleAnim;
 	Animation dieAnim;
-	Animation deadAnim;
 	Animation attackAnim;
 
 	b2Transform initialPos;

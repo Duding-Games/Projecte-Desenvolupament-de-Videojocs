@@ -26,9 +26,6 @@ EnemySlime::EnemySlime() : Entity(EntityType::ENEMYSLIME)
 	//dying
 	dieAnim.LoadAnimations("dyingAnimSlime");
 
-	//dead
-	deadAnim.LoadAnimations("deadAnimSlime");
-
 	//attacking
 	attackAnim.LoadAnimations("attackAnimSlime");
 
@@ -68,45 +65,25 @@ bool EnemySlime::Start() {
 bool EnemySlime::Update(float dt)
 {
 	currentAnim = &idleAnim;
+	vel = b2Vec2(0, -GRAVITY_Y);
 
-	/*vel = b2Vec2(0, GRAVITY_Y);
-
-	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
-		vel = b2Vec2(speed * dt, 0);
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
-		isFacingLeft = !isFacingLeft;
-	}
-
-	if(isDead) {
-		currentAnim = &deadAnim;
+	if (isDead) {
+		currentAnim = &dieAnim;
 		pbody->body->SetActive(false);
-		if (deadAnim.HasFinished() == true) {
+		if (dieAnim.HasFinished()) {
 			app->entityManager->DestroyEntity(pbody->listener);
+			dieAnim.Reset();
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		pbody->body->SetGravityScale(1);
-		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
-		currentAnim = &dieAnim;
-	}
+	if (isAttacking) currentAnim = &attackAnim;
 
-	if(isAttacking && !isDead){
-		currentAnim = &attackAnim;
-	}
-
-	
 	Slimefinding(dt);
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
-	
-	pbody->body->SetLinearVelocity(vel);*/
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	pbody->body->SetLinearVelocity(vel);
 
 	currentAnim->Update();
 
@@ -142,8 +119,7 @@ void EnemySlime::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ATTACK:
 		LOG("Collision ATTACK");
 		isAttacking = false;
-		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
-		currentAnim = &dieAnim;
+		isDead = true;
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
@@ -178,7 +154,7 @@ bool EnemySlime::isOutOfBounds(int x, int y) {
 
 bool EnemySlime::Slimefinding(float dt)
 {
-	if(app->map->pathfinding_walking->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
+	if(app->map->pathfinding_walking->GetDistance(app->scene->GetPLayer()->position, position) <= 120){
 
 		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
 		playerPos.x += 1;
@@ -186,7 +162,8 @@ bool EnemySlime::Slimefinding(float dt)
 
 		app->map->pathfinding_walking->CreatePath(playerPos,enemyPos);
 		lastPath = *app->map->pathfinding_walking->GetLastPath();
-		// L13: Get the latest calculated path and draw
+
+		//Get the latest calculated path and draw
 		for (uint i = 0; i < lastPath.Count(); ++i)
 		{
 			iPoint pos = app->map->MapToWorld(lastPath.At(i)->x, lastPath.At(i)->y);
@@ -206,13 +183,6 @@ bool EnemySlime::Slimefinding(float dt)
 					isFacingLeft = false;
 			}
 
-			if (lastPath.At(lastPath.Count() - 2)->y < enemyPos.y) {
-				vel.y -= speed * dt;
-			}
-
-			if (lastPath.At(lastPath.Count() - 2)->y > enemyPos.y) {
-				vel.y += speed * dt;
-			}
 			isAttacking = false;
 			attackAnim.Reset();
 			pbody->body->SetLinearVelocity(vel);
@@ -235,7 +205,8 @@ bool EnemySlime::Slimefinding(float dt)
 
 	else {
 
-		currentAnim = &idleAnim;
+		if (!isDead) {
+			currentAnim = &idleAnim;
 
 		if (isFacingLeft) {
 			if(position.x > initialPos.p.x - 40) {
@@ -257,6 +228,8 @@ bool EnemySlime::Slimefinding(float dt)
 		}
 
 		pbody->body->SetLinearVelocity(vel);
+		}
+		
 	}
 	return true;
 
