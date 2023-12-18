@@ -66,10 +66,8 @@ bool Scene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool Scene::Start()
 {
-	// NOTE: We have to avoid the use of paths in the code, we will move it later to a config file
-	//background1 = app->tex->Load("Assets/Maps/background1.png");
 	//Music is commented so that you can add your own music
-	//app->audio->PlayMusic("Assets/Audio/Music/music_spy.ogg");
+	app->audio->PlayMusic("Assets/Audio/Music/background_music.ogg");
 
 	//Get the size of the window
 
