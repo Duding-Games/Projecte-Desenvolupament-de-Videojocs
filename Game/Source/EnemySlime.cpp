@@ -178,20 +178,20 @@ bool EnemySlime::isOutOfBounds(int x, int y) {
 
 bool EnemySlime::Slimefinding(float dt)
 {
-	if(app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
+	if(app->map->pathfinding_walking->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
 
 		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
 		playerPos.x += 1;
 		iPoint enemyPos = app->map->WorldToMap(position.x,position.y);
 
-		app->map->pathfinding->CreatePath(playerPos,enemyPos);
-		lastPath = *app->map->pathfinding->GetLastPath();
+		app->map->pathfinding_walking->CreatePath(playerPos,enemyPos);
+		lastPath = *app->map->pathfinding_walking->GetLastPath();
 		// L13: Get the latest calculated path and draw
 		for (uint i = 0; i < lastPath.Count(); ++i)
 		{
 			iPoint pos = app->map->MapToWorld(lastPath.At(i)->x, lastPath.At(i)->y);
 			if (app->physics->debug == true) {
-				app->render->DrawTexture(app->map->pathfinding->mouseTileTex, pos.x, pos.y, SDL_FLIP_NONE);
+				app->render->DrawTexture(app->map->pathfinding_walking->mouseTileTex, pos.x, pos.y, SDL_FLIP_NONE);
 			}
 		}
 
@@ -218,7 +218,7 @@ bool EnemySlime::Slimefinding(float dt)
 			pbody->body->SetLinearVelocity(vel);
 		}
 
-		if (app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 66){
+		if (app->map->pathfinding_walking->GetDistance(app->scene->GetPLayer()->position, position) <= 66){
 			
 			if (isFacingLeft) {
 				vel.x -= speed * dt;
