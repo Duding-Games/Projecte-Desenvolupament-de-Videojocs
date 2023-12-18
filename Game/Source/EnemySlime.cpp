@@ -1,4 +1,4 @@
-#include "EnemyBat.h"
+#include "EnemySlime.h"
 #include "App.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -16,29 +16,29 @@
 #include "DynArray.h"
 #include "Pathfinding.h"
 
-EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
+EnemySlime::EnemySlime() : Entity(EntityType::ENEMYSLIME)
 {
-	name.Create("EnemyBat");
+	name.Create("EnemySlime");
 
 	//idle
-	idleAnim.LoadAnimations("idleAnimBat");
+	idleAnim.LoadAnimations("idleAnimSlime");
 
 	//dying
-	dieAnim.LoadAnimations("dyingAnimBat");
+	dieAnim.LoadAnimations("dyingAnimSlime");
 
 	//dead
-	deadAnim.LoadAnimations("deadAnimBat");
+	deadAnim.LoadAnimations("deadAnimSlime");
 
 	//attacking
-	attackAnim.LoadAnimations("attackAnimBat");
+	attackAnim.LoadAnimations("attackAnimSlime");
 
 }
 
-EnemyBat::~EnemyBat() {
+EnemySlime::~EnemySlime() {
 
 }
 
-bool EnemyBat::Awake() {
+bool EnemySlime::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -48,16 +48,15 @@ bool EnemyBat::Awake() {
 	return true;
 }
 
-bool EnemyBat::Start() {
+bool EnemySlime::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
-	pbody = app->physics->CreateCircle(position.x, position.y, 6, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(false);
-	pbody->body->SetGravityScale(0);
 
 	initialPos.p.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 3;
 	initialPos.p.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 3;
@@ -66,11 +65,11 @@ bool EnemyBat::Start() {
 	return true;
 }
 
-bool EnemyBat::Update(float dt)
+bool EnemySlime::Update(float dt)
 {
 	currentAnim = &idleAnim;
 
-	vel = b2Vec2(0, 0);
+	/*vel = b2Vec2(0, GRAVITY_Y);
 
 	if (app->input->GetKey(SDL_SCANCODE_K) == KEY_REPEAT) {
 		vel = b2Vec2(speed * dt, 0);
@@ -99,38 +98,41 @@ bool EnemyBat::Update(float dt)
 	}
 
 	
-	Bathfinding(dt);
+	Slimefinding(dt);
 
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
 	
-	pbody->body->SetLinearVelocity(vel);
+	pbody->body->SetLinearVelocity(vel);*/
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
 	currentAnim->Update();
 
 	return true;
 }
 
-bool EnemyBat::PostUpdate() {
+bool EnemySlime::PostUpdate() {
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
 	if (isFacingLeft) {
-		app->render->DrawTexture(texture, position.x + 7, position.y + 7, SDL_FLIP_HORIZONTAL, &rect);
+		app->render->DrawTexture(texture, position.x - 18, position.y - 23, SDL_FLIP_HORIZONTAL, &rect);
 	}
 	else {
-		app->render->DrawTexture(texture, position.x + 5, position.y + 7, SDL_FLIP_NONE, &rect);
+		app->render->DrawTexture(texture, position.x - 18, position.y - 23, SDL_FLIP_NONE, &rect);
 	}
 
 	return true;
 }
-bool EnemyBat::CleanUp()
+bool EnemySlime::CleanUp()
 {
 
 	return true;
 }
 
-void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
+void EnemySlime::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	switch (physB->ctype)
 	{
@@ -140,7 +142,6 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ATTACK:
 		LOG("Collision ATTACK");
 		isAttacking = false;
-		pbody->body->SetGravityScale(1);
 		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
 		currentAnim = &dieAnim;
 		break;
@@ -157,12 +158,10 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::PLATFORM:
-		isDead = true;
 		LOG("Collision PLATFORM");
 		break;
 
 	case ColliderType::SPIKES:
-
 		LOG("Collision SPIKES");
 		break;
 
@@ -173,13 +172,13 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 }
 
-bool EnemyBat::isOutOfBounds(int x, int y) {
+bool EnemySlime::isOutOfBounds(int x, int y) {
 	return true;
 }
 
-bool EnemyBat::Bathfinding(float dt)
+bool EnemySlime::Slimefinding(float dt)
 {
-	if(app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 150){
+	if(app->map->pathfinding->GetDistance(app->scene->GetPLayer()->position, position) <= 200){
 
 		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
 		playerPos.x += 1;

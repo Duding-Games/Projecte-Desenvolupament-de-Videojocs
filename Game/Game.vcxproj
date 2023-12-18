@@ -96,6 +96,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\EnemyBat.cpp" />
+    <ClCompile Include="Source\EnemySlime.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\Item.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\EnemyBat.h" />
+    <ClInclude Include="Source\EnemySlime.h" />
     <ClInclude Include="Source\Entity.h" />
     <ClInclude Include="Source\EntityManager.h" />
     <ClInclude Include="Source\Item.h" />

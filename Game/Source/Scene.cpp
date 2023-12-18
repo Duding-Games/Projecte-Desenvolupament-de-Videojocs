@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "EnemyBat.h"
+#include "EnemySlime.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -43,6 +44,11 @@ bool Scene::Awake(pugi::xml_node& config)
 	if (config.child("enemyBat")) {
 		enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
 		enemyBat->parameters = config.child("enemyBat");
+	}
+
+	if (config.child("enemySlime")) {
+		enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
+		enemySlime->parameters = config.child("enemySlime");
 	}
 
 	if (config.child("map")) {
