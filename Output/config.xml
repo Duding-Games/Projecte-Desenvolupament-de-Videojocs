@@ -24,6 +24,8 @@
 		<backgroundMusic path="Assets/Audio/Music/background_music.ogg"/>
 		<pickCoin path="Assets/Audio/Fx/coin.ogg"/>
 		<Jump path="Assets/Audio/Fx/JumpFx.wav"/>
+		<Dash path="Assets/Audio/Fx/DashFx.wav"/>
+		<Sword path="Assets/Audio/Fx/SwordFx.wav"/>
 	</audios>
 	<scene>
 		<map path="Assets/Maps/" name="MapGameTiled.tmx">

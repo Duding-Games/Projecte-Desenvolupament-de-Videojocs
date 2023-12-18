@@ -45,6 +45,8 @@ public:
 	PhysBody* sensor;
 	int pickCoinFxId;
 	int jumpFxId;
+	int dashFxId;
+	int swordFxId;
 	int offsetTexY = 6;
 	bool isJumping = false;
 	bool isFacingLeft = false;

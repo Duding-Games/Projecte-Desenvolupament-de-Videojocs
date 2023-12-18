@@ -75,6 +75,8 @@ bool Player::Start() {
 
 	pickCoinFxId = app->audio->LoadAudios("pickCoin");
 	jumpFxId = app->audio->LoadAudios("Jump");
+	dashFxId = app->audio->LoadAudios("Dash");
+	swordFxId = app->audio->LoadAudios("Sword");
 
 	initialPos = pbody->body->GetTransform();
 		
@@ -181,6 +183,7 @@ bool Player::Update(float dt)
 					currentAnim = &dashAnim;
 				}
 				pbody->body->GetFixtureList()[0].GetShape()->m_radius = PIXEL_TO_METERS(7);
+				app->audio->PlayFx(dashFxId);
 				isDashing = true;
 				offsetTexY = 12;
 			}
@@ -197,7 +200,6 @@ bool Player::Update(float dt)
 				pbody->body->SetLinearVelocity(vel);
 				currentAnim = &dashAnim;
 			}
-
 			isDashing = true;
 		}
 		{}
@@ -212,6 +214,7 @@ bool Player::Update(float dt)
 				sensor = app->physics->CreateRectangleSensor(position.x + 40, position.y + 15, 30, 40, bodyType::STATIC);
 				sensor->ctype = ColliderType::ATTACK;
 			}
+			app->audio->PlayFx(swordFxId);
 		}
 
 		if (isAttacking) {
