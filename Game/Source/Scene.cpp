@@ -41,14 +41,16 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("player");
 	}
 
-	if (config.child("enemyBat")) {
-		enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
-		enemyBat->parameters = config.child("enemyBat");
+	for (pugi::xml_node itemNode = config.child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+	{
+		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
+		enemyBat->parameters = itemNode;
 	}
 
-	if (config.child("enemySlime")) {
-		enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
-		enemySlime->parameters = config.child("enemySlime");
+	for (pugi::xml_node itemNode = config.child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
+	{
+		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
+		enemySlime->parameters = itemNode;
 	}
 
 	if (config.child("map")) {
