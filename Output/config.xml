@@ -161,7 +161,14 @@
 		</idleAnimSlime>
 		<attackAnimSlime loop="false" speed="0.1">
 			<frame x="256" y="0" w="64" h="64"/>
-			<frame x="256" y="0" w="64" h="64"/>
+			<frame x="0" y="64" w="64" h="64"/>
+			<frame x="64" y="64" w="64" h="64"/>
+			<frame x="128" y="64" w="64" h="64"/>
 		</attackAnimSlime>
+		<dyingAnimSlime loop="false" speed="0.1">
+			<frame x="0" y="256" w="64" h="64"/>
+			<frame x="64" y="256" w="64" h="64"/>
+			<frame x="128" y="256" w="64" h="64"/>
+		</dyingAnimSlime>
 	</animations>
 </config>
