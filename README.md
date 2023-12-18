@@ -1,4 +1,4 @@
-# Duding Games' first release by Núria Case, Albert Cifuentes & Bernat Cifuentes!
+# Duding Games' first release by Núria Case & Albert Cifuentes!
 
 We're making a project team of the subject “DESENVOLUPAMENT DE VIDEOJOCS” in CITM University: Videogames Design & Developments degree. The first job is to make a platformer game in SDL and Box2d.
 Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolupament-de-Videojocs">Click Here.</a>
@@ -7,7 +7,6 @@ Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolu
 <ul>
   <li>Núria Case. Github: <a href="https://github.com/Cifu2004">@Cifu2004</a>.</li>
   <li>Albert Cifuentes. Github: <a href="https://github.com/CaseChips">@CaseChips</a>.</li>
-  <li>Bernat Cifuentes. Github: <a href="https://github.com/ItsBernii">@ItsBernii</a>.</li>
 </ul>
 <h2>Keyboard Controls</h2>
 
