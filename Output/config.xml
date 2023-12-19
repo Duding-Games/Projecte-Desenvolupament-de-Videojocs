@@ -27,6 +27,7 @@
 		<Dash path="Assets/Audio/Fx/DashFx.wav"/>
 		<Sword path="Assets/Audio/Fx/SwordFx.wav"/>
 		<Kill path="Assets/Audio/Fx/EnemyDeadFx.wav"/>
+		<Run path="Assets/Audio/Fx/RunFx.ogg"/>
 	</audios>
 	<scene>
 		<map path="Assets/Maps/" name="MapGameTiled.tmx">
