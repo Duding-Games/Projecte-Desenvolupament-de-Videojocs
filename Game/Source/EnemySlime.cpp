@@ -50,6 +50,8 @@ bool EnemySlime::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+	killFxId = app->audio->LoadAudios("Kill");
+
 	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
@@ -120,6 +122,7 @@ void EnemySlime::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision ATTACK");
 		isAttacking = false;
 		isDead = true;
+		app->audio->PlayFx(killFxId);
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");

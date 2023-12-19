@@ -53,6 +53,8 @@ bool EnemyBat::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
+	killFxId = app->audio->LoadAudios("Kill");
+
 	pbody = app->physics->CreateCircle(position.x, position.y, 6, bodyType::DYNAMIC);
 	pbody->listener = this;
 	pbody->ctype = ColliderType::ENEMY;
@@ -144,6 +146,7 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		pbody->body->SetGravityScale(1);
 		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
 		currentAnim = &dieAnim;
+		app->audio->PlayFx(killFxId);
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");

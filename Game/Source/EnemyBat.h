@@ -45,6 +45,8 @@ public:
 	SDL_Texture* texture = NULL;
 	PhysBody* pbody;
 
+	int killFxId;
+
 	bool isFacingLeft;
 	bool isDead = false;
 	bool isAttacking = false;
