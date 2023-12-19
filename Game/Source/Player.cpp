@@ -77,6 +77,7 @@ bool Player::Start() {
 	jumpFxId = app->audio->LoadAudios("Jump");
 	dashFxId = app->audio->LoadAudios("Dash");
 	swordFxId = app->audio->LoadAudios("Sword");
+	runFxId = app->audio->LoadAudios("Run");
 
 	initialPos = pbody->body->GetTransform();
 		
