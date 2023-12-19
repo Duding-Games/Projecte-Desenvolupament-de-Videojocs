@@ -300,8 +300,6 @@ bool Player::Update(float dt)
 		}
 	}
 
-
-
 	return true;
 }
 
@@ -351,7 +349,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::ENEMY:
-		isDying = true;
+		if (physB->listener->isAttacking) {
+			isDying = true;
+		}
 		isJumping = false;
 		LOG("Collision ENEMY");
 		break;

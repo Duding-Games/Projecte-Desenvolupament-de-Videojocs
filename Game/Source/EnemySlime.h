@@ -49,7 +49,6 @@ public:
 
 	bool isFacingLeft;
 	bool isDead = false;
-	bool isAttacking = false;
 
 	Animation* currentAnim;
 	DynArray<iPoint> lastPath;

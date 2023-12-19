@@ -69,6 +69,17 @@ bool EnemySlime::Update(float dt)
 	currentAnim = &idleAnim;
 	vel = b2Vec2(0, -GRAVITY_Y);
 
+	if (!isDead) {
+		if (isAttacking) currentAnim = &attackAnim;
+
+		Slimefinding(dt);
+	}
+
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+
+	pbody->body->SetLinearVelocity(vel);
+	
 	if (isDead) {
 		currentAnim = &dieAnim;
 		pbody->body->SetActive(false);
@@ -77,15 +88,6 @@ bool EnemySlime::Update(float dt)
 			dieAnim.Reset();
 		}
 	}
-
-	if (isAttacking) currentAnim = &attackAnim;
-
-	Slimefinding(dt);
-
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
-
-	pbody->body->SetLinearVelocity(vel);
 
 	currentAnim->Update();
 
@@ -161,7 +163,9 @@ bool EnemySlime::Slimefinding(float dt)
 
 		iPoint playerPos = app->map->WorldToMap(app->scene->GetPLayer()->position.x, app->scene->GetPLayer()->position.y);
 		playerPos.x += 1;
+		playerPos.y +=1;
 		iPoint enemyPos = app->map->WorldToMap(position.x,position.y);
+		enemyPos.y += 1;
 
 		app->map->pathfinding_walking->CreatePath(playerPos,enemyPos);
 		lastPath = *app->map->pathfinding_walking->GetLastPath();
@@ -207,6 +211,8 @@ bool EnemySlime::Slimefinding(float dt)
 	}
 
 	else {
+
+		isAttacking = false;
 
 		if (!isDead) {
 			currentAnim = &idleAnim;
