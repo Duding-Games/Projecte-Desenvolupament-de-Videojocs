@@ -84,6 +84,10 @@ bool Scene::Start()
 
 	/*app->audio->LoadMusic("backgroundMusic");*/
 
+	winSensor = app->physics->CreateRectangleSensor(3410, 345, 69, 92, bodyType::STATIC);
+	winSensor->ctype = ColliderType::WIN;
+	
+
 	return true;
 }
 

@@ -48,6 +48,7 @@ public:
 	int dashFxId;
 	int swordFxId;
 	int runFxId;
+	int winFxId;
 	int offsetTexY = 6;
 	bool isJumping = false;
 	bool isFacingLeft = false;

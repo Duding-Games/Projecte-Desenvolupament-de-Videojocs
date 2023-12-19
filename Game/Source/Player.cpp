@@ -78,6 +78,7 @@ bool Player::Start() {
 	dashFxId = app->audio->LoadAudios("Dash");
 	swordFxId = app->audio->LoadAudios("Sword");
 	runFxId = app->audio->LoadAudios("Run");
+	winFxId = app->audio->LoadAudios("Win");
 
 	initialPos = pbody->body->GetTransform();
 		
@@ -356,7 +357,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		isJumping = false;
 		LOG("Collision ENEMY");
 		break;
-
+	case ColliderType::WIN:
+		LOG("Collision WIN");
+		app->audio->PlayFx(winFxId);
+		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

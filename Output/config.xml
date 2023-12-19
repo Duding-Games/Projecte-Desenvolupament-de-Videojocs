@@ -28,6 +28,7 @@
 		<Sword path="Assets/Audio/Fx/SwordFx.wav"/>
 		<Kill path="Assets/Audio/Fx/EnemyDeadFx.wav"/>
 		<Run path="Assets/Audio/Fx/RunFx.ogg"/>
+		<Win path="Assets/Audio/Fx/WinFx.wav"/>
 	</audios>
 	<scene>
 		<map path="Assets/Maps/" name="MapGameTiled.tmx">

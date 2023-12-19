@@ -53,7 +53,7 @@ private:
 	Player* player;
 	EnemyBat* enemyBat;
 	EnemySlime* enemySlime;
-
+	PhysBody* winSensor;
 };
 
 #endif // __SCENE_H__
