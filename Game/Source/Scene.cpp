@@ -82,9 +82,7 @@ bool Scene::Start()
 		app->map->mapData.tileHeight,
 		app->map->mapData.tilesets.Count());
 
-	/*app->audio->LoadMusic("backgroundMusic");*/
-
-	winSensor = app->physics->CreateRectangleSensor(3410, 345, 69, 92, bodyType::STATIC);
+	winSensor = app->physics->CreateRectangleSensor(3405, 345, 69, 92, bodyType::STATIC);
 	winSensor->ctype = ColliderType::WIN;
 	
 
