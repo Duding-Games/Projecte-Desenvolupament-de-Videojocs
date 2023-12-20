@@ -61,8 +61,10 @@ bool EnemyBat::Start() {
 	pbody->body->SetFixedRotation(false);
 	pbody->body->SetGravityScale(0);
 
-	initialPos.p.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 3;
-	initialPos.p.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 3;
+
+	
+	initialPos.x = (pbody->body->GetTransform().p.x);
+	initialPos.y = (pbody->body->GetTransform().p.y);
 	isFacingLeft = true;
 
 	return true;
@@ -252,7 +254,7 @@ bool EnemyBat::Bathfinding(float dt)
 		currentAnim = &idleAnim;
 
 		if (isFacingLeft) {
-			if(position.x > initialPos.p.x - 40) {
+			if(position.x > initialPos.x - 40) {
 				vel.x -= speed * dt;
 			}
 			else {
@@ -262,7 +264,7 @@ bool EnemyBat::Bathfinding(float dt)
 
 
 		else{
-			if (position.x < initialPos.p.x + 40) {
+			if (position.x < initialPos.x + 40) {
 				vel.x += speed * dt;
 			}
 			else {

@@ -35,10 +35,14 @@ public:
 
 	void AddEntity(Entity* entity);
 
+	void DestroyDeadEnemies();
+
 public:
 
 	List<Entity*> entities;
 	List<Entity*> enemies;
+	List<iPoint> deadEnemies;
+
 
 
 };

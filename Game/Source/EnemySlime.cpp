@@ -57,8 +57,8 @@ bool EnemySlime::Start() {
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetFixedRotation(false);
 
-	initialPos.p.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 3;
-	initialPos.p.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 3;
+	initialPos.x = (pbody->body->GetTransform().p.x);
+	initialPos.y = (pbody->body->GetTransform().p.y);
 	isFacingLeft = true;
 
 	return true;
@@ -219,7 +219,7 @@ bool EnemySlime::Slimefinding(float dt)
 			currentAnim = &idleAnim;
 
 		if (isFacingLeft) {
-			if(position.x > initialPos.p.x - 40) {
+			if(position.x > initialPos.x - 40) {
 				vel.x -= speed * dt;
 			}
 			else {
@@ -229,7 +229,7 @@ bool EnemySlime::Slimefinding(float dt)
 
 
 		else{
-			if (position.x < initialPos.p.x + 40) {
+			if (position.x < initialPos.x + 40) {
 				vel.x += speed * dt;
 			}
 			else {

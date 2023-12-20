@@ -5,6 +5,8 @@
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Map.h"
+#include "Entity.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -152,4 +154,21 @@ bool EntityManager::PostUpdate() {
 		ret = item->data->PostUpdate();
 	}
 	return ret;
+}
+
+void EntityManager::DestroyDeadEnemies()
+{
+	ListItem<Entity*>* item;
+	for (item = enemies.start; item != NULL; item = item->next)
+	{
+		ListItem<iPoint>* destroyEnemy;
+		for (destroyEnemy = deadEnemies.start; destroyEnemy != NULL; destroyEnemy = destroyEnemy->next)
+		{
+			
+			if (app->map->WorldToMap(destroyEnemy->data.x, destroyEnemy->data.y) == app->map->WorldToMap(item->data->initialPos.x, item->data->initialPos.y))
+			{
+				item->data->active = false;
+			}
+		}
+	}
 }

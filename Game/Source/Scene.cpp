@@ -156,6 +156,42 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 	player->pbody->body->SetTransform(b2Vec2(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y)), 0);
 
+
+	//ELIMINAR TODOS LOS ENEMIGOS
+	/*ListItem<Entity*>* item;
+
+	for (item = app->entityManager->enemies.start; item != NULL; item = item->next)
+	{
+		item->data->active = false;
+		
+	}
+	app->entityManager->enemies.Clear();*/
+
+	//Spawnear todos los enemigos
+	/*pugi::xml_document configFile;
+	pugi::xml_parse_result file = configFile.load_file("config.xml");*/
+	
+	/*for (pugi::xml_node itemNode = configFile.child("config").child("scene").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+	{
+		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
+		enemyBat->parameters = itemNode;
+	}
+	for (pugi::xml_node itemNode = configFile.child("config").child("scene").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
+	{
+		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
+		enemySlime->parameters = itemNode;
+	}*/
+
+	//Lo de abajo para eliminar los que estaban muertos
+	for (pugi::xml_node itemNode = node.child("enemies").child("enemy"); itemNode; itemNode = itemNode.next_sibling("enemy"))
+	{
+		if (!itemNode.attribute("alive").as_bool()) {
+			app->entityManager->deadEnemies.Add(iPoint(itemNode.attribute("x").as_int(), itemNode.attribute("y").as_int()));
+		}
+	}
+	app->entityManager->DestroyDeadEnemies();
+
+
 	return true;
 }
 
@@ -172,8 +208,8 @@ bool Scene::SaveState(pugi::xml_node node) {
 	for (int i = 0; i < app->entityManager->enemies.Count(); i++)
 	{
 		pugi::xml_node enemy = enemiesNode.append_child("enemy");
-		enemy.append_attribute("x").set_value(app->entityManager->enemies.At(i)->data->position.x);
-		enemy.append_attribute("y").set_value(app->entityManager->enemies.At(i)->data->position.y);
+		enemy.append_attribute("x").set_value(app->entityManager->enemies.At(i)->data->initialPos.x);
+		enemy.append_attribute("y").set_value(app->entityManager->enemies.At(i)->data->initialPos.y);
 		enemy.append_attribute("alive").set_value(app->entityManager->enemies.At(i)->data->active);
 
 	}
