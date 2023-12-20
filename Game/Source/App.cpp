@@ -184,7 +184,16 @@ void App::FinishUpdate()
 			//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
 		}
 	}
-	
+	else {
+		double currentDt = frameTime.ReadMs();
+		if (32 > 0 && currentDt < 32) {
+			uint32 delay = (uint32)(32 - currentDt);
+
+			PerfTimer delayTimer = PerfTimer();
+			SDL_Delay(delay);
+			//LOG("We waited for %I32u ms and got back in %f ms",delay,delayTimer.ReadMs());
+		}
+	}
 
 	// Amount of frames since startup
 	frameCount++;
