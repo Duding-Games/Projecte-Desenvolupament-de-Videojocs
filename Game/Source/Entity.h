@@ -89,6 +89,8 @@ public:
 	bool isAttacking;
 	bool isDestroyed;
 
+	//b2Transform initialPos;
+
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...
 	iPoint position;       
