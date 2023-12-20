@@ -38,6 +38,8 @@ public:
 public:
 
 	List<Entity*> entities;
+	List<Entity*> enemies;
+
 
 };
 

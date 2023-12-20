@@ -83,6 +83,7 @@ bool EnemySlime::Update(float dt)
 	if (isDead) {
 		currentAnim = &dieAnim;
 		pbody->body->SetActive(false);
+		active = false;
 		if (dieAnim.HasFinished()) {
 			app->entityManager->DestroyEntity(pbody->listener);
 			dieAnim.Reset();
