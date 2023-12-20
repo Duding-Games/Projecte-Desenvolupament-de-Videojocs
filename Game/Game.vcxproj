@@ -113,7 +113,6 @@
     <ClCompile Include="Source\Textures.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\Window.cpp" />
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\EnemyBat.h" />
     <ClInclude Include="Source\EnemySlime.h" />

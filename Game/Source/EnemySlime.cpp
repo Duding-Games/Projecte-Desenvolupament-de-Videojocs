@@ -216,7 +216,7 @@ bool EnemySlime::Slimefinding(float dt)
 		}
 	
 	}
-
+	//doesn't work how it should
 	/*else {
 
 		isAttacking = false;
