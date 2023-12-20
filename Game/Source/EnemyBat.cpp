@@ -63,8 +63,8 @@ bool EnemyBat::Start() {
 
 
 	
-	initialPos.x = (pbody->body->GetTransform().p.x);
-	initialPos.y = (pbody->body->GetTransform().p.y);
+	initialPos.x = METERS_TO_PIXELS((pbody->body->GetTransform().p.x));
+	initialPos.y = METERS_TO_PIXELS((pbody->body->GetTransform().p.y));
 	isFacingLeft = true;
 
 	return true;
@@ -231,7 +231,9 @@ bool EnemyBat::Bathfinding(float dt)
 			}
 			isAttacking = false;
 			attackAnim.Reset();
-			pbody->body->SetLinearVelocity(vel);
+			
+				pbody->body->SetLinearVelocity(vel);
+			
 		}
 
 		if (app->map->pathfinding_flying->GetDistance(app->scene->GetPLayer()->position, position) <= 66){
@@ -244,7 +246,9 @@ bool EnemyBat::Bathfinding(float dt)
 
 			}
 			isAttacking = true;
-			pbody->body->SetLinearVelocity(vel);
+			
+				pbody->body->SetLinearVelocity(vel);
+			
 		}
 	
 	}
@@ -271,8 +275,9 @@ bool EnemyBat::Bathfinding(float dt)
 				isFacingLeft = true;
 			}
 		}
-
-		pbody->body->SetLinearVelocity(vel);
+		
+			pbody->body->SetLinearVelocity(vel);
+		
 	}
 	return true;
 
