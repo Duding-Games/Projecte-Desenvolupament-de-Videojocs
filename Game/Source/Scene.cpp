@@ -160,10 +160,23 @@ bool Scene::LoadState(pugi::xml_node node) {
 	//ELIMINAR TODOS LOS ENEMIGOS
 	ListItem<Entity*>* item;
 
-	for (item = app->entityManager->enemies.start; item != NULL; item = item->next)
+	/*for (item = app->entityManager->enemies.start; item != NULL; item = item->next)
 	{
 		item->data->active = false;
 		
+
+		
+		
+	}
+	app->entityManager->enemies.Clear()*/;
+
+	while (app->entityManager->enemies.Count() > 0) {
+
+		Entity* enemyToDelete = app->entityManager->enemies.At(app->entityManager->enemies.Count() - 1)->data;
+
+		//enemyToDelete->pbody->body->SetActive(false);
+		app->entityManager->DestroyEntity(enemyToDelete);
+		app->entityManager->enemies.Del(app->entityManager->enemies.At(app->entityManager->enemies.Count() - 1));
 	}
 	app->entityManager->enemies.Clear();
 	

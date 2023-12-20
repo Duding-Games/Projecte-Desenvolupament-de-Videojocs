@@ -72,6 +72,9 @@ bool EnemyBat::Start() {
 
 bool EnemyBat::Update(float dt)
 {
+
+	
+
 	currentAnim = &idleAnim;
 
 	vel = b2Vec2(0, 0);

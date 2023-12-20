@@ -89,6 +89,8 @@ public:
 	bool isAttacking;
 	bool isDestroyed;
 
+	PhysBody* pbody;
+
 	//b2Transform initialPos;
 
 	// Possible properties, it depends on how generic we

@@ -67,7 +67,9 @@ bool EnemySlime::Start() {
 bool EnemySlime::Update(float dt)
 {
 
-	
+	if (!active) {
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+	}
 
 	currentAnim = &idleAnim;
 	vel = b2Vec2(0, -GRAVITY_Y - 17.0f);

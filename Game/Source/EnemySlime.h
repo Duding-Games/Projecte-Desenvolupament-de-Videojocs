@@ -43,7 +43,7 @@ public:
 	b2Vec2 vel;
 	const char* texturePath;
 	SDL_Texture* texture = NULL;
-	PhysBody* pbody;
+	/*PhysBody* pbody;*/
 
 	int killFxId;
 
