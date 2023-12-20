@@ -32,7 +32,7 @@ bool Item::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
-	pbody = app->physics->CreateCircle(position.x + 8, position.y + 8, 4, bodyType::KINEMATIC);
+	pbody = app->physics->CreateRectangleSensor(position.x + 8, position.y + 8, 4, 4, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::ITEM;
 	pbody->listener = this;
 	
