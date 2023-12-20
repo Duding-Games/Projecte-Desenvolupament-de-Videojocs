@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "EnemyBat.h"
 #include "EnemySlime.h"
+#include "EntityManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -165,6 +166,18 @@ bool Scene::SaveState(pugi::xml_node node) {
 	pugi::xml_node camNode = node.append_child("player");
 	camNode.append_attribute("x").set_value(player->position.x);
 	camNode.append_attribute("y").set_value(player->position.y);
+
+	pugi::xml_node enemiesNode = node.append_child("enemies");
+
+	for (int i = 0; i < app->entityManager->enemies.Count(); i++)
+	{
+		pugi::xml_node enemy = enemiesNode.append_child("enemy");
+		enemy.append_attribute("x").set_value(app->entityManager->enemies.At(i)->data->position.x);
+		enemy.append_attribute("y").set_value(app->entityManager->enemies.At(i)->data->position.y);
+		enemy.append_attribute("alive").set_value(app->entityManager->enemies.At(i)->data->active);
+
+	}
+
 
 	return true;
 }

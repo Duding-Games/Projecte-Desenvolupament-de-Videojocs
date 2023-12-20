@@ -91,9 +91,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		break;
 	case EntityType::ENEMYBAT:
 		entity = new EnemyBat();
+		enemies.Add(entity);
 		break;
 	case EntityType::ENEMYSLIME:
 		entity = new EnemySlime();
+		enemies.Add(entity);
 		break;
 	default:
 		break;
