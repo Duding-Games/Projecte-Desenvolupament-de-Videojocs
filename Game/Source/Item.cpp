@@ -44,6 +44,10 @@ bool Item::Update(float dt)
 {
 	// L07 DONE 4: Add a physics to an item - update the position of the object from the physics. 
 	currentAnim = &coinAnim;
+	if (isDestroyed) {
+		app->entityManager->DestroyEntity(pbody->listener);
+		pbody->body->GetWorld()->DestroyBody(pbody->body);
+	}
 	coinAnim.Update();
 	return true;
 }

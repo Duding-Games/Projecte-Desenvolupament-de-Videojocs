@@ -331,8 +331,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		app->audio->PlayFx(pickCoinFxId);
-		app->entityManager->DestroyEntity(physB->listener);
-		physB->body->SetActive(false);
+		physB->listener->isDestroyed = true;
 		break;
 
 	case ColliderType::WALL:
