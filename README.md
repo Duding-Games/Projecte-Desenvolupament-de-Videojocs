@@ -1,4 +1,4 @@
-# Duding Games' second release by Núria Case & Albert Cifuentes!
+# Duding Games' SWORDFALL second release by Núria Case & Albert Cifuentes!
 
 We're making a project team of the subject “DESENVOLUPAMENT DE VIDEOJOCS” in CITM University: Videogames Design & Developments degree. The first job is to make a platformer game in SDL and Box2d.
 Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolupament-de-Videojocs">Click Here.</a>
@@ -30,7 +30,7 @@ Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolu
   <li>F5 - Save Player & Enemies positions</li>
   <li>F6 - Load Player & Enemies positions</li>
   <li>F9 - Enable/Disable Colliders & pathfinding visual paths</li>
-  <li>F10 - Enable/Disable GodMode</li>
+  <li>F10 - Enable/Disable GodMode (WASD to move the player, Arrows to move the camera)</li>
   <li>F11 - Enable/Disable Vsync</li>
   <li>R - Die and Reset Level</li>
 </ul>
@@ -44,6 +44,8 @@ Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolu
   <li>Character animations</li>
   <li>New level 1 implemented</li>
   <li>Parallax system</li>
+  <li>Pathfinding system with walking and flying enemies</li>
+  <li>Load and Save the player and enemies positions</li>
   <li>Implementation of a debug mode</li>
   <li>Code improvements for better performance and reliability</li>
 </ul>
