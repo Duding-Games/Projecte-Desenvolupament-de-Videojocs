@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Render.h"
 
+
 class PhysBody;
 
 enum class EntityType
@@ -86,10 +87,12 @@ public:
 	bool active = true;
 	pugi::xml_node parameters; 
 	bool isAttacking;
+	//b2Transform initialPos;
 
 	// Possible properties, it depends on how generic we
 	// want our Entity class, maybe it's not renderable...
 	iPoint position;       
+	iPoint initialPos;       
 	bool renderable = true;
 };
 

@@ -52,13 +52,14 @@ public:
 
 	Animation* currentAnim;
 	DynArray<iPoint> lastPath;
+	
 
 private:
 	Animation idleAnim;
 	Animation dieAnim;
 	Animation attackAnim;
 
-	b2Transform initialPos;
+	
 };
 
 #endif // __ENEMY_H__
