@@ -66,6 +66,9 @@ bool EnemySlime::Start() {
 
 bool EnemySlime::Update(float dt)
 {
+
+	
+
 	currentAnim = &idleAnim;
 	vel = b2Vec2(0, -GRAVITY_Y);
 

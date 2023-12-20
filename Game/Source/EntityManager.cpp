@@ -79,7 +79,7 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type)
+Entity* EntityManager::CreateEntity(EntityType type, bool doStart)
 {
 	Entity* entity = nullptr; 
 
@@ -104,6 +104,11 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	}
 
 	entities.Add(entity);
+	if (doStart) {
+		entity->Awake();
+		entity->Start();
+	}
+
 
 	return entity;
 }
@@ -170,5 +175,13 @@ void EntityManager::DestroyDeadEnemies()
 				item->data->active = false;
 			}
 		}
+	}
+
+	for (item = enemies.start; item != NULL; item = item->next)
+	{
+		if (item->data->active) {
+			item->data->Start();
+		}
+	
 	}
 }

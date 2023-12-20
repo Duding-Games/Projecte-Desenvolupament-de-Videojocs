@@ -158,29 +158,34 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 
 	//ELIMINAR TODOS LOS ENEMIGOS
-	/*ListItem<Entity*>* item;
+	ListItem<Entity*>* item;
 
 	for (item = app->entityManager->enemies.start; item != NULL; item = item->next)
 	{
 		item->data->active = false;
 		
 	}
-	app->entityManager->enemies.Clear();*/
+	app->entityManager->enemies.Clear();
 
 	//Spawnear todos los enemigos
-	/*pugi::xml_document configFile;
-	pugi::xml_parse_result file = configFile.load_file("config.xml");*/
+	pugi::xml_document configFile;
+	pugi::xml_parse_result file = configFile.load_file("config.xml");
 	
-	/*for (pugi::xml_node itemNode = configFile.child("config").child("scene").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+	for (pugi::xml_node itemNode = configFile.child("config").child("scene").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
 	{
 		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
 		enemyBat->parameters = itemNode;
+		enemyBat->Awake();
+		enemyBat->Start();
+		
 	}
 	for (pugi::xml_node itemNode = configFile.child("config").child("scene").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
 	{
 		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
 		enemySlime->parameters = itemNode;
-	}*/
+		enemySlime->Awake();
+		enemySlime->Start();
+	}
 
 	//Lo de abajo para eliminar los que estaban muertos
 	for (pugi::xml_node itemNode = node.child("enemies").child("enemy"); itemNode; itemNode = itemNode.next_sibling("enemy"))
