@@ -107,7 +107,7 @@ bool EnemyBat::Update(float dt)
 	if (isDying) {
 		isAttacking = false;
 		pbody->body->SetGravityScale(1);
-		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y));
+		pbody->body->SetLinearVelocity(b2Vec2(0, -GRAVITY_Y - 17.0f));
 		currentAnim = &dieAnim;
 
 	}
@@ -177,7 +177,7 @@ void EnemyBat::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::SPIKES:
-
+		isDead = true;
 		LOG("Collision SPIKES");
 		break;
 

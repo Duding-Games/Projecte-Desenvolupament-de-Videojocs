@@ -45,17 +45,19 @@
 		<enemyBat x = "2852" y = "207" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
 		
 		
-		<enemySlime x="830" y="276" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+		<enemySlime x="825" y="276" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 		<enemySlime x="1587" y="483" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 		<enemySlime x="2208" y="345" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 		<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-		<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+
 		
 		
 		<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>
-		<item x="420" y="380" texturepath="Assets/Textures/coin.png"/>
+		<item x="405" y="380" texturepath="Assets/Textures/coin.png"/>
+		<item x="420" y="365" texturepath="Assets/Textures/coin.png"/>
+		<item x="435" y="380" texturepath="Assets/Textures/coin.png"/>
 		<item x="3370" y="377" texturepath="Assets/Textures/coin.png"/>
 		<item x="3385" y="377" texturepath="Assets/Textures/coin.png"/>
 		<item x="3400" y="377" texturepath="Assets/Textures/coin.png"/>

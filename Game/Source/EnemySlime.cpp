@@ -70,7 +70,7 @@ bool EnemySlime::Update(float dt)
 	
 
 	currentAnim = &idleAnim;
-	vel = b2Vec2(0, -GRAVITY_Y);
+	vel = b2Vec2(0, -GRAVITY_Y - 17.0f);
 
 	if (!isDead) {
 		if (isAttacking) currentAnim = &attackAnim;
@@ -215,7 +215,7 @@ bool EnemySlime::Slimefinding(float dt)
 	
 	}
 
-	else {
+	/*else {
 
 		isAttacking = false;
 
@@ -244,7 +244,7 @@ bool EnemySlime::Slimefinding(float dt)
 		pbody->body->SetLinearVelocity(vel);
 		}
 		
-	}
+	}*/
 	return true;
 
 }
