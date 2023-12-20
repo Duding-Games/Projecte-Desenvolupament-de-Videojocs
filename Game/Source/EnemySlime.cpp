@@ -147,6 +147,7 @@ void EnemySlime::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::SPIKES:
+		isDead = true;
 		LOG("Collision SPIKES");
 		break;
 

@@ -42,6 +42,7 @@
 		<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
 		<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>
+		<e_tutorial texturepath="Assets/Textures/E_tutorial.png"/>
 
 
 

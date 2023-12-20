@@ -64,6 +64,8 @@ bool Scene::Awake(pugi::xml_node& config)
 		texturePath = config.child("map").child("mouseTileTex").attribute("texturepath").as_string();
 	}
 
+	texture = config.child("e_tutorial").attribute("texturepath").as_string();
+
 	return ret;
 }
 // Called before the first frame
@@ -72,9 +74,7 @@ bool Scene::Start()
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/background_music.ogg");
 
-	//Get the size of the window
-
-	//Get the size of the texture
+	tex = app->tex->Load(texture);
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width,
@@ -113,8 +113,8 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->godmode)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
 
-	// Renders the image in the center of the screen 
-	//app->render->DrawTexture(img, (int)textPosX, (int)textPosY);
+	// Render tutorial image
+	app->render->DrawTexture(tex, 1104, 207, SDL_FLIP_NONE);
 
 	//Request App to Load / Save when pressing the keys F5(save) / F6(load)
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN) app->SaveRequest();
@@ -166,6 +166,8 @@ bool Scene::LoadState(pugi::xml_node node) {
 		
 	}
 	app->entityManager->enemies.Clear();
+	
+	
 
 	//Spawnear todos los enemigos
 	pugi::xml_document configFile;

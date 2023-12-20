@@ -45,6 +45,8 @@ public:
 	Player* GetPLayer();
 
 	SString texturePath;
+	const char* texture;
+	SDL_Texture* tex;
 
 private:
 	float textPosX, textPosY = 0;
@@ -54,6 +56,7 @@ private:
 	EnemyBat* enemyBat;
 	EnemySlime* enemySlime;
 	PhysBody* winSensor;
+	
 };
 
 #endif // __SCENE_H__
