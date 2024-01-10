@@ -6,7 +6,7 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="184" y="452" />
+		<player x="445" y="384" />
 		<enemies>
 			<enemy x="414" y="414" alive="false" />
 			<enemy x="897" y="138" alive="true" />
@@ -17,12 +17,11 @@
 			<enemy x="31" y="9" alive="false" />
 			<enemy x="44" y="6" alive="false" />
 			<enemy x="51" y="7" alive="false" />
-			<enemy x="51" y="7" alive="false" />
 		</enemies>
 	</scene>
 	<:anonymous />
 	<entitymanager />
 	<renderer>
-		<camera x="-20" y="-650" />
+		<camera x="-403" y="-537" />
 	</renderer>
 </game_state>
