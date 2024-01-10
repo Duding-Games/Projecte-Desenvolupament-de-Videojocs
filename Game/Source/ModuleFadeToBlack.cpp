@@ -1,13 +1,18 @@
 #include "ModuleFadeToBlack.h"
 
-#include "Application.h"
-#include "ModuleRender.h"
+#include "App.h"
+#include "Window.h"
 #include "Module.h"
 #include "SDL/include/SDL_render.h"
+#include "Log.h"
 
-ModuleFadeToBlack::ModuleFadeToBlack(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleFadeToBlack::ModuleFadeToBlack(App* app, bool start_enabled) : Module(app, start_enabled)
 {
-	screenRect = { 0, 0, SCREEN_WIDTH * SCREEN_SIZE, SCREEN_HEIGHT * SCREEN_SIZE };
+
+	uint winW, winH;
+	app->win->GetWindowSize(winW, winH);
+	
+	screenRect = { 0, 0, winW * app->win->GetScale(), winH * app->win->GetScale()};
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
@@ -22,14 +27,14 @@ bool ModuleFadeToBlack::Start()
 	currentStep = Fade_Step::NONE;
 
 	// Enable blending mode for transparency
-	SDL_SetRenderDrawBlendMode(App->renderer->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->renderer->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }
 
-update_status ModuleFadeToBlack::Update()
+bool ModuleFadeToBlack::Update()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return update_status::UPDATE_CONTINUE;
+	if (currentStep == Fade_Step::NONE) return true;
 
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
@@ -52,21 +57,21 @@ update_status ModuleFadeToBlack::Update()
 		}
 	}
 
-	return update_status::UPDATE_CONTINUE;
+	return true;
 }
 
-update_status ModuleFadeToBlack::PostUpdate()
+bool ModuleFadeToBlack::PostUpdate()
 {
 	// Exit this function if we are not performing a fade
-	if (currentStep == Fade_Step::NONE) return update_status::UPDATE_CONTINUE;
+	if (currentStep == Fade_Step::NONE) return true;
 
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
 	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(App->renderer->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
-	SDL_RenderFillRect(App->renderer->renderer, &screenRect);
+	SDL_SetRenderDrawColor(app->renderer->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	SDL_RenderFillRect(app->renderer->renderer, &screenRect);
 
-	return update_status::UPDATE_CONTINUE;
+	return true;
 }
 
 bool ModuleFadeToBlack::FadeToBlack(Module* moduleToDisable, Module* moduleToEnable, float frames)
