@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "EnemyBat.h"
 #include "EnemySlime.h"
+#include "FinalBoss.h"
 #include "EntityManager.h"
 
 #include "Defs.h"
@@ -52,6 +53,12 @@ bool Scene::Awake(pugi::xml_node& config)
 	{
 		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
 		enemySlime->parameters = itemNode;
+	}
+
+	for (pugi::xml_node itemNode = config.child("finalBoss"); itemNode; itemNode = itemNode.next_sibling("finalBoss"))
+	{
+		FinalBoss* finalBoss = (FinalBoss*)app->entityManager->CreateEntity(EntityType::FINALBOSS);
+		finalBoss->parameters = itemNode;
 	}
 
 	if (config.child("map")) {

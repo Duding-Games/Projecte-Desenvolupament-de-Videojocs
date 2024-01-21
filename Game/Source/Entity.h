@@ -15,6 +15,7 @@ enum class EntityType
 	ITEM,
 	ENEMYBAT,
 	ENEMYSLIME,
+	FINALBOSS,
 	UNKNOWN
 };
 

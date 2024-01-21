@@ -49,6 +49,9 @@
 		<enemySlime x="1587" y="483" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 		<enemySlime x="2208" y="345" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 		<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+		
+		
+		<finalBoss x="600" y="400" texturepath="Assets/Textures/Enemies/FinalBoss/FinalBoss.png" speed="0.1"/>
 
 		
 		
@@ -197,5 +200,13 @@
 			<frame x="64" y="256" w="64" h="64"/>
 			<frame x="128" y="256" w="64" h="64"/>
 		</dyingAnimSlime>
+		<idleAnimBoss loop="true" speed="0.1">
+			<frame x="0" y="0" w="288" h="160"/>
+			<frame x="288" y="0" w="288" h="160"/>
+			<frame x="576" y="0" w="288" h="160"/>
+			<frame x="864" y="0" w="288" h="160"/>
+			<frame x="1152" y="0" w="288" h="160"/>
+			<frame x="1440" y="0" w="288" h="160"/>
+		</idleAnimBoss>
 	</animations>
 </config>

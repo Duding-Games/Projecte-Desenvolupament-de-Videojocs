@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "EnemyBat.h"
 #include "EnemySlime.h"
+#include "FinalBoss.h"
 #include "Item.h"
 
 struct SDL_Texture;
@@ -55,6 +56,7 @@ private:
 	Player* player;
 	EnemyBat* enemyBat;
 	EnemySlime* enemySlime;
+	FinalBoss* finalBoss;
 	PhysBody* winSensor;
 	
 };

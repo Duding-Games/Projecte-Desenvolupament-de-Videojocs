@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "EnemyBat.h"
 #include "EnemySlime.h"
+#include "FinalBoss.h"
 #include "App.h"
 #include "Textures.h"
 #include "Scene.h"
@@ -97,6 +98,10 @@ Entity* EntityManager::CreateEntity(EntityType type, bool doStart)
 		break;
 	case EntityType::ENEMYSLIME:
 		entity = new EnemySlime();
+		enemies.Add(entity);
+		break;
+	case EntityType::FINALBOSS:
+		entity = new FinalBoss();
 		enemies.Add(entity);
 		break;
 	default:
