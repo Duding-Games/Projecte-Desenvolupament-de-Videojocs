@@ -53,12 +53,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(entityManager);
-<<<<<<< Updated upstream
 	AddModule(fadeToBlack);
-=======
 	AddModule(guiManager);
 
->>>>>>> Stashed changes
 	// Render last to swap buffer
 	AddModule(render);
 

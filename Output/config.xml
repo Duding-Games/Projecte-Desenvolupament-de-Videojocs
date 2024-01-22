@@ -50,8 +50,10 @@
 			<enemySlime x="1587" y="483" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 			<enemySlime x="2208" y="345" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
 			<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-	
-		
+
+
+			<heart x="230" y="450" texturepath="Assets/Textures/hearts.png"/>
+			
 			<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
 			<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
 			<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>
@@ -147,7 +149,7 @@
 			<frame x="200" y="333" w="50" h="37"/>
 		</dieAnim>
 		
-		<coinAnim loop="true" speed="0.1">
+		<coinAnim loop="true" speed="0.2">
 			<frame x="0" y="0" w="16" h="16"/>
 			<frame x="16" y="0" w="16" h="16"/>
 			<frame x="32" y="0" w="16" h="16"/>
@@ -157,6 +159,15 @@
 			<frame x="32" y="16" w="16" h="16"/>
 			<frame x="48" y="16" w="16" h="16"/>
 		</coinAnim>
+
+		<heartAnim loop="true" speed="0.2">
+			<frame x="0" y="0" w="18" h="18"/>
+			<frame x="18" y="0" w="18" h="18"/>
+			<frame x="36" y="0" w="18" h="18"/>
+			<frame x="54" y="0" w="18" h="18"/>
+			<frame x="72" y="0" w="18" h="18"/>
+			<frame x="90" y="0" w="18" h="18"/>
+		</heartAnim>
 		
 		<idleAnimBat loop="true" speed="0.1">
 			<frame x="0" y="19" w="20" h="20"/>

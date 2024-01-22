@@ -55,11 +55,10 @@ bool FinalBoss::Start() {
 
 	killFxId = app->audio->LoadAudios("Kill");
 
-	pbody = app->physics->CreateCircle(position.x, position.y, 8, bodyType::DYNAMIC);
+	pbody = app->physics->CreateCircle(position.x, position.y, 40, bodyType::DYNAMIC);
 	pbody->listener = this;
-	pbody->ctype = ColliderType::ENEMY;
+	pbody->ctype = ColliderType::BOSS;
 	pbody->body->SetFixedRotation(false);
-
 	initialPos.x = (pbody->body->GetTransform().p.x);
 	initialPos.y = (pbody->body->GetTransform().p.y);
 	isFacingLeft = true;
@@ -83,8 +82,8 @@ bool FinalBoss::Update(float dt)
 		Bossfinding(dt);
 	}
 
-	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
-	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
+	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 120;
+	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 95;
 
 	pbody->body->SetLinearVelocity(vel);
 	

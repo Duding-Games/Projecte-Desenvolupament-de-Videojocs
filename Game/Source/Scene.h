@@ -6,6 +6,7 @@
 #include "EnemyBat.h"
 #include "EnemySlime.h"
 #include "Item.h"
+#include "Heart.h"
 #include "GuiControl.h"
 #include "GuiControlButton.h"
 

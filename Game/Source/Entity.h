@@ -13,6 +13,7 @@ enum class EntityType
 {
 	PLAYER,
 	ITEM,
+	HEART,
 	ENEMYBAT,
 	ENEMYSLIME,
 	FINALBOSS,

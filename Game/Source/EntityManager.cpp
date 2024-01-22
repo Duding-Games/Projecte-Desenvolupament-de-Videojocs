@@ -92,6 +92,9 @@ Entity* EntityManager::CreateEntity(EntityType type, bool doStart)
 	case EntityType::ITEM:
 		entity = new Item();
 		break;
+	case EntityType::HEART:
+		entity = new Heart();
+		break;
 	case EntityType::ENEMYBAT:
 		entity = new EnemyBat();
 		enemies.Add(entity);
