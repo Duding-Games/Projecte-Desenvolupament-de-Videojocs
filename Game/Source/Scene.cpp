@@ -41,16 +41,16 @@ bool Scene::Awake(pugi::xml_node& config)
 			item->parameters = itemNode;
 		}
 
-	for (pugi::xml_node itemNode = config.child("lvl1").child("heart"); itemNode; itemNode = itemNode.next_sibling("heart"))
-	{
-		Heart* heart = (Heart*)app->entityManager->CreateEntity(EntityType::HEART);
-		heart->parameters = itemNode;
-	}
+		for (pugi::xml_node itemNode = config.child("lvl1").child("heart"); itemNode; itemNode = itemNode.next_sibling("heart"))
+		{
+			Heart* heart = (Heart*)app->entityManager->CreateEntity(EntityType::HEART);
+			heart->parameters = itemNode;
+		}
 
-	if (config.child("lvl1").child("player")) {
-		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("lvl1").child("player");
-	}
+		if (config.child("lvl1").child("player")) {
+			player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
+			player->parameters = config.child("lvl1").child("player");
+		}
 
 		for (pugi::xml_node itemNode = config.child("lvl1").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
 		{

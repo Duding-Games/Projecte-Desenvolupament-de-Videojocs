@@ -21,21 +21,24 @@ Heart::~Heart() {}
 
 bool Heart::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
+	
 
 	return true;
 }
 
 bool Heart::Start() {
 
+
+position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	pbody = app->physics->CreateRectangleSensor(position.x + 8, position.y + 8, 4, 4, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::HEART;
 	pbody->listener = this;
 	
+	currentAnim = &heartAnim;
 
 	return true;
 }
