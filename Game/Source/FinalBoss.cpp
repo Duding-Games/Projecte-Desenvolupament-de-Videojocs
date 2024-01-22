@@ -20,6 +20,9 @@ FinalBoss::FinalBoss() : Entity(EntityType::FINALBOSS)
 {
 	name.Create("FinalBoss");
 
+	//spawn
+	spawnAnim.LoadAnimations("spawnAnimBoss");
+
 	//idle
 	idleAnim.LoadAnimations("idleAnimBoss");
 
