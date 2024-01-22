@@ -16,6 +16,24 @@
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
+	
+}
+
+Player::~Player() {
+
+}
+
+bool Player::Awake() {
+
+	
+
+	return true;
+}
+
+bool Player::Start() {
+
+
+
 	name.Create("Player");
 
 	//idle
@@ -24,8 +42,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 
 	//run
 	runAnim.LoadAnimations("runAnim");
-
-
 
 	//jump
 	jumpAnim.LoadAnimations("jumpAnim");
@@ -45,13 +61,6 @@ Player::Player() : Entity(EntityType::PLAYER)
 	//die
 	dieAnim.LoadAnimations("dieAnim");
 
-}
-
-Player::~Player() {
-
-}
-
-bool Player::Awake() {
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
@@ -61,10 +70,6 @@ bool Player::Awake() {
 	jumpForce = parameters.attribute("jumpForce").as_float();
 	timerDash = Timer();
 
-	return true;
-}
-
-bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -82,7 +87,7 @@ bool Player::Start() {
 	winFxId = app->audio->LoadAudios("Win");
 
 	initialPos = pbody->body->GetTransform();
-		
+	currentAnim = &idleAnim;
 
 	return true;
 }

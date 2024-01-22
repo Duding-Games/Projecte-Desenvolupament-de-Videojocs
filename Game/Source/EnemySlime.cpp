@@ -18,6 +18,22 @@
 
 EnemySlime::EnemySlime() : Entity(EntityType::ENEMYSLIME)
 {
+	
+
+}
+
+EnemySlime::~EnemySlime() {
+
+}
+
+bool EnemySlime::Awake() {
+
+	
+
+	return true;
+}
+
+bool EnemySlime::Start() {
 	name.Create("EnemySlime");
 
 	//idle
@@ -28,26 +44,12 @@ EnemySlime::EnemySlime() : Entity(EntityType::ENEMYSLIME)
 
 	//attacking
 	attackAnim.LoadAnimations("attackAnimSlime");
-
-}
-
-EnemySlime::~EnemySlime() {
-
-}
-
-bool EnemySlime::Awake() {
+	//initilize textures
 
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	speed = parameters.attribute("speed").as_float();
-
-	return true;
-}
-
-bool EnemySlime::Start() {
-
-	//initilize textures
 	texture = app->tex->Load(texturePath);
 
 	killFxId = app->audio->LoadAudios("Kill");
@@ -60,6 +62,7 @@ bool EnemySlime::Start() {
 	initialPos.x = (pbody->body->GetTransform().p.x);
 	initialPos.y = (pbody->body->GetTransform().p.y);
 	isFacingLeft = true;
+	currentAnim = &idleAnim;
 
 	return true;
 }

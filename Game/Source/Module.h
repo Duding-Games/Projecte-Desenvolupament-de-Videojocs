@@ -45,7 +45,7 @@ public:
 
 	void Init()
 	{
-		active = true;
+		/*active = true;*/
 	}
 
 	// Called before render is available

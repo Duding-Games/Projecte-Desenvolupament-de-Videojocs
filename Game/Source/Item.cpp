@@ -12,29 +12,31 @@
 
 Item::Item() : Entity(EntityType::ITEM)
 {
-	name.Create("item");
-
-	coinAnim.LoadAnimations("coinAnim");
+	
 }
 
 Item::~Item() {}
 
 bool Item::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
+	
 
 	return true;
 }
 
 bool Item::Start() {
+	name.Create("item");
 
+	coinAnim.LoadAnimations("coinAnim");
 	//initilize textures
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
 	texture = app->tex->Load(texturePath);
 	pbody = app->physics->CreateRectangleSensor(position.x + 8, position.y + 8, 4, 4, bodyType::KINEMATIC);
 	pbody->ctype = ColliderType::ITEM;
 	pbody->listener = this;
+	currentAnim = &coinAnim;
 	
 
 	return true;

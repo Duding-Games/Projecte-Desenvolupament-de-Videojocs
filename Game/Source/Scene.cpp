@@ -32,14 +32,14 @@ bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-
-	// iterate all objects in the scene
-	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("lvl1").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
-	{
-		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
-		item->parameters = itemNode;
-	}
+	//if (app->scene->IsEnabled() == true) {
+		// iterate all objects in the scene
+		// Check https://pugixml.org/docs/quickstart.html#access
+		for (pugi::xml_node itemNode = config.child("lvl1").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+		{
+			Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
+			item->parameters = itemNode;
+		}
 
 	for (pugi::xml_node itemNode = config.child("lvl1").child("heart"); itemNode; itemNode = itemNode.next_sibling("heart"))
 	{
@@ -52,39 +52,43 @@ bool Scene::Awake(pugi::xml_node& config)
 		player->parameters = config.child("lvl1").child("player");
 	}
 
-	for (pugi::xml_node itemNode = config.child("lvl1").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
-	{
-		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
-		enemyBat->parameters = itemNode;
-	}
+		for (pugi::xml_node itemNode = config.child("lvl1").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+		{
+			EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
+			enemyBat->parameters = itemNode;
+		}
 
-	for (pugi::xml_node itemNode = config.child("lvl1").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
-	{
-		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
-		enemySlime->parameters = itemNode;
-	}
+		for (pugi::xml_node itemNode = config.child("lvl1").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
+		{
+			EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
+			enemySlime->parameters = itemNode;
+		}
 
-	if (config.child("map")) {
-		//Get the map name from the config file and assigns the value in the module
-		app->map->name = config.child("map").attribute("name").as_string();
-		app->map->path = config.child("map").attribute("path").as_string();
-	}
+		if (config.child("map")) {
+			//Get the map name from the config file and assigns the value in the module
+			app->map->name = config.child("map").attribute("name").as_string();
+			app->map->path = config.child("map").attribute("path").as_string();
+		}
 
-	if (config.child("map").child("mouseTileTex")) {
-		texturePath = config.child("map").child("mouseTileTex").attribute("texturepath").as_string();
-	}
+		if (config.child("map").child("mouseTileTex")) {
+			texturePath = config.child("map").child("mouseTileTex").attribute("texturepath").as_string();
+		}
 
-	texture = config.child("e_tutorial").attribute("texturepath").as_string();
+		texture = config.child("e_tutorial").attribute("texturepath").as_string();
 
+		//}
 	return ret;
 }
 // Called before the first frame
 bool Scene::Start()
 {
+	
+	//Awake(config);
+
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/background_music.ogg");
 
-	tex = app->tex->Load(texture);
+	/*tex = app->tex->Load(texture);*/
 
 	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
 		app->map->mapData.width,

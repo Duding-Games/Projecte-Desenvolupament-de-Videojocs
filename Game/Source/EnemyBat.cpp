@@ -18,6 +18,7 @@
 
 EnemyBat::EnemyBat() : Entity(EntityType::ENEMYBAT)
 {
+	
 	name.Create("EnemyBat");
 
 	//idle
@@ -40,16 +41,20 @@ EnemyBat::~EnemyBat() {
 
 bool EnemyBat::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	speed = parameters.attribute("speed").as_float();
+	
 
 	return true;
 }
 
 bool EnemyBat::Start() {
 
+	
+
+
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
+	speed = parameters.attribute("speed").as_float();
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 
@@ -66,6 +71,8 @@ bool EnemyBat::Start() {
 	initialPos.x = METERS_TO_PIXELS((pbody->body->GetTransform().p.x));
 	initialPos.y = METERS_TO_PIXELS((pbody->body->GetTransform().p.y));
 	isFacingLeft = true;
+
+	currentAnim = &idleAnim;
 
 	return true;
 }

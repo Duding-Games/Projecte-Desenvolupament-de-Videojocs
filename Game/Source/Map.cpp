@@ -207,7 +207,20 @@ bool Map::CleanUp()
         RELEASE(layerItem->data);
         layerItem = layerItem->next;
     }
+    mapData.maplayers.Clear();
 
+   /* ListItem<PhysBody*>* colliderItem;
+    colliderItem = colliderList.start;
+
+    while (colliderItem != NULL)
+    {
+        RELEASE(colliderItem->data);
+        colliderItem = colliderItem->next;
+    }
+    colliderList.Clear();*/
+
+
+    
     return true;
 }
 
@@ -517,6 +530,8 @@ bool Map::LoadCollisions(std::string collisionLayer)
                     if (gid == tileset->firstgid + 0) {
                         PhysBody* c1 = app->physics->CreateRectangle(pos.x + 12.5, pos.y + 20, 13, 5, STATIC);
                         c1->ctype = ColliderType::SPIKES;
+                        //colliderList.Add(c1);
+            
                     }
                    
                 }
@@ -542,10 +557,12 @@ bool Map::LoadCollisionsObject()
             if (mapObjectsItem->data->id == 18) { //floors
                 PhysBody* c1 = app->physics->CreateRectangle(object->x + object->height / 2, object->y + object->width / 2, object->height, object->width, STATIC);
                 c1->ctype = ColliderType::PLATFORM;
+                //colliderList.Add(c1);
             }
             if (mapObjectsItem->data->id == 19) { //walls
                 PhysBody* c1 = app->physics->CreateRectangle(object->x + object->height / 2, object->y + object->width / 2, object->height, object->width, STATIC);
                 c1->ctype = ColliderType::WALL;
+               /* colliderList.Add(c1);*/
             }
            
         }

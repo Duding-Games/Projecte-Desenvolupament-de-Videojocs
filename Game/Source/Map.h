@@ -119,6 +119,7 @@ struct MapData
 
 	List<MapLayer*> maplayers;
 	List<MapObjects*> mapObjects;
+	
 };
 
 class Map : public Module
@@ -167,6 +168,7 @@ private:
 
 public: 
 
+	List<PhysBody*> colliderList;
 	MapData mapData;
 	SString name;
 	SString path;

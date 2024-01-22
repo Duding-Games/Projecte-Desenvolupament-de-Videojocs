@@ -57,7 +57,14 @@ bool ModuleFadeToBlack::Update(float dt)
 			moduleToDisable->Disable();
 			app->map->Disable();
 			app->entityManager->Disable();
+
+			pugi::xml_document configFile;
+			pugi::xml_node config;
+			pugi::xml_parse_result file = configFile.load_file("config.xml");
+
+			config = configFile.child("config").child(moduleToEnable->name.GetString());
 			
+			moduleToEnable->Awake(config);
 			moduleToEnable->Enable();
 			app->map->Enable();
 			app->entityManager->Enable();

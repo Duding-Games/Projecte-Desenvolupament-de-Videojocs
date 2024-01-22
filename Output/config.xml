@@ -74,7 +74,7 @@
 		</lvl1>
 
 		<lvl2>
-			<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
+			<player x="100" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
 			
 			<finalBoss x="600" y="400" texturepath="Assets/Textures/Enemies/FinalBoss/FinalBoss.png" speed="0.1"/>
 			
