@@ -5,6 +5,8 @@
 #include "Render.h"
 #include "Window.h"
 #include "Scene.h"
+#include "Scene2.h"
+#include "ModuleFadeToBlack.h"
 #include "Map.h"
 #include "Player.h"
 #include "EnemyBat.h"
@@ -112,6 +114,16 @@ bool Scene::Update(float dt)
 
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT && app->godmode)
 		app->render->camera.x -= (int)ceil(camSpeed * dt);
+
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+		app->fadeToBlack->FadeToBlack(this, this);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+		app->fadeToBlack->FadeToBlack(this, app->scene2);
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+		app->fadeToBlack->FadeToBlack(this, this);
+	}
 
 	// Render tutorial image
 	app->render->DrawTexture(tex, 1104, 207, SDL_FLIP_NONE);

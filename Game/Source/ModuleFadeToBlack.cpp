@@ -1,4 +1,6 @@
 #include "ModuleFadeToBlack.h"
+#include "Map.h"
+#include "EntityManager.h"
 
 #include "App.h"
 #include "Window.h"
@@ -9,14 +11,9 @@
 ModuleFadeToBlack::ModuleFadeToBlack(App* app, bool start_enabled) : Module(app, start_enabled)
 {
 
-	uint winW, winH;
-	app->win->GetWindowSize(winW, winH);
 
-	// Convertir winW y winH a int
-	int screenWidth = static_cast<int>(winW * app->win->GetScale());
-	int screenHeight = static_cast<int>(winH * app->win->GetScale());
+
 	
-	screenRect = { 0, 0, screenWidth, screenHeight};
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
@@ -28,6 +25,16 @@ bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
 
+
+	uint winW, winH;
+	app->win->GetWindowSize(winW, winH);
+
+	// Convertir winW y winH a int
+	int screenWidth = static_cast<int>(winW * app->win->GetScale());
+	int screenHeight = static_cast<int>(winH * app->win->GetScale());
+
+	screenRect = { 0, 0, screenWidth, screenHeight };
+
 	currentStep = Fade_Step::NONE;
 
 	// Enable blending mode for transparency
@@ -35,7 +42,7 @@ bool ModuleFadeToBlack::Start()
 	return true;
 }
 
-bool ModuleFadeToBlack::Update()
+bool ModuleFadeToBlack::Update(float dt)
 {
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
@@ -45,9 +52,15 @@ bool ModuleFadeToBlack::Update()
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
 		{
+
 			// TODO 1: Enable / Disable the modules received when FadeToBlacks(...) gets called
 			moduleToDisable->Disable();
+			app->map->Disable();
+			app->entityManager->Disable();
+			
 			moduleToEnable->Enable();
+			app->map->Enable();
+			app->entityManager->Enable();
 
 			currentStep = Fade_Step::FROM_BLACK;
 		}

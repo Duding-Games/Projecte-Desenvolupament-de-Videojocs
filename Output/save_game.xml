@@ -6,22 +6,16 @@
 	<audio />
 	<:anonymous />
 	<scene>
-		<player x="445" y="384" />
-		<enemies>
-			<enemy x="414" y="414" alive="false" />
-			<enemy x="897" y="138" alive="true" />
-			<enemy x="1564" y="45" alive="true" />
-			<enemy x="2024" y="322" alive="true" />
-			<enemy x="2851" y="207" alive="true" />
-			<enemy x="16" y="5" alive="false" />
-			<enemy x="31" y="9" alive="false" />
-			<enemy x="44" y="6" alive="false" />
-			<enemy x="51" y="7" alive="false" />
-		</enemies>
+		<player x="151" y="420" />
+		<enemies />
+	</scene>
+	<scene>
+		<player x="151" y="420" />
+		<enemies />
 	</scene>
 	<:anonymous />
 	<entitymanager />
 	<renderer>
-		<camera x="-403" y="-537" />
+		<camera x="-20" y="-609" />
 	</renderer>
 </game_state>

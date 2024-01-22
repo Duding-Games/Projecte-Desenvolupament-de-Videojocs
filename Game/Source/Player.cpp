@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
+#include "Scene2.h"
 #include "Log.h"
 #include "Point.h"
 #include "Physics.h"
@@ -94,12 +95,7 @@ bool Player::Update(float dt)
 	b2Vec2 vel = b2Vec2(0, -GRAVITY_Y);
 	vel.y = pbody->body->GetLinearVelocity().y;
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
-		pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
-		pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
-	}
+
 
 	//Godmode
 	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
