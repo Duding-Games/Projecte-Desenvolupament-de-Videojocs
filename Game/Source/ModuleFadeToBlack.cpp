@@ -11,8 +11,12 @@ ModuleFadeToBlack::ModuleFadeToBlack(App* app, bool start_enabled) : Module(app,
 
 	uint winW, winH;
 	app->win->GetWindowSize(winW, winH);
+
+	// Convertir winW y winH a int
+	int screenWidth = static_cast<int>(winW * app->win->GetScale());
+	int screenHeight = static_cast<int>(winH * app->win->GetScale());
 	
-	screenRect = { 0, 0, winW * app->win->GetScale(), winH * app->win->GetScale()};
+	screenRect = { 0, 0, screenWidth, screenHeight};
 }
 
 ModuleFadeToBlack::~ModuleFadeToBlack()
@@ -27,7 +31,7 @@ bool ModuleFadeToBlack::Start()
 	currentStep = Fade_Step::NONE;
 
 	// Enable blending mode for transparency
-	SDL_SetRenderDrawBlendMode(app->renderer->renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }
 
@@ -68,8 +72,8 @@ bool ModuleFadeToBlack::PostUpdate()
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
 
 	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(app->renderer->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
-	SDL_RenderFillRect(app->renderer->renderer, &screenRect);
+	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	SDL_RenderFillRect(app->render->renderer, &screenRect);
 
 	return true;
 }

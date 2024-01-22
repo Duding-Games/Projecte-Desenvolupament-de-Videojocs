@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Physics.h"
 #include "ModuleFadeToBlack.h"
+#include "Module.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -25,16 +26,16 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	frames = 0;
 
-	win = new Window();
-	input = new Input();
-	render = new Render();
-	tex = new Textures();
-	audio = new Audio();
-	physics = new Physics();
-	fadeToBlack = new ModuleFadeToBlack();
-	scene = new Scene();
-	map = new Map();
-	entityManager = new EntityManager();
+	win = new Window(this);
+	input = new Input(this);
+	render = new Render(this);
+	tex = new Textures(this);
+	audio = new Audio(this);
+	physics = new Physics(this);
+	fadeToBlack = new ModuleFadeToBlack(this);
+	scene = new Scene(this, true); //en esta no he puesto default en true porque voy a tener que ponerlo en false luego :P
+	map = new Map(this);
+	entityManager = new EntityManager(this);
 
 
 	// Ordered for awake / Start / Update
@@ -249,7 +250,7 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->IsEnabled() == false) {
 			continue;
 		}
 
@@ -271,7 +272,7 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->IsEnabled() == false) {
 			continue;
 		}
 
@@ -292,7 +293,7 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->IsEnabled() == false) {
 			continue;
 		}
 

@@ -10,9 +10,37 @@ class App;
 class Module
 {
 public:
+	
+	App* app;
 
-	Module() : active(false)
+	Module(App* parent, bool start_enabled = true) : app(parent), active(start_enabled)
 	{}
+
+	virtual ~Module()
+	{}
+	
+	bool IsEnabled() const
+	{
+		return active;
+	}
+
+	void Enable()
+	{
+		if (active == false)
+		{
+			active = true;
+			Start();
+		}
+	}
+
+	void Disable()
+	{
+		if (active == true)
+		{
+			active = false;
+			CleanUp();
+		}
+	}
 
 	void Init()
 	{
@@ -70,6 +98,7 @@ public:
 public:
 
 	SString name;
+private:
 	bool active;
 
 };
