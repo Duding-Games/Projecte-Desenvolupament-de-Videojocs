@@ -55,6 +55,7 @@ public:
 	
 
 private:
+	Animation spawnAnim;
 	Animation idleAnim;
 	Animation dieAnim;
 	Animation attackAnim;
