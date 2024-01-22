@@ -6,6 +6,8 @@
 #include "EnemyBat.h"
 #include "EnemySlime.h"
 #include "Item.h"
+#include "GuiControl.h"
+#include "GuiControlButton.h"
 
 struct SDL_Texture;
 
@@ -56,6 +58,7 @@ private:
 	EnemyBat* enemyBat;
 	EnemySlime* enemySlime;
 	PhysBody* winSensor;
+	GuiControlButton* gcButton;
 	
 };
 

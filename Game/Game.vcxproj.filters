@@ -28,6 +28,8 @@
     <ClCompile Include="Source\ModuleFadeToBlack.cpp" />
     <ClCompile Include="Source\FinalBoss.cpp" />
     <ClCompile Include="Source\Scene2.cpp" />
+    <ClCompile Include="Source\GuiControlButton.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -80,6 +82,9 @@
     <ClInclude Include="Source\ModuleFadeToBlack.h" />
     <ClInclude Include="Source\FinalBoss.h" />
     <ClInclude Include="Source\Scene2.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiControlButton.h" />
+    <ClInclude Include="Source\GuiManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

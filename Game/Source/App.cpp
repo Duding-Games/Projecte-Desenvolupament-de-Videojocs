@@ -10,6 +10,7 @@
 #include "Physics.h"
 #include "ModuleFadeToBlack.h"
 #include "Module.h"
+#include "GuiManager.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -38,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	scene2 = new Scene2(this, false);
 	map = new Map(this);
 	entityManager = new EntityManager(this);
+	guiManager = new GuiManager(this);
 
 
 	// Ordered for awake / Start / Update
@@ -51,7 +53,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene2);
 	AddModule(map);
 	AddModule(entityManager);
+<<<<<<< Updated upstream
 	AddModule(fadeToBlack);
+=======
+	AddModule(guiManager);
+
+>>>>>>> Stashed changes
 	// Render last to swap buffer
 	AddModule(render);
 

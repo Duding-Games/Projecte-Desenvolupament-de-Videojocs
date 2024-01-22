@@ -21,6 +21,7 @@ class Scene2;
 class EntityManager;
 class Map;
 class Physics;
+class GuiManager;
 
 class App
 {
@@ -99,6 +100,7 @@ public:
 	EntityManager* entityManager;
 	Map* map;
 	Physics* physics;
+	GuiManager* guiManager;
 
 	bool godmode = false;
 

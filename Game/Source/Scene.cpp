@@ -15,6 +15,8 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "GuiControl.h"
+#include "GuiManager.h"
 
 Scene::Scene(App* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -87,6 +89,13 @@ bool Scene::Start()
 
 	winSensor = app->physics->CreateRectangleSensor(3405, 345, 69, 92, bodyType::STATIC);
 	winSensor->ctype = ColliderType::WIN;
+
+	uint winW, winH;
+
+	app->win->GetWindowSize(winW, winH);
+
+	SDL_Rect btPos = { winW / 2 - 60, winH / 2 - 10, 120,20 };
+	gcButton = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Nigg-", btPos, this);
 	
 
 	return true;
