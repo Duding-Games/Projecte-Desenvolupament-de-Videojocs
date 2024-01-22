@@ -31,7 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	physics = new Physics();
-	//fadeToBlack = new ModuleFadeToBlack();
+	fadeToBlack = new ModuleFadeToBlack();
 	scene = new Scene();
 	map = new Map();
 	entityManager = new EntityManager();
