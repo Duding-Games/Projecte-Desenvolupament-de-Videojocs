@@ -31,49 +31,50 @@
 		<Win path="Assets/Audio/Fx/WinFx.wav"/>
 	</audios>
 	<scene>
-		<map path="Assets/Maps/" name="MapGameTiled.tmx">
+		<map path="Assets/Maps/" name="MapGameTiled.tmx" name2="MapGameTiled2.tmx">
 			<mouseTileTex texturepath="Assets/Textures/pathfinding.png"/>
 		</map>
-		
-		<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
-		
-		
-		<enemyBat x = "414" y = "414" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
-		<enemyBat x = "897" y = "138" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
-		<enemyBat x = "1564" y = "46" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
-		<enemyBat x = "2024" y = "322" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
-		<enemyBat x = "2852" y = "207" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
-		
-		
-		<enemySlime x="825" y="276" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-		<enemySlime x="1587" y="483" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-		<enemySlime x="2208" y="345" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-		<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
-		
-		
-		<finalBoss x="600" y="400" texturepath="Assets/Textures/Enemies/FinalBoss/FinalBoss.png" speed="0.1"/>
-
-		
-		
-		<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
-		<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
-		<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>
-		<item x="405" y="380" texturepath="Assets/Textures/coin.png"/>
-		<item x="420" y="365" texturepath="Assets/Textures/coin.png"/>
-		<item x="435" y="380" texturepath="Assets/Textures/coin.png"/>
-		<item x="3370" y="377" texturepath="Assets/Textures/coin.png"/>
-		<item x="3385" y="377" texturepath="Assets/Textures/coin.png"/>
-		<item x="3400" y="377" texturepath="Assets/Textures/coin.png"/>
-		<item x="1220" y="255" texturepath="Assets/Textures/coin.png"/>
-		<item x="1235" y="255" texturepath="Assets/Textures/coin.png"/>
-		<item x="1250" y="255" texturepath="Assets/Textures/coin.png"/>
-		<item x="1960" y="420" texturepath="Assets/Textures/coin.png"/>
-		<item x="1990" y="420" texturepath="Assets/Textures/coin.png"/>
-		<item x="1975" y="420" texturepath="Assets/Textures/coin.png"/>
-		<item x="2750" y="235" texturepath="Assets/Textures/coin.png"/>
-		<item x="2765" y="235" texturepath="Assets/Textures/coin.png"/>
 
 
+
+		<lvl1>
+			<player x="200" y="460" texturepath="Assets/Textures/player1.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
+			
+			<enemyBat x = "414" y = "414" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
+			<enemyBat x = "897" y = "138" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
+			<enemyBat x = "1564" y = "46" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
+			<enemyBat x = "2024" y = "322" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
+			<enemyBat x = "2852" y = "207" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
+		
+			<enemySlime x="825" y="276" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+			<enemySlime x="1587" y="483" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+			<enemySlime x="2208" y="345" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+			<enemySlime x="2553" y="391" texturepath="Assets/Textures/Enemies/Slime/Slime.png" speed="0.1"/>
+	
+		
+			<item x="230" y="471" texturepath="Assets/Textures/coin.png"/>
+			<item x="245" y="471" texturepath="Assets/Textures/coin.png"/>
+			<item x="260" y="471" texturepath="Assets/Textures/coin.png"/>
+			<item x="405" y="380" texturepath="Assets/Textures/coin.png"/>
+			<item x="420" y="365" texturepath="Assets/Textures/coin.png"/>
+			<item x="435" y="380" texturepath="Assets/Textures/coin.png"/>
+			<item x="3370" y="377" texturepath="Assets/Textures/coin.png"/>
+			<item x="3385" y="377" texturepath="Assets/Textures/coin.png"/>
+			<item x="3400" y="377" texturepath="Assets/Textures/coin.png"/>
+			<item x="1220" y="255" texturepath="Assets/Textures/coin.png"/>
+			<item x="1235" y="255" texturepath="Assets/Textures/coin.png"/>
+			<item x="1250" y="255" texturepath="Assets/Textures/coin.png"/>
+			<item x="1960" y="420" texturepath="Assets/Textures/coin.png"/>
+			<item x="1990" y="420" texturepath="Assets/Textures/coin.png"/>
+			<item x="1975" y="420" texturepath="Assets/Textures/coin.png"/>
+			<item x="2750" y="235" texturepath="Assets/Textures/coin.png"/>
+			<item x="2765" y="235" texturepath="Assets/Textures/coin.png"/>
+		</lvl1>
+
+		<lvl2>
+			<finalBoss x="600" y="400" texturepath="Assets/Textures/Enemies/FinalBoss/FinalBoss.png" speed="0.1"/>
+		</lvl2>
+		
 
 	</scene>
 	

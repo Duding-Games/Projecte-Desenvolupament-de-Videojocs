@@ -32,24 +32,24 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	for (pugi::xml_node itemNode = config.child("lvl1").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 	}
 
-	if (config.child("player")) {
+	if (config.child("lvl1").child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("player");
+		player->parameters = config.child("lvl1").child("player");
 	}
 
-	for (pugi::xml_node itemNode = config.child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+	for (pugi::xml_node itemNode = config.child("lvl1").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
 	{
 		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
 		enemyBat->parameters = itemNode;
 	}
 
-	for (pugi::xml_node itemNode = config.child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
+	for (pugi::xml_node itemNode = config.child("lvl1").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
 	{
 		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
 		enemySlime->parameters = itemNode;
