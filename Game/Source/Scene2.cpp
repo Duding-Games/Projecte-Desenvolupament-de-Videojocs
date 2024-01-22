@@ -4,54 +4,61 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "Scene2.h"
 #include "Map.h"
 #include "Player.h"
 #include "EnemyBat.h"
 #include "EnemySlime.h"
+#include "FinalBoss.h"
 #include "EntityManager.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene(App* app, bool start_enabled) : Module(app, start_enabled)
+Scene2::Scene2(App* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name.Create("scene");
 }
 
 // Destructor
-Scene::~Scene()
+Scene2::~Scene2()
 {}
 
 // Called before render is available
-bool Scene::Awake(pugi::xml_node& config)
+bool Scene2::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
 
 	// iterate all objects in the scene
 	// Check https://pugixml.org/docs/quickstart.html#access
-	for (pugi::xml_node itemNode = config.child("lvl1").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
+	for (pugi::xml_node itemNode = config.child("lvl2").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
 	{
 		Item* item = (Item*)app->entityManager->CreateEntity(EntityType::ITEM);
 		item->parameters = itemNode;
 	}
 
-	if (config.child("lvl1").child("player")) {
+	if (config.child("lvl2").child("player")) {
 		player = (Player*)app->entityManager->CreateEntity(EntityType::PLAYER);
-		player->parameters = config.child("lvl1").child("player");
+		player->parameters = config.child("lvl2").child("player");
 	}
 
-	for (pugi::xml_node itemNode = config.child("lvl1").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
+	for (pugi::xml_node itemNode = config.child("lvl2").child("enemyBat"); itemNode; itemNode = itemNode.next_sibling("enemyBat"))
 	{
 		EnemyBat* enemyBat = (EnemyBat*)app->entityManager->CreateEntity(EntityType::ENEMYBAT);
 		enemyBat->parameters = itemNode;
 	}
 
-	for (pugi::xml_node itemNode = config.child("lvl1").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
+	for (pugi::xml_node itemNode = config.child("lvl2").child("enemySlime"); itemNode; itemNode = itemNode.next_sibling("enemySlime"))
 	{
 		EnemySlime* enemySlime = (EnemySlime*)app->entityManager->CreateEntity(EntityType::ENEMYSLIME);
 		enemySlime->parameters = itemNode;
+	}
+
+	for (pugi::xml_node itemNode = config.child("lvl2").child("finalBoss"); itemNode; itemNode = itemNode.next_sibling("finalBoss"))
+	{
+		FinalBoss* finalBoss = (FinalBoss*)app->entityManager->CreateEntity(EntityType::FINALBOSS);
+		finalBoss->parameters = itemNode;
 	}
 
 	if (config.child("map")) {
@@ -69,7 +76,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	return ret;
 }
 // Called before the first frame
-bool Scene::Start()
+bool Scene2::Start()
 {
 	//Music is commented so that you can add your own music
 	app->audio->PlayMusic("Assets/Audio/Music/background_music.ogg");
@@ -91,13 +98,13 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool Scene2::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool Scene2::Update(float dt)
 {
 	float camSpeed = 1; 
 
@@ -124,7 +131,7 @@ bool Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool Scene2::PostUpdate()
 {
 	bool ret = true;
 
@@ -135,21 +142,21 @@ bool Scene::PostUpdate()
 }
 
 // Called before quitting
-bool Scene::CleanUp()
+bool Scene2::CleanUp()
 {
 	LOG("Freeing scene");
 
 	return true;
 }
 
-Player* Scene::GetPLayer()
+Player* Scene2::GetPLayer()
 {
 	return player;
 }
 
 //Implement a method to load the state
 // for now load camera's x and y
-bool Scene::LoadState(pugi::xml_node node) {
+bool Scene2::LoadState(pugi::xml_node node) {
 
 	int x = node.child("player").attribute("x").as_int();
 	int y = node.child("player").attribute("y").as_int();
@@ -217,7 +224,7 @@ bool Scene::LoadState(pugi::xml_node node) {
 
 //Create a method to save the state of the renderer
 // using append_child and append_attribute
-bool Scene::SaveState(pugi::xml_node node) {
+bool Scene2::SaveState(pugi::xml_node node) {
 
 	pugi::xml_node camNode = node.append_child("player");
 	camNode.append_attribute("x").set_value(player->position.x);

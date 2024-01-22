@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "Scene2.h"
 #include "Map.h"
 #include "Physics.h"
 #include "ModuleFadeToBlack.h"
@@ -34,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	physics = new Physics(this);
 	fadeToBlack = new ModuleFadeToBlack(this);
 	scene = new Scene(this, true); //en esta no he puesto default en true porque voy a tener que ponerlo en false luego :P
+	scene2 = new Scene2(this, false);
 	map = new Map(this);
 	entityManager = new EntityManager(this);
 
