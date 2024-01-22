@@ -32,6 +32,12 @@ FinalBoss::FinalBoss() : Entity(EntityType::FINALBOSS)
 	//attacking
 	attackAnim.LoadAnimations("attackAnimBoss");
 
+	//walking
+	walkAnim.LoadAnimations("walkAnimBoss");
+
+	//take damage
+	damagedAnim.LoadAnimations("damagedAnimBoss");
+
 }
 
 FinalBoss::~FinalBoss() {

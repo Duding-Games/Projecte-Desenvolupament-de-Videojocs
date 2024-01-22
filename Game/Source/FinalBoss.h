@@ -59,6 +59,8 @@ private:
 	Animation idleAnim;
 	Animation dieAnim;
 	Animation attackAnim;
+	Animation walkAnim;
+	Animation damagedAnim;
 
 	
 };
