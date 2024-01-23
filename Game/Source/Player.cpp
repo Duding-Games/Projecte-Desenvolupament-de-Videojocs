@@ -142,6 +142,7 @@ bool Player::Update(float dt)
 		pbody->body->SetGravityScale(0);
 		pbody->body->GetFixtureList()[0].SetSensor(true);
 		isDying = false;
+		lives = 3;
 
 	}
 
@@ -336,7 +337,7 @@ bool Player::PostUpdate() {
 	}
 
 	sprintf_s(scoreText, 10, "%d", score);
-	app->fonts->BlitText(10, 25, scoreFont, scoreText);
+	app->fonts->BlitText(30, 30, scoreFont, scoreText);
 
 	SDL_Rect coinRect = { 0,0,16,16 };
 	app->render->DrawTexture(textureCoin, 15, 30, SDL_FLIP_NONE, &coinRect, 0);
@@ -424,7 +425,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WIN:
 		LOG("Collision WIN");
 		app->audio->PlayFx(winFxId);
-		app->fadeToBlack->FadeToBlack(app->scene, app->scene2);
+		lvlChange = true;
+		/*app->fadeToBlack->FadeToBlack(app->scene, app->scene2);*/
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

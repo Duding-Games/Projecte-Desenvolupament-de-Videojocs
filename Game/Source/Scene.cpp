@@ -12,6 +12,7 @@
 #include "EnemyBat.h"
 #include "EnemySlime.h"
 #include "EntityManager.h"
+#include "Player.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -137,8 +138,9 @@ bool Scene::Update(float dt)
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
 		app->fadeToBlack->FadeToBlack(this, this);
 	}
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN || player->lvlChange ) {
 		app->fadeToBlack->FadeToBlack(this, app->scene2);
+		player->lvlChange = false;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
 		app->fadeToBlack->FadeToBlack(this, this);

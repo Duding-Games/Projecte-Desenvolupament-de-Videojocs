@@ -63,6 +63,7 @@ public:
 	bool isAttacking = false;
 	bool isCrouching = false;
 	bool isDying = false;
+	bool lvlChange = false;
 	uint score = 000;
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };
