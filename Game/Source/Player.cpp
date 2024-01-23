@@ -321,6 +321,9 @@ bool Player::PostUpdate() {
 }
 bool Player::CleanUp()
 {
+	//RELEASE(pbody.algo)
+	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	app->entityManager->DestroyEntity(pbody->listener);
 
 	return true;
 }

@@ -31,8 +31,8 @@ Scene::~Scene()
 bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
-	bool ret = true;
-	//if (app->scene->IsEnabled() == true) {
+	bool ret = true;/*
+	if (sceneReload) {*/
 		// iterate all objects in the scene
 		// Check https://pugixml.org/docs/quickstart.html#access
 		for (pugi::xml_node itemNode = config.child("lvl1").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))
@@ -76,7 +76,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 		texture = config.child("e_tutorial").attribute("texturepath").as_string();
 
-		//}
+	/*}*/
 	return ret;
 }
 // Called before the first frame

@@ -104,6 +104,7 @@ public:
 public:
 
 	SString name;
+	bool sceneReload = false;
 private:
 	bool active;
 

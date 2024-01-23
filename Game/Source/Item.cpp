@@ -64,6 +64,8 @@ bool Item::PostUpdate()
 
 bool Item::CleanUp()
 {
+	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	app->entityManager->DestroyEntity(pbody->listener);
 	return true;
 }
 

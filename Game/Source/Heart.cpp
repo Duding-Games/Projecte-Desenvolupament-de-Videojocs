@@ -65,6 +65,8 @@ bool Heart::PostUpdate()
 
 bool Heart::CleanUp()
 {
+	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	app->entityManager->DestroyEntity(pbody->listener);
 	return true;
 }
 

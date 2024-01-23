@@ -54,6 +54,7 @@ bool ModuleFadeToBlack::Update(float dt)
 		{
 
 			// TODO 1: Enable / Disable the modules received when FadeToBlacks(...) gets called
+			moduleToDisable->sceneReload = false;
 			moduleToDisable->Disable();
 			app->map->Disable();
 			app->entityManager->Disable();
@@ -63,7 +64,8 @@ bool ModuleFadeToBlack::Update(float dt)
 			pugi::xml_parse_result file = configFile.load_file("config.xml");
 
 			config = configFile.child("config").child(moduleToEnable->name.GetString());
-			
+
+			moduleToEnable->sceneReload = true;
 			moduleToEnable->Awake(config);
 			moduleToEnable->Enable();
 			app->map->Enable();

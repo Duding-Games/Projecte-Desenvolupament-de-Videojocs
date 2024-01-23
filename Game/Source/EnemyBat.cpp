@@ -152,6 +152,8 @@ bool EnemyBat::PostUpdate() {
 }
 bool EnemyBat::CleanUp()
 {
+	pbody->body->GetWorld()->DestroyBody(pbody->body);
+	app->entityManager->DestroyEntity(pbody->listener);
 
 	return true;
 }

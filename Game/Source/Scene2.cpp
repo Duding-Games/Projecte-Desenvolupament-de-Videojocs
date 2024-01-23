@@ -31,7 +31,7 @@ bool Scene2::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 	bool ret = true;
-	if (app->scene2->IsEnabled() == true) {
+	if (sceneReload) {
 		// iterate all objects in the scene
 		// Check https://pugixml.org/docs/quickstart.html#access
 		for (pugi::xml_node itemNode = config.child("lvl2").child("item"); itemNode; itemNode = itemNode.next_sibling("item"))

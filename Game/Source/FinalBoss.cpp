@@ -46,17 +46,18 @@ FinalBoss::~FinalBoss() {
 
 bool FinalBoss::Awake() {
 
-	position.x = parameters.attribute("x").as_int();
-	position.y = parameters.attribute("y").as_int();
-	texturePath = parameters.attribute("texturepath").as_string();
-	speed = parameters.attribute("speed").as_float();
-
+	
 	return true;
 }
 
 bool FinalBoss::Start() {
 
 	//initilize textures
+	position.x = parameters.attribute("x").as_int();
+	position.y = parameters.attribute("y").as_int();
+	texturePath = parameters.attribute("texturepath").as_string();
+	speed = parameters.attribute("speed").as_float();
+
 	texture = app->tex->Load(texturePath);
 
 	killFxId = app->audio->LoadAudios("Kill");
@@ -68,6 +69,7 @@ bool FinalBoss::Start() {
 	initialPos.x = (pbody->body->GetTransform().p.x);
 	initialPos.y = (pbody->body->GetTransform().p.y);
 	isFacingLeft = true;
+	currentAnim = &idleAnim;
 
 	return true;
 }
