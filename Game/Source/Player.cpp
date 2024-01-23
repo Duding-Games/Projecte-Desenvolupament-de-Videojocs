@@ -13,6 +13,7 @@
 #include "Timer.h"
 #include "PerfTimer.h"
 #include "Window.h"
+#include "Map.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -65,6 +66,7 @@ bool Player::Start() {
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
+	texturePath2 = parameters.attribute("texturepath2").as_string();
 	speed = parameters.attribute("speed").as_float();
 	speedDash = parameters.attribute("speedDash").as_float();
 	jumpForce = parameters.attribute("jumpForce").as_float();
@@ -73,6 +75,7 @@ bool Player::Start() {
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
+	textureHeart = app->tex->Load(texturePath2);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -236,6 +239,9 @@ bool Player::Update(float dt)
 			isDying = true;
 		}
 
+		if (lives == 0) {
+			isDying = true;
+		}
 		//Die
 		if (isDying) {
 			currentAnim = &dieAnim;
@@ -244,6 +250,7 @@ bool Player::Update(float dt)
 				isDying = false;
 				dieAnim.Reset();
 				isFacingLeft = false;
+				lives = 3;
 			}
 		}
 		//Dash
@@ -271,6 +278,7 @@ bool Player::Update(float dt)
 	position.x = METERS_TO_PIXELS(pbody->body->GetTransform().p.x) - 16;
 	position.y = METERS_TO_PIXELS(pbody->body->GetTransform().p.y) - 16;
 
+	
 	currentAnim->Update();
 	
 
@@ -316,6 +324,20 @@ bool Player::PostUpdate() {
 	else {
 		app->render->DrawTexture(texture, position.x - 8, position.y - offsetTexY, SDL_FLIP_NONE, &rect);
 	}
+	SDL_Rect heartRect = { 0,0,18,18 };
+
+	if (lives == 3) {
+		app->render->DrawTexture(textureHeart,15,10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 35, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 55, 10, SDL_FLIP_NONE, &heartRect, 0);
+	}
+	if (lives == 2) {
+		app->render->DrawTexture(textureHeart, 15, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 35, 10, SDL_FLIP_NONE, &heartRect, 0);
+	}
+	if (lives == 1) {
+		app->render->DrawTexture(textureHeart, 15, 10, SDL_FLIP_NONE, &heartRect, 0);
+	}
 
 	return true;
 }
@@ -339,9 +361,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::HEART:
-		LOG("Collision ITEM");
-		app->audio->PlayFx(pickCoinFxId);
-		physB->listener->isDestroyed = true;
+		LOG("Collision	HEART");
+		if (lives < 3) {
+			app->audio->PlayFx(pickCoinFxId);
+			physB->listener->isDestroyed = true;
+			lives++;
+		}
+		
 		break;
 
 	case ColliderType::WALL:
@@ -354,15 +380,22 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::SPIKES:
-		isDying = true;
+		if (lives > 0) {
+			lives--;
+		}
 		isJumping = false;
 		LOG("Collision SPIKES");
 		break;
 
 	case ColliderType::ENEMY:
 		if (physB->listener->isAttacking) {
-			isDying = true;
+			/*isDying = true;*/
+			//ALBERT, AQUÍ POSA UN SOROLL DE UGH
+			if (lives > 0) {
+				lives--;
+			}
 		}
+
 		isJumping = false;
 		LOG("Collision ENEMY");
 		break;

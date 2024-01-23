@@ -40,7 +40,9 @@ public:
 	float speedDash;
 	float jumpForce;
 	const char* texturePath;
+	const char* texturePath2;
 	SDL_Texture* texture = NULL;
+	SDL_Texture* textureHeart = NULL;
 	PhysBody* pbody;
 	PhysBody* sensor;
 	int pickCoinFxId;
@@ -50,12 +52,14 @@ public:
 	int runFxId;
 	int winFxId;
 	int offsetTexY = 6;
+	int lives = 3;
 	bool isJumping = false;
 	bool isFacingLeft = false;
 	bool isDashing = false;
 	bool isAttacking = false;
 	bool isCrouching = false;
 	bool isDying = false;
+	iPoint heartPos;
 
 	Animation* currentAnim;
 

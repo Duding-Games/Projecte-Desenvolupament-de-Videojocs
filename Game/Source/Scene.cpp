@@ -105,8 +105,8 @@ bool Scene::Start()
 	app->win->GetWindowSize(winW, winH);
 
 	SDL_Rect btPos = { winW / 2 - 60, winH / 2 - 10, 120,20 };
-	gcButton = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Nigg-", btPos, this);
-	
+	gcButton = (GuiControlButton*) app->guiManager->CreateGuiControl(GuiControlType::BUTTON, 1, "Play", btPos, this);
+	 
 
 	return true;
 }
