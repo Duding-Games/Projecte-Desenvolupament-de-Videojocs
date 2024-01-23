@@ -212,10 +212,13 @@ bool Map::CleanUp()
     ListItem<PhysBody*>* colliderItem;
     colliderItem = colliderList.start;
     while (colliderItem != NULL) {
-        colliderItem->data->body->SetTransform(b2Vec2(0, colliderItem->data->body->GetTransform().p.y),colliderItem->data->body->GetAngle());
+       
+        LOG("DESTRUYENDO CUERPO FÍSICO");
         colliderItem->data->body->GetWorld()->DestroyBody(colliderItem->data->body);
         colliderItem = colliderItem->next;
+     
     }
+    LOG("CLEARING LIST");
     colliderList.Clear();
 
 
@@ -562,6 +565,7 @@ bool Map::LoadCollisionsObject()
                 PhysBody* c1 = app->physics->CreateRectangle(object->x + object->height / 2, object->y + object->width / 2, object->height, object->width, STATIC);
                 c1->ctype = ColliderType::WALL;
                 colliderList.Add(c1);
+               
             }
            
         }
