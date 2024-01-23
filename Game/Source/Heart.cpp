@@ -29,7 +29,7 @@ bool Heart::Awake() {
 bool Heart::Start() {
 
 
-position.x = parameters.attribute("x").as_int();
+	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	//initilize textures
