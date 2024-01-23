@@ -50,10 +50,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(fonts);
 	AddModule(physics);
 	AddModule(scene);
 	AddModule(scene2);
+	AddModule(fonts);
 	AddModule(map);
 	AddModule(entityManager);
 	AddModule(fadeToBlack);

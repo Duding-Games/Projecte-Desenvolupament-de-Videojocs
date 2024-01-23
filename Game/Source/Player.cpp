@@ -15,6 +15,7 @@
 #include "PerfTimer.h"
 #include "Window.h"
 #include "Map.h"
+#include "ModuleFadeToBlack.h"
 
 Player::Player() : Entity(EntityType::PLAYER)
 {
@@ -63,8 +64,7 @@ bool Player::Start() {
 	//die
 	dieAnim.LoadAnimations("dieAnim");
 
-	char lookupTable[] = { "0123456789" };
-	scoreFont = app->fonts->Load("pinball/NumsPinball2.png", lookupTable, 1);
+	
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
@@ -75,6 +75,8 @@ bool Player::Start() {
 	jumpForce = parameters.attribute("jumpForce").as_float();
 	timerDash = Timer();
 
+	char lookupTable[] = { "0123456789" };
+	scoreFont = app->fonts->Load(scorePath, lookupTable, 1);
 
 	//initilize textures
 	texture = app->tex->Load(texturePath);
@@ -315,6 +317,8 @@ bool Player::Update(float dt)
 		}
 	}
 
+	
+
 	return true;
 }
 
@@ -328,7 +332,12 @@ bool Player::PostUpdate() {
 	else {
 		app->render->DrawTexture(texture, position.x - 8, position.y - offsetTexY, SDL_FLIP_NONE, &rect);
 	}
+
+	sprintf_s(scoreText, 10, "%d", score);
+	app->fonts->BlitText(10, 25, scoreFont, scoreText);
+
 	SDL_Rect heartRect = { 0,0,18,18 };
+
 
 	if (lives == 3) {
 		app->render->DrawTexture(textureHeart,15,10, SDL_FLIP_NONE, &heartRect, 0);
@@ -364,7 +373,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
 		score += 1;
-		app->fonts->BlitText(120, 15, scoreFont, scoreText);
+		
 		app->audio->PlayFx(pickCoinFxId);
 		physB->listener->isDestroyed = true;
 		break;
@@ -411,6 +420,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WIN:
 		LOG("Collision WIN");
 		app->audio->PlayFx(winFxId);
+		app->fadeToBlack->FadeToBlack(app->scene, app->scene2);
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
