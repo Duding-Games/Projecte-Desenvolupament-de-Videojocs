@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "App.h"
 #include "Textures.h"
+#include "ModuleFonts.h"
 #include "Audio.h"
 #include "Input.h"
 #include "Render.h"
@@ -62,11 +63,13 @@ bool Player::Start() {
 	//die
 	dieAnim.LoadAnimations("dieAnim");
 
-
+	char lookupTable[] = { "0123456789" };
+	scoreFont = app->fonts->Load("pinball/NumsPinball2.png", lookupTable, 1);
 	position.x = parameters.attribute("x").as_int();
 	position.y = parameters.attribute("y").as_int();
 	texturePath = parameters.attribute("texturepath").as_string();
 	texturePath2 = parameters.attribute("texturepath2").as_string();
+	scorePath = parameters.attribute("scorePath").as_string();
 	speed = parameters.attribute("speed").as_float();
 	speedDash = parameters.attribute("speedDash").as_float();
 	jumpForce = parameters.attribute("jumpForce").as_float();
@@ -76,6 +79,7 @@ bool Player::Start() {
 	//initilize textures
 	texture = app->tex->Load(texturePath);
 	textureHeart = app->tex->Load(texturePath2);
+	textureScore = app->tex->Load(scorePath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -339,6 +343,9 @@ bool Player::PostUpdate() {
 		app->render->DrawTexture(textureHeart, 15, 10, SDL_FLIP_NONE, &heartRect, 0);
 	}
 
+
+	
+
 	return true;
 }
 bool Player::CleanUp()
@@ -356,6 +363,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::ITEM:
 		LOG("Collision ITEM");
+		score += 1;
+		app->fonts->BlitText(120, 15, scoreFont, scoreText);
 		app->audio->PlayFx(pickCoinFxId);
 		physB->listener->isDestroyed = true;
 		break;

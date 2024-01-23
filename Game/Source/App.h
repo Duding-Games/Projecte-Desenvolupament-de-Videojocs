@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "PerfTimer.h"
+#include "Textures.h"
 #include "Timer.h"
 #include "EntityManager.h"
 
@@ -16,6 +17,7 @@ class Render;
 class Textures;
 class Audio;
 class ModuleFadeToBlack;
+class ModuleFonts;
 class Scene;
 class Scene2;
 class EntityManager;
@@ -95,6 +97,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	ModuleFadeToBlack* fadeToBlack;
+	ModuleFonts* fonts;
 	Scene* scene;
 	Scene2* scene2;
 	EntityManager* entityManager;

@@ -41,8 +41,10 @@ public:
 	float jumpForce;
 	const char* texturePath;
 	const char* texturePath2;
+	const char* scorePath;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* textureHeart = NULL;
+	SDL_Texture* textureScore = NULL;
 	PhysBody* pbody;
 	PhysBody* sensor;
 	int pickCoinFxId;
@@ -59,7 +61,11 @@ public:
 	bool isAttacking = false;
 	bool isCrouching = false;
 	bool isDying = false;
+	uint score = 000;
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
 	iPoint heartPos;
+	iPoint scorePos;
 
 	Animation* currentAnim;
 

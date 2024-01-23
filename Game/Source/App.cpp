@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
+#include "ModuleFonts.h"
 #include "Scene.h"
 #include "Scene2.h"
 #include "Map.h"
@@ -33,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render(this);
 	tex = new Textures(this);
 	audio = new Audio(this);
+	fonts = new ModuleFonts(this);
 	physics = new Physics(this);
 	fadeToBlack = new ModuleFadeToBlack(this);
 	scene = new Scene(this, true); //en esta no he puesto default en true porque voy a tener que ponerlo en false luego :P
@@ -48,6 +50,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(fonts);
 	AddModule(physics);
 	AddModule(scene);
 	AddModule(scene2);
