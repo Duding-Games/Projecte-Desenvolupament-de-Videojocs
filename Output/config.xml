@@ -20,16 +20,21 @@
 		<music volume="8"/>
 		<fx volume="8"/>
 	</audio>
+	
 	<audios>
 		<backgroundMusic path="Assets/Audio/Music/background_music.ogg"/>
 		<pickCoin path="Assets/Audio/Fx/coin.ogg"/>
+		<pickHeart path="Assets/Audio/Fx/heartFx.wav"/>
 		<Jump path="Assets/Audio/Fx/JumpFx.wav"/>
 		<Dash path="Assets/Audio/Fx/DashFx.wav"/>
 		<Sword path="Assets/Audio/Fx/SwordFx.wav"/>
 		<Kill path="Assets/Audio/Fx/EnemyDeadFx.wav"/>
 		<Run path="Assets/Audio/Fx/RunFx.ogg"/>
 		<Win path="Assets/Audio/Fx/WinFx.wav"/>
+		<Death path="Assets/Audio/Fx/deathFx.wav"/>
+		<Killed path="Assets/Audio/Fx/killedFx.wav"/>
 	</audios>
+	
 	<scene>
 		<map path="Assets/Maps/" name="MapGameTiled.tmx" name2="MapGameTiled2.tmx">
 			<mouseTileTex texturepath="Assets/Textures/pathfinding.png"/>

@@ -50,13 +50,16 @@ public:
 	PhysBody* pbody;
 	PhysBody* sensor;
 	int pickCoinFxId;
+	int pickHeartFxId;
 	int jumpFxId;
 	int dashFxId;
 	int swordFxId;
 	int runFxId;
 	int winFxId;
+	int deathFxId;
+	int killedFxId;
 	int offsetTexY = 6;
-	int lives = 3;
+	int lives = 5;
 	bool isJumping = false;
 	bool isFacingLeft = false;
 	bool isDashing = false;

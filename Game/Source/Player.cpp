@@ -91,11 +91,14 @@ bool Player::Start() {
 	pbody->body->SetFixedRotation(false);
 
 	pickCoinFxId = app->audio->LoadAudios("pickCoin");
+	pickHeartFxId = app->audio->LoadAudios("pickHeart");
 	jumpFxId = app->audio->LoadAudios("Jump");
 	dashFxId = app->audio->LoadAudios("Dash");
 	swordFxId = app->audio->LoadAudios("Sword");
 	runFxId = app->audio->LoadAudios("Run");
 	winFxId = app->audio->LoadAudios("Win");
+	deathFxId = app->audio->LoadAudios("Death");
+	killedFxId = app->audio->LoadAudios("Killed");
 
 	initialPos = pbody->body->GetTransform();
 	currentAnim = &idleAnim;
@@ -142,7 +145,7 @@ bool Player::Update(float dt)
 		pbody->body->SetGravityScale(0);
 		pbody->body->GetFixtureList()[0].SetSensor(true);
 		isDying = false;
-		lives = 3;
+		lives = 5;
 
 	}
 
@@ -245,7 +248,7 @@ bool Player::Update(float dt)
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
-			isDying = true;
+			lives = 0;
 		}
 
 		if (lives == 0) {
@@ -254,12 +257,13 @@ bool Player::Update(float dt)
 		//Die
 		if (isDying) {
 			currentAnim = &dieAnim;
+			app->audio->PlayFx(killedFxId);
 			if (dieAnim.HasFinished()) {
 				pbody->body->SetTransform(b2Vec2(initialPos.p.x, initialPos.p.y), initialPos.q.GetAngle());
 				isDying = false;
 				dieAnim.Reset();
 				isFacingLeft = false;
-				lives = 3;
+				lives = 5;
 			}
 		}
 		//Dash
@@ -343,7 +347,19 @@ bool Player::PostUpdate() {
 	app->render->DrawTexture(textureCoin, 15, 30, SDL_FLIP_NONE, &coinRect, 0);
 
 	SDL_Rect heartRect = { 0,0,18,18 };
-
+	if (lives == 5) {
+		app->render->DrawTexture(textureHeart, 15, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 35, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 55, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 75, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 95, 10, SDL_FLIP_NONE, &heartRect, 0);
+	}
+	if (lives == 4) {
+		app->render->DrawTexture(textureHeart, 15, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 35, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 55, 10, SDL_FLIP_NONE, &heartRect, 0);
+		app->render->DrawTexture(textureHeart, 75, 10, SDL_FLIP_NONE, &heartRect, 0);
+	}
 	if (lives == 3) {
 		app->render->DrawTexture(textureHeart,15,10, SDL_FLIP_NONE, &heartRect, 0);
 		app->render->DrawTexture(textureHeart, 35, 10, SDL_FLIP_NONE, &heartRect, 0);
@@ -385,8 +401,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::HEART:
 		LOG("Collision	HEART");
-		if (lives < 3) {
-			app->audio->PlayFx(pickCoinFxId);
+		if (lives < 5) {
+			app->audio->PlayFx(pickHeartFxId);
 			physB->listener->isDestroyed = true;
 			lives++;
 		}
@@ -403,8 +419,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 
 	case ColliderType::SPIKES:
-		if (lives > 0) {
+		if (lives > 0 && app->godmode == false) {
 			lives--;
+			app->audio->PlayFx(deathFxId);
 		}
 		isJumping = false;
 		LOG("Collision SPIKES");
@@ -412,10 +429,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 	case ColliderType::ENEMY:
 		if (physB->listener->isAttacking) {
-			/*isDying = true;*/
-			//ALBERT, AQUÍ POSA UN SOROLL DE UGH
-			if (lives > 0) {
+			if (lives > 0 && app->godmode == false) {
 				lives--;
+				app->audio->PlayFx(deathFxId);
 			}
 		}
 
