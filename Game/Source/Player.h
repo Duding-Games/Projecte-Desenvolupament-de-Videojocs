@@ -64,8 +64,6 @@ public:
 	uint score = 000;
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };
-	iPoint heartPos;
-	iPoint scorePos;
 
 	Animation* currentAnim;
 
