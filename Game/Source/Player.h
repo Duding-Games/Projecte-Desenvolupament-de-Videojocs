@@ -42,9 +42,11 @@ public:
 	const char* texturePath;
 	const char* texturePath2;
 	const char* scorePath;
+	const char* coinPath;
 	SDL_Texture* texture = NULL;
 	SDL_Texture* textureHeart = NULL;
 	SDL_Texture* textureScore = NULL;
+	SDL_Texture* textureCoin = NULL;
 	PhysBody* pbody;
 	PhysBody* sensor;
 	int pickCoinFxId;

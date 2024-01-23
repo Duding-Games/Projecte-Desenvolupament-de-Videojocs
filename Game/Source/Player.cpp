@@ -70,6 +70,7 @@ bool Player::Start() {
 	texturePath = parameters.attribute("texturepath").as_string();
 	texturePath2 = parameters.attribute("texturepath2").as_string();
 	scorePath = parameters.attribute("scorePath").as_string();
+	coinPath = parameters.attribute("coinPath").as_string();
 	speed = parameters.attribute("speed").as_float();
 	speedDash = parameters.attribute("speedDash").as_float();
 	jumpForce = parameters.attribute("jumpForce").as_float();
@@ -82,6 +83,7 @@ bool Player::Start() {
 	texture = app->tex->Load(texturePath);
 	textureHeart = app->tex->Load(texturePath2);
 	textureScore = app->tex->Load(scorePath);
+	textureCoin = app->tex->Load(coinPath);
 
 	pbody = app->physics->CreateCircle(position.x, position.y + 12, 14, bodyType::DYNAMIC);
 	pbody->listener = this;
@@ -336,8 +338,10 @@ bool Player::PostUpdate() {
 	sprintf_s(scoreText, 10, "%d", score);
 	app->fonts->BlitText(10, 25, scoreFont, scoreText);
 
-	SDL_Rect heartRect = { 0,0,18,18 };
+	SDL_Rect coinRect = { 0,0,16,16 };
+	app->render->DrawTexture(textureCoin, 15, 30, SDL_FLIP_NONE, &coinRect, 0);
 
+	SDL_Rect heartRect = { 0,0,18,18 };
 
 	if (lives == 3) {
 		app->render->DrawTexture(textureHeart,15,10, SDL_FLIP_NONE, &heartRect, 0);

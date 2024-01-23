@@ -38,7 +38,7 @@
 
 
 		<lvl1>
-			<player x="200" y="460" texturepath="Assets/Textures/player1.png" texturepath2="Assets/Textures/hearts.png" scorePath="Assets/Textures/Score.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
+			<player x="200" y="460" texturepath="Assets/Textures/player1.png" texturepath2="Assets/Textures/hearts.png" scorePath="Assets/Textures/Score.png" coinPath="Assets/Textures/coin.png" speed="0.2" speedDash="0.5" jumpForce="0.11"/>
 			
 			<enemyBat x = "414" y = "414" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
 			<enemyBat x = "897" y = "138" texturepath = "Assets/Textures/Enemies/Bat/bat.png" speed = "0.1" />
