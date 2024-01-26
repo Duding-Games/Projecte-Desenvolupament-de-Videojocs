@@ -1,4 +1,4 @@
-# Duding Games' SWORDFALL second release by Núria Case & Albert Cifuentes!
+# Duding Games' SWORDFALL Third release by Núria Case & Albert Cifuentes!
 
 We're making a project team of the subject “DESENVOLUPAMENT DE VIDEOJOCS” in CITM University: Videogames Design & Developments degree. The first job is to make a platformer game in SDL and Box2d.
 Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolupament-de-Videojocs">Click Here.</a>
