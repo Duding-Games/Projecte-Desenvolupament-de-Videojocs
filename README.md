@@ -27,6 +27,8 @@ Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolu
 
 <ul>
   <li>F1 - Go to Level 1</li>
+  <li>F2 - Go to level 2</li>
+  <li>F3 - Go to current level</li>
   <li>F3 - Reset Current Level</li>
   <li>F8 - Enable/Disable Vsync</li>
   <li>F9 - Enable/Disable Colliders</li>
@@ -41,8 +43,10 @@ Link to the project: <a href="https://github.com/Duding-Games/Projecte-Desenvolu
   <li>Collision system using tiled with Box2D</li>
   <li>Character Movements: Run, Jump, Attack, Dash, Crouch</li>
   <li>Character animations</li>
-  <li>New level 1 implemented</li>
+  <li>New level 1 & 2 implemented</li>
   <li>Parallax system</li>
+  <li>Lives System</li>
+  <li>Coins Score</li>
   <li>Implementation of a debug mode</li>
   <li>Code improvements for better performance and reliability</li>
 </ul>
